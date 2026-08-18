@@ -1,6 +1,8 @@
 mkfile_path := $(dir $(lastword $(MAKEFILE_LIST)))
 
 APPL_CXXOBJS += \
+    strategy/BottleDeliveryStrategy.o \
+    strategy/LapStrategy.o \
     operation/PIDCalculator.o \
     operation/DistanceCalculator.o \
     operation/TrapezoidCalculator.o \
@@ -31,6 +33,7 @@ APPL_DIRS += \
     $(mkfile_path)device \
     $(mkfile_path)operation \
     $(mkfile_path)scene \
+    $(mkfile_path)strategy \
 
 INCLUDES += \
 	-I$(mkfile_path)../../../drivers/include \
@@ -42,3 +45,4 @@ INCLUDES += \
     -I$(mkfile_path)operation \
     -I$(mkfile_path)scene \
     -I$(mkfile_path)parameter \
+    -I$(mkfile_path)strategy \
