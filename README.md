@@ -1,0 +1,2 @@
+# teamc_etrobo_ETRally
+クラス図と整合を取りながらETラリーの実装を行うリポジトリ
