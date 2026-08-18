@@ -2,21 +2,21 @@
 
 const SceneOrder LapStrategy::LAP[] =
 {
-    { 0,  0, ActionType::LineTrace}, // Lap直線1
-    { 1,  1, ActionType::LineTrace}, // Lapカーブ1-1
-    { 2,  2, ActionType::LineTrace}, // Lapカーブ1-2
-    { 3,  3, ActionType::LineTrace}, // Lapカーブ1-3
-    { 4,  4, ActionType::LineTrace}, // Lap直線2
-    { 5,  5, ActionType::LineTrace}, // Lapカーブ2-1
-    { 6,  6, ActionType::LineTrace}, // Lapカーブ2-2
-    { 7,  7, ActionType::LineTrace}, // Lapカーブ2-3
-    { 8,  8, ActionType::LineTrace}, // Lap直線3
-    { 9,  9, ActionType::LineTrace}, // Lapカーブ3
-    {10, 10, ActionType::LineTrace}, // Lap蛇行1
-    {11, 11, ActionType::LineTrace}, // Lap蛇行2
-    {12, 12, ActionType::LineTrace}, // Lap直線4
-    {13, 13, ActionType::LineTrace}, // Lap減速
-    {14,  0, ActionType::Stop}       // 停止
+    { 0, static_cast<int>(LapLineTraceSceneID::Straight1), ActionType::LineTrace},
+    { 1, static_cast<int>(LapLineTraceSceneID::Curve1_1),  ActionType::LineTrace},
+    { 2, static_cast<int>(LapLineTraceSceneID::Curve1_2),  ActionType::LineTrace},
+    { 3, static_cast<int>(LapLineTraceSceneID::Curve1_3),  ActionType::LineTrace},
+    { 4, static_cast<int>(LapLineTraceSceneID::Straight2), ActionType::LineTrace},
+    { 5, static_cast<int>(LapLineTraceSceneID::Curve2_1),  ActionType::LineTrace},
+    { 6, static_cast<int>(LapLineTraceSceneID::Curve2_2),  ActionType::LineTrace},
+    { 7, static_cast<int>(LapLineTraceSceneID::Curve2_3),  ActionType::LineTrace},
+    { 8, static_cast<int>(LapLineTraceSceneID::Straight3), ActionType::LineTrace},
+    { 9, static_cast<int>(LapLineTraceSceneID::Curve3),    ActionType::LineTrace},
+    {10, static_cast<int>(LapLineTraceSceneID::SShape1),   ActionType::LineTrace},
+    {11, static_cast<int>(LapLineTraceSceneID::SShape2),   ActionType::LineTrace},
+    {12, static_cast<int>(LapLineTraceSceneID::Straight4), ActionType::LineTrace},
+    {13, static_cast<int>(LapLineTraceSceneID::SlowDown),  ActionType::LineTrace},
+    {14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}
 };
 
 LapStrategy::LapStrategy(
