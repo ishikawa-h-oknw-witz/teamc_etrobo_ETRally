@@ -47,6 +47,7 @@ void Logger::printf(const char* fmt, ...)
     serial_wri_dat(2, buffer, len);
 }
 
+/*
 void Logger::output()
 {
     ColorSensor::HSV hsv;
@@ -73,3 +74,4 @@ void Logger::output()
         mRightMotor.getCount()
     );
 }
+*/

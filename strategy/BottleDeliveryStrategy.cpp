@@ -39,10 +39,10 @@ const SceneOrder BottleDeliveryStrategy::MoveZone[] =
 const SceneOrder BottleDeliveryStrategy::CarryZone[] =
 {
     {0, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
-    {1, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move},
+    {1, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
     {2, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
-    {3, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move},
+    {3, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
     {4, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
     {5, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
@@ -152,8 +152,6 @@ void BottleDeliveryStrategy::execute()
 
     //ラリーへ向かう
     changeScene(EnterRally, 5);
-
-    finish();
 }
 
 

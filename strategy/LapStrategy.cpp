@@ -2,21 +2,21 @@
 
 const SceneOrder LapStrategy::LAP[] =
 {
-    { 0, static_cast<int>(LapLineTraceSceneID::Straight1), ActionType::LineTrace},
-    { 1, static_cast<int>(LapLineTraceSceneID::Curve1_1),  ActionType::LineTrace},
-    { 2, static_cast<int>(LapLineTraceSceneID::Curve1_2),  ActionType::LineTrace},
-    { 3, static_cast<int>(LapLineTraceSceneID::Curve1_3),  ActionType::LineTrace},
-    { 4, static_cast<int>(LapLineTraceSceneID::Straight2), ActionType::LineTrace},
-    { 5, static_cast<int>(LapLineTraceSceneID::Curve2_1),  ActionType::LineTrace},
-    { 6, static_cast<int>(LapLineTraceSceneID::Curve2_2),  ActionType::LineTrace},
-    { 7, static_cast<int>(LapLineTraceSceneID::Curve2_3),  ActionType::LineTrace},
-    { 8, static_cast<int>(LapLineTraceSceneID::Straight3), ActionType::LineTrace},
-    { 9, static_cast<int>(LapLineTraceSceneID::Curve3),    ActionType::LineTrace},
-    {10, static_cast<int>(LapLineTraceSceneID::SShape1),   ActionType::LineTrace},
-    {11, static_cast<int>(LapLineTraceSceneID::SShape2),   ActionType::LineTrace},
-    {12, static_cast<int>(LapLineTraceSceneID::Straight4), ActionType::LineTrace},
-    {13, static_cast<int>(LapLineTraceSceneID::SlowDown),  ActionType::LineTrace},
-    {14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}
+    { 0, static_cast<int>(LapLineTraceSceneID::Straight1), ActionType::LineTrace},  //カーブ1までの直線
+    { 1, static_cast<int>(LapLineTraceSceneID::Curve1_1),  ActionType::LineTrace},  //カーブ1始まり
+    { 2, static_cast<int>(LapLineTraceSceneID::Curve1_2),  ActionType::LineTrace},  //カーブ1真ん中
+    { 3, static_cast<int>(LapLineTraceSceneID::Curve1_3),  ActionType::LineTrace},  //カーブ1終わり
+    { 4, static_cast<int>(LapLineTraceSceneID::Straight2), ActionType::LineTrace},  //カーブ2までの直線
+    { 5, static_cast<int>(LapLineTraceSceneID::Curve2_1),  ActionType::LineTrace},  //カーブ2始まり
+    { 6, static_cast<int>(LapLineTraceSceneID::Curve2_2),  ActionType::LineTrace},  //カーブ2真ん中
+    { 7, static_cast<int>(LapLineTraceSceneID::Curve2_3),  ActionType::LineTrace},  //カーブ2終わり
+    { 8, static_cast<int>(LapLineTraceSceneID::Straight3), ActionType::LineTrace},  //カーブ3までの直線
+    { 9, static_cast<int>(LapLineTraceSceneID::Curve3),    ActionType::LineTrace},  //カーブ3
+    {10, static_cast<int>(LapLineTraceSceneID::SShape1),   ActionType::LineTrace},  //蛇行1
+    {11, static_cast<int>(LapLineTraceSceneID::SShape2),   ActionType::LineTrace},  //蛇行2
+    {12, static_cast<int>(LapLineTraceSceneID::Straight4), ActionType::LineTrace},  //最後の直線
+    {13, static_cast<int>(LapLineTraceSceneID::SlowDown),  ActionType::LineTrace},  //ボトル前の減速
+    {14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
 };
 
 LapStrategy::LapStrategy(
