@@ -61,8 +61,8 @@ enum class MoveSceneID
 // 旋回用シーンID
 enum class TurnSceneID
 {
-    AdjustEnterAngle = 1, // エンターゾーン進入時の角度調整
-    Turn90Right      = 3, // 右に90°回転
+    AdjustEnterAngle = 9, // エンターゾーン進入時の角度調整
+    Turn90Right      = 1, // 右に90°回転
     TurnToRally      = 0  // Dlv右に90°回転
 };
 

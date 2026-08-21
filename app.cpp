@@ -3,7 +3,7 @@
 // 攻略パッケージ
 #include "LapStrategy.h"
 #include "BottleDeliveryStrategy.h"
-//#include "RallyStrategy.h"
+#include "RallyStrategy.h"
 
 // シーンパッケージ
 #include "SceneManager.h"
@@ -123,7 +123,7 @@ void main_task(intptr_t exinf)
         sceneManager,
         armController);
 
-    //RallyStrategy rallyStrategy(sceneManager);
+    RallyStrategy rallyStrategy(sceneManager);
 
     /* 初期化 */
     logger.init();
@@ -177,9 +177,9 @@ void main_task(intptr_t exinf)
     bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
-    //Logger::printf("[app]ETラリー開始\n");
+    Logger::printf("[app]ETラリー開始\n");
 
-    //rallyStrategy.execute();
+    rallyStrategy.execute();
 
     Logger::printf("[app]終了\n");
 

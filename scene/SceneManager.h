@@ -16,7 +16,8 @@ enum class ActionType
     LineTrace,
     Move,
     Turn,
-    BottoleDetect,
+    BottleDetect,
+    ColorDetect,
     Stop
 };
 
@@ -35,6 +36,7 @@ struct LineTraceScene
     Color finishColor[7];
     CalibrationData targetSensorValue;
     PID pid;
+    IEventDetector* successEvents[7];
 };
 
 struct MoveScene
@@ -60,6 +62,11 @@ struct BottleDetectScene
     Color detectColor[7];
 };
 
+struct ColorDetectScene
+{
+    int sceneId;
+    Color detectColor[7];
+};
 
 class SceneManager
 {

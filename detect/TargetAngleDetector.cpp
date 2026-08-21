@@ -3,23 +3,23 @@
 
 TargetAngleDetector::TargetAngleDetector()
     : mTargetAngle(0),
-      mAngleTolerance(0.5)
+      mAngleTolerance(0.5f)
 {
 }
 
-void TargetAngleDetector::setTargetAngle(int angle)
+void TargetAngleDetector::setTargetAngle(float angle)
 {
     mTargetAngle = angle;
 }
 
-void TargetAngleDetector::setAngleTolerance(int tolerance)
+void TargetAngleDetector::setAngleTolerance(float tolerance)
 {
     mAngleTolerance = tolerance;
 }
 
 bool TargetAngleDetector::judge()
 {
-    int currentAngle = mIMU.getHeading();
+    float currentAngle = mIMU.getHeading();
 
     return abs(currentAngle - mTargetAngle) <= mAngleTolerance;
 }
