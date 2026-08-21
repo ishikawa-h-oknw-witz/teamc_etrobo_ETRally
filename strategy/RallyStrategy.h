@@ -7,8 +7,7 @@
 class RallyStrategy : public IChallengeStrategy
 {
 public:
-    explicit RallyStrategy(
-        SceneManager& sceneManager);
+    RallyStrategy(SceneManager& sceneManager);
 
     void execute() override;
     void update(int sceneId, bool result) override;
@@ -18,7 +17,9 @@ public:
 private:
     SceneManager& mSceneManager;
 
-    int mCurrentScene;
-    bool mFinished;
+    bool changeScene(
+        const SceneOrder sceneOrder[],
+        int maxSceneNum);
 
+    Color detectPointColor();
 };

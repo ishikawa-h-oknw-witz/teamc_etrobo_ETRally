@@ -4,9 +4,10 @@
 
 namespace
 {
-    constexpr int BOTTLE_COLOR_SAMPLE_COUNT = 10;
-    constexpr int BOTTLE_COLOR_REQUIRED_MATCH_COUNT = 6;
-    constexpr int BOTTLE_COLOR_SAMPLE_INTERVAL_MS = 10;
+    constexpr int COLOR_SAMPLE_COUNT = 10;
+    constexpr int COLOR_REQUIRED_MATCH_COUNT = 6;
+    constexpr int COLOR_SAMPLE_INTERVAL_MS = 10;
+    constexpr int MAX_SCENE_CONTROL_CYCLES = 3000;
 }
 
 //コンストラクタ
@@ -51,16 +52,26 @@ void SceneManager::setActionType(ActionType actiontype)
 bool SceneManager::SceneExecute()
 {
     mImu.resetHeading();
+    mEventDetector = nullptr;
     setParameter();
 
     mDistanceCalculator.reset();
+    mPIDCalculator.reset();
 
-    if (mActionType == ActionType::BottoleDetect)
+    if (mActionType == ActionType::BottleDetect)
     {
         return mTargetColorDetector.judgeMultiple(
-            BOTTLE_COLOR_SAMPLE_COUNT,
-            BOTTLE_COLOR_REQUIRED_MATCH_COUNT,
-            BOTTLE_COLOR_SAMPLE_INTERVAL_MS);
+            COLOR_SAMPLE_COUNT,
+            COLOR_REQUIRED_MATCH_COUNT,
+            COLOR_SAMPLE_INTERVAL_MS);
+    }
+
+    if (mActionType == ActionType::ColorDetect)
+    {
+        return mTargetColorDetector.judgeMultiple(
+            COLOR_SAMPLE_COUNT,
+            COLOR_REQUIRED_MATCH_COUNT,
+            COLOR_SAMPLE_INTERVAL_MS);
     }
 
     if (mActionType == ActionType::Stop)
@@ -68,9 +79,24 @@ bool SceneManager::SceneExecute()
         mGyroTraceRunner.stop();
         return true;
     }
+
+    if (mEventDetector == nullptr)
+    {
+        Logger::printf("Event detector is not configured. SceneID=%d\r\n", mSceneId);
+        mGyroTraceRunner.stop();
+        return false;
+    }
     
+    int controlCycleCount = 0;
     while(!mEventDetector->judge())
     {
+        if (controlCycleCount >= MAX_SCENE_CONTROL_CYCLES)
+        {
+            Logger::printf("Scene timeout. SceneID=%d\r\n", mSceneId);
+            mGyroTraceRunner.stop();
+            return false;
+        }
+
         // 走行実行
         switch (mActionType)
         {
@@ -90,6 +116,7 @@ bool SceneManager::SceneExecute()
             break;
         }
         tslp_tsk(10*1000);
+        controlCycleCount++;
     }
 
     // シーン終了
@@ -198,11 +225,20 @@ void SceneManager::setParameter()
 
         break;
     }
-    case ActionType::BottoleDetect:
+    case ActionType::BottleDetect:
     {
         const BottleDetectScene& bottledetectscene = bottleDetectScenes[mSceneId];
     
         mTargetColorDetector.setTargetColors(bottledetectscene.detectColor);
+        mEventDetector = &mTargetColorDetector;
+
+        break;
+    }
+    case ActionType::ColorDetect:
+    {
+        const ColorDetectScene& colorDetectScene = colorDetectScenes[mSceneId];
+
+        mTargetColorDetector.setTargetColors(colorDetectScene.detectColor);
         mEventDetector = &mTargetColorDetector;
 
         break;

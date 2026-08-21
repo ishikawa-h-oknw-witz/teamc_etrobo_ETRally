@@ -11,9 +11,6 @@ public:
 
     bool judge() override;
 
-    /**
-     * •¡”‰ñ‘ª’è‚µA•K—v‰ñ”ˆÈãˆê’v‚µ‚½ê‡‚Étrue‚ğ•Ô‚·
-     */
     bool judgeMultiple(
         int sampleCount,
         int requiredMatchCount,

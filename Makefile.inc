@@ -3,6 +3,7 @@ mkfile_path := $(dir $(lastword $(MAKEFILE_LIST)))
 APPL_CXXOBJS += \
     strategy/BottleDeliveryStrategy.o \
     strategy/LapStrategy.o \
+    strategy/RallyStrategy.o \
     operation/PIDCalculator.o \
     operation/DistanceCalculator.o \
     operation/TrapezoidCalculator.o \

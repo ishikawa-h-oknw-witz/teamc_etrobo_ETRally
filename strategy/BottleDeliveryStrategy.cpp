@@ -11,9 +11,9 @@ const SceneOrder BottleDeliveryStrategy::EnterBottle[] =
 
 const SceneOrder BottleDeliveryStrategy::DetectBottleColor[] =
 {
-    {0, static_cast<int>(BottleDetectSceneID::DetectYellowBottle), ActionType::BottoleDetect}, // 黄ボトル検知
-    {1, static_cast<int>(BottleDetectSceneID::DetectBlueBottle),   ActionType::BottoleDetect}, // 青ボトル検知
-    {2, static_cast<int>(BottleDetectSceneID::DetectRedBottle),    ActionType::BottoleDetect}  // 赤ボトル検知
+    {0, static_cast<int>(BottleDetectSceneID::DetectYellowBottle), ActionType::BottleDetect}, // 黄ボトル検知
+    {1, static_cast<int>(BottleDetectSceneID::DetectBlueBottle),   ActionType::BottleDetect}, // 青ボトル検知
+    {2, static_cast<int>(BottleDetectSceneID::DetectRedBottle),    ActionType::BottleDetect}  // 赤ボトル検知
 };
 
 
