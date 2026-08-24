@@ -9,7 +9,7 @@ class RallyStrategy : public IChallengeStrategy
 public:
     RallyStrategy(SceneManager& sceneManager);
 
-    void execute() override;
+    void execute(int redGatePosition, int blueGatePosition, int yellowGatePosition) override;
     void update(int sceneId, bool result) override;
     void updateNextScene() override;
     void finish() override;

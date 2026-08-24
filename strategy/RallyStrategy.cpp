@@ -89,15 +89,6 @@ struct GatePosition
 };
 
 
-// ラリーで攻略するゲート
-const GatePosition gatePositions[] =
-{
-    {Color::Yellow, 3},
-    {Color::Red,    9},
-    {Color::Green, 13},
-};
-
-
 // ============================================================
 // ラリー用シーン
 // ============================================================
@@ -191,7 +182,7 @@ RallyStrategy::RallyStrategy(
 }
 
 
-void RallyStrategy::execute()
+void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yellowGatePosition)
 {
     Logger::printf("[Rally]ラリー開始\r\n");
 
@@ -204,12 +195,6 @@ void RallyStrategy::execute()
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
     int nowEdgeIndex = RIGHT_EDGE_INDEX;
-
-    // ゲートの数を配列情報から取得
-    const int gatePositionCount =
-        static_cast<int>(
-            sizeof(gatePositions) /
-            sizeof(gatePositions[0]));
 
 
     // ============================================================
@@ -227,8 +212,6 @@ void RallyStrategy::execute()
         // ゲートを順番に攻略
         // ========================================================
 
-        for (int gateIndex = 0; gateIndex < gatePositionCount; gateIndex++)
-        {
             const GatePosition& gate = gatePositions[gateIndex];
 
             Logger::printf(
@@ -572,7 +555,7 @@ void RallyStrategy::execute()
             // ここでは nowEdgeIndex を初期化しない。
             //
             // 次の周でも現在のエッジを引き継ぐ。
-        }
+        
     }
 
 
