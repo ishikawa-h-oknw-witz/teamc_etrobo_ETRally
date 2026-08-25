@@ -88,6 +88,27 @@ struct GatePosition
     int gatePositionNum;
 };
 
+//
+Color getPointColor(int gatePosition)
+{
+    if (gatePosition >= 1 && gatePosition <= 8)
+    {
+        return Color::Green;
+    }
+    else if (gatePosition >= 9 && gatePosition <= 12)
+    {
+        return Color::Yellow;
+    }
+    else if (gatePosition >= 13 && gatePosition <= 16)
+    {
+        return Color::Red;
+    }
+    else
+    {
+        return Color::Blue;
+    }
+}
+
 
 // ============================================================
 // ラリー用シーン
@@ -191,11 +212,14 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
     // ============================================================
 
     constexpr int LAP_COUNT = 3;
+    
+    const Color POINT_COLOR = getPointColor(redGatePosition); 
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
     int nowEdgeIndex = RIGHT_EDGE_INDEX;
 
+    int NowLine
 
     // ============================================================
     // 3周する
@@ -207,18 +231,6 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
             "[Rally] %d周目開始\r\n",
             lap + 1);
 
-
-        // ========================================================
-        // ゲートを順番に攻略
-        // ========================================================
-
-            const GatePosition& gate = gatePositions[gateIndex];
-
-            Logger::printf(
-                "[Rally]ゲート攻略開始 Gate=%d\r\n",
-                gate.gatePositionNum);
-
-
             // ====================================================
             // 目標基準点を探す
             // ====================================================
@@ -227,13 +239,12 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
 
             int pointSearchCount = 0;
 
-            while (detectedPointColor != gate.pointColor)
+            while (detectedPointColor != POINT_COLOR)
             {
                 if (pointSearchCount >= MAX_POINT_SEARCH_COUNT)
                 {
                     Logger::printf(
-                        "[Rally]基準点探索失敗 Gate=%d\r\n",
-                        gate.gatePositionNum);
+                        "[Rally]基準点探索失敗\r\n");
 
                     // finish();
                     return;
@@ -292,8 +303,7 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
 
 
             Logger::printf(
-                "[Rally]目標基準点到達 Gate=%d\r\n",
-                gate.gatePositionNum);
+                "[Rally]目標基準点到達\r\n");
 
 
             // ====================================================
@@ -319,133 +329,16 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
             // ゲート位置に応じてゲートへ進入
             // ====================================================
 
-            const int gatePosition = gate.gatePositionNum;
+            changeScene(&EnterGate[(redGatePosition - 1) % 4], 0);
 
-
-            if (gatePosition <= 4 || gatePosition >= 10)
+            if (redGatePosition >= 5)
             {
-                // --------------------------------------------
-                // ゲート 1～4、10～13
-                // --------------------------------------------
-
-                int enterGateIndex;
-                int turnDirection;
-
-                if (gatePosition <= 4)
-                {
-                    enterGateIndex = gatePosition - 1;
-
-                    turnDirection = UP_LEFT_TURN_INDEX;
-                }
-                else
-                {
-                    enterGateIndex = gatePosition - 10;
-
-                    turnDirection = DOWN_RIGHT_TURN_INDEX;
-                }
-
-                if (enterGateIndex < 0 || enterGateIndex >= 5)
-                {
-                    Logger::printf(
-                        "[Rally]ゲート番号不正=%d\r\n",
-                        gatePosition);
-
-                    // finish();
-                    return;
-                }
-
-
-                // ------------------------------------------------
-                // ゲート前まで移動
-                // ------------------------------------------------
-
-                if (!changeScene(&EnterGate[enterGateIndex],0))
-                {
-                    // finish();
-                    return;
-                }
-
-
-                // ------------------------------------------------
-                // ゲート通過方向へ旋回
-                // ------------------------------------------------
-
-                if (!changeScene(&GateTurn[turnDirection],0))
-                {
-                    // finish();
-                    return;
-                }
-
-
-                // ------------------------------------------------
-                // ゲートを通過
-                // ------------------------------------------------
-
-                if (!changeScene(GateCrossing,1))
-                {
-                    // finish();
-                    return;
-                }
-
-
-                // ------------------------------------------------
-                // 基準点方向へ旋回
-                // ------------------------------------------------
-
-                if (!changeScene(&GateCrossingTurn[turnDirection],0))
-                {
-                    // finish();
-                    return;
-                }
+                changeScene(&GateTurn[0], 0);
             }
             else
             {
-                // --------------------------------------------
-                // ゲート 5～9
-                // --------------------------------------------
-
-                const int enterGateIndex = gatePosition - 5;
-
-                if (enterGateIndex < 0 || enterGateIndex >= 5)
-                {
-                    Logger::printf(
-                        "[Rally]ゲート番号不正=%d\r\n",
-                        gatePosition);
-
-                    // finish();
-                    return;
-                }
-
-
-                // ------------------------------------------------
-                // ゲート通過
-                // ------------------------------------------------
-
-                if (!changeScene(&EnterGate[enterGateIndex],0))
-                {
-                    // finish();
-                    return;
-                }
-
-
-                if (!changeScene(&GateCrossingTurn[VERTICAL_GATE_TURN_INDEX],0))
-                {
-                    // finish();
-                    return;
-                }
+                changeScene(&GateTurn[1], 0);
             }
-
-
-            // ====================================================
-            // 基準点へ帰還
-            // ====================================================
-
-            if (!changeScene(ReturnPoint,0))
-            {
-                // finish();
-                return;
-            }
-
 
             // ====================================================
             // 次のゲートへ向かう
