@@ -219,7 +219,7 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
     // 周回をまたいでもエッジは引き継ぐ
     int nowEdgeIndex = RIGHT_EDGE_INDEX;
 
-    int NowLine
+    int NowLine;
 
     // ============================================================
     // 3周する
@@ -273,7 +273,7 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
                     "[Rally]検知基準点=%d "
                     "目標基準点=%d\r\n",
                     static_cast<int>(detectedPointColor),
-                    static_cast<int>(gate.pointColor));
+                    static_cast<int>(POINT_COLOR));
 
 
                 // ------------------------------------------------
@@ -281,7 +281,7 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
                 // それ以外なら通過
                 // ------------------------------------------------
 
-                if (detectedPointColor == gate.pointColor)
+                if (detectedPointColor == POINT_COLOR)
                 {
                     if (!changeScene(MovePointCenter,0))
                     {
@@ -329,128 +329,83 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
             // ゲート位置に応じてゲートへ進入
             // ====================================================
 
-            changeScene(&EnterGate[(redGatePosition - 1) % 4], 0);
+            changeScene(&EnterGate[0], 0);
+            if ((redGatePosition - 1) / 4 != 0)
+            {
+                changeScene(&EnterGate[(redGatePosition - 1) % 4], 0);
+            }
+            changeScene(&GateTurn[0], 0);
 
             if (redGatePosition >= 5)
             {
-                changeScene(&GateTurn[0], 0);
+                changeScene(&EnterGate[1], 0);
+                NowLine = ((redGatePosition - 1) / 4) - 1;
             }
             else
             {
-                changeScene(&GateTurn[1], 0);
+                changeScene(&EnterGate[5], 0);
+                NowLine = -1;
             }
 
-            // ====================================================
-            // 次のゲートへ向かう
-            // ====================================================
-
-            // --------------------------------------------
-            // 次のゲートがある場合
-            //
-            // 同じ周：
-            //   Gate 3 → Gate 9
-            //   Gate 9 → Gate 13
-            //
-            // 次の周：
-            //   Gate 13 → Gate 3
-            // --------------------------------------------
-
-            const bool hasNextGate = (gateIndex + 1 < gatePositionCount);
-
-            const bool hasNextLap = (lap + 1 < LAP_COUNT);
-
-            // 最終周の最後のゲートなら終了
-            if (!hasNextGate && !hasNextLap)
+            if (NowLine == -1)
             {
-                continue;
+                changeScene(&GateTurn[2], 0);
             }
 
-            // ----------------------------------------------------
-            // 帰還した基準点の色を4色判定
-            // ----------------------------------------------------
-
-            const Color returnedPointColor = detectPointColor();
-
-            // ----------------------------------------------------
-            // 次に攻略するゲートを決定
-            //
-            // 同じ周の途中
-            //   gateIndex + 1
-            //
-            // 周の最後
-            //   次周の gateIndex 0
-            // ----------------------------------------------------
-
-            const int nextGateIndex =
-                hasNextGate
-                ? gateIndex + 1
-                : 0;
-
-
-            const Color nextPointColor = gatePositions[nextGateIndex].pointColor;
-
-            Logger::printf(
-                "[Rally]次のゲート=%d\r\n",
-                gatePositions[
-                    nextGateIndex].gatePositionNum);
-
-
-            // ----------------------------------------------------
-            // 次の基準点へ向かうエッジを決定
-            // ----------------------------------------------------
-
-            if (!getNextEdgeIndex(returnedPointColor,nextPointColor,nowEdgeIndex))
+            //青が左
+            if ((blueGatePosition - 21) / 5 > NowLine)
             {
-                Logger::printf(
-                    "[Rally]次のエッジ決定失敗\r\n");
-
-                // finish();
-                return;
+                changeScene(&EnterGate[((blueGatePosition - 21) / 5) - NowLine], 0);
             }
-
-
-            Logger::printf(
-                "[Rally]次のエッジ=%d\r\n",
-                nowEdgeIndex);
-
-
-            // ----------------------------------------------------
-            // 次の基準点方向へ旋回
-            //
-            // RIGHT_EDGE → 上方向
-            // LEFT_EDGE  → 下方向
-            // ----------------------------------------------------
-
-            const int rejoinTurnIndex =
-                nowEdgeIndex == RIGHT_EDGE_INDEX
-                ? UP_REJOIN_TURN_INDEX
-                : DOWN_REJOIN_TURN_INDEX;
-
-
-            if (!changeScene(&RejoinTurn[rejoinTurnIndex],0))
+            //青が右
+            else if ((blueGatePosition - 21) / 5 < NowLine)
             {
-                // finish();
-                return;
+                changeScene(&EnterGate[(NowLine - ((blueGatePosition - 21) / 5)) + 4], 0);
             }
 
+            changeScene(&GateTurn[1], 0);
 
-            // ----------------------------------------------------
-            // ラインを検知するまで前進
-            // ----------------------------------------------------
-
-            if (!changeScene(RejoinMove,0))
+            //青が上
+            if ((blueGatePosition - 21) % 5 > (redGatePosition - 1) % 4)
             {
-                // finish();
-                return;
+                changeScene(&EnterGate[((blueGatePosition - 21) % 5) - ((redGatePosition - 1) % 4)], 0);
+                NowLine = (blueGatePosition - 21) % 5;
+            }
+            //青が下
+            else
+            {
+                changeScene(&EnterGate[(((redGatePosition - 1) % 4) - ((blueGatePosition - 21) % 5)) + 3], 0);
+                NowLine = ((blueGatePosition - 21) % 5) - 1;
             }
 
+            //黄が上
+            if ((yellowGatePosition - 1) % 4 > NowLine)
+            {
+                changeScene(&EnterGate[((yellowGatePosition - 1) % 4) - NowLine], 0);
+            }
+            //黄が下
+            else if((yellowGatePosition - 1) % 4 < NowLine)
+            {
+                changeScene(&EnterGate[(NowLine - ((yellowGatePosition - 1) % 4)) + 4], 0);
+            }
 
-            // ここでは nowEdgeIndex を初期化しない。
-            //
-            // 次の周でも現在のエッジを引き継ぐ。
-        
-    }
+            changeScene(&GateTurn[0], 0);
 
+            //黄が左
+            if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
+            {
+                changeScene(&EnterGate[1], 0);
+                changeScene(&EnterGate[5], 0);
+            }
+            else
+            {
+                changeScene(&EnterGate[5], 0);
+                changeScene(&EnterGate[1], 0);
+            }
+
+            changeScene(&GateTurn[0], 0);
+            changeScene(&EnterGate[(yellowGatePosition - 1) % 4], 0);
+            changeScene(&EnterGate[0], 0);
 
     // ============================================================
     // ラリー終了
