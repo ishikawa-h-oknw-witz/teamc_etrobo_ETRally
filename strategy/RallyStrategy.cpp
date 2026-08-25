@@ -132,7 +132,7 @@ const SceneOrder MovePointCenter[] =
 // 目標ではない基準点を通過
 const SceneOrder PassPoint[] =
 {
-    {0, 11, ActionType::Move},
+    {0, 14, ActionType::Move},
 };
 
 
@@ -140,7 +140,7 @@ const SceneOrder PassPoint[] =
 const SceneOrder GateTurn[] =
 {
     {0, 2, ActionType::Turn},
-    {1, 1, ActionType::Turn}
+    {1, 0, ActionType::Turn}
 };
 
 
@@ -148,8 +148,8 @@ const SceneOrder GateTurn[] =
 const SceneOrder GateCrossingTurn[] =
 {
     {0, 2, ActionType::Turn},
-    {1, 1, ActionType::Turn},
-    {2, 8, ActionType::Turn}
+    {1, 0, ActionType::Turn},
+    {2, 4, ActionType::Turn}
 };
 
 
@@ -157,7 +157,7 @@ const SceneOrder GateCrossingTurn[] =
 const SceneOrder RejoinTurn[] =
 {
     {0, 5, ActionType::Turn},
-    {1, 4, ActionType::Turn},
+    {1, 6, ActionType::Turn},
 };
 
 
@@ -176,21 +176,26 @@ const SceneOrder EnterGate[] =
     {2, 6, ActionType::Move},
     {3, 7, ActionType::Move},
     {4, 8, ActionType::Move},
+    {5, 9, ActionType::Move},
+    {6, 10, ActionType::Move},
+    {7, 11, ActionType::Move},
+    {8, 12, ActionType::Move},
+    {9, 13, ActionType::Move},
 };
 
 
 // ゲート通過
 const SceneOrder GateCrossing[] =
 {
-    {0, 9,  ActionType::Move},
-    {1, 12, ActionType::Move},
+    {0, 15, ActionType::Move},
+    {1, 16, ActionType::Move},
 };
 
 
 // 基準点へ帰還
 const SceneOrder ReturnPoint[] =
 {
-    {0, 10, ActionType::Move},
+    {0, 17, ActionType::Move},
 };
 
 } // namespace
@@ -359,7 +364,9 @@ void RallyStrategy::execute()
 
             if (NowLine == -1)
             {
-                changeScene(&GateTurn[2], 0);
+                changeScene(
+                    &GateCrossingTurn[TURN_AROUND_INDEX],
+                    0);
             }
 
             //青が左
