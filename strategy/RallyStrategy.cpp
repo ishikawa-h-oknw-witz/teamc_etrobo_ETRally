@@ -197,15 +197,25 @@ const SceneOrder ReturnPoint[] =
 
 
 RallyStrategy::RallyStrategy(
-    SceneManager& sceneManager)
-    : mSceneManager(sceneManager)
+    SceneManager& sceneManager,
+    int redGatePosition,
+    int blueGatePosition,
+    int yellowGatePosition)
+    : mSceneManager(sceneManager),
+      mRedGatePosition(redGatePosition),
+      mBlueGatePosition(blueGatePosition),
+      mYellowGatePosition(yellowGatePosition)
 {
 }
 
 
-void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yellowGatePosition)
+void RallyStrategy::execute()
 {
     Logger::printf("[Rally]ラリー開始\r\n");
+
+    const int redGatePosition = mRedGatePosition;
+    const int blueGatePosition = mBlueGatePosition;
+    const int yellowGatePosition = mYellowGatePosition;
 
     // ============================================================
     // 初期設定
@@ -406,6 +416,7 @@ void RallyStrategy::execute(int redGatePosition, int blueGatePosition, int yello
             changeScene(&GateTurn[0], 0);
             changeScene(&EnterGate[(yellowGatePosition - 1) % 4], 0);
             changeScene(&EnterGate[0], 0);
+    }
 
     // ============================================================
     // ラリー終了

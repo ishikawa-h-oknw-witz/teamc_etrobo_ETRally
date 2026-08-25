@@ -123,7 +123,11 @@ void main_task(intptr_t exinf)
         sceneManager,
         armController);
 
-    RallyStrategy rallyStrategy(sceneManager);
+    RallyStrategy rallyStrategy(
+        sceneManager,
+        2,
+        9,
+        15);
 
     /* 初期化 */
     logger.init();
@@ -179,7 +183,7 @@ void main_task(intptr_t exinf)
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
 
-    rallyStrategy.execute(2, 9, 15);
+    rallyStrategy.execute();
 
     Logger::printf("[app]終了\n");
 

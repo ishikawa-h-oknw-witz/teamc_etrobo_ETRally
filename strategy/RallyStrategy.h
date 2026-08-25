@@ -7,15 +7,22 @@
 class RallyStrategy : public IChallengeStrategy
 {
 public:
-    RallyStrategy(SceneManager& sceneManager);
+    RallyStrategy(
+        SceneManager& sceneManager,
+        int redGatePosition,
+        int blueGatePosition,
+        int yellowGatePosition);
 
-    void execute(int redGatePosition, int blueGatePosition, int yellowGatePosition) override;
+    void execute() override;
     void update(int sceneId, bool result) override;
     void updateNextScene() override;
     void finish() override;
 
 private:
     SceneManager& mSceneManager;
+    int mRedGatePosition;
+    int mBlueGatePosition;
+    int mYellowGatePosition;
 
     bool changeScene(
         const SceneOrder sceneOrder[],
