@@ -117,8 +117,8 @@ Color getPointColor(int gatePosition)
 // 次の基準点までライントレース
 const SceneOrder EnterPoint[] =
 {
-    {0, 28, ActionType::LineTrace},
     {0, 29, ActionType::LineTrace},
+    {0, 28, ActionType::LineTrace},
 };
 
 
@@ -235,6 +235,26 @@ void RallyStrategy::execute()
     int nowEdgeIndex = RIGHT_EDGE_INDEX;
 
     int NowLine;
+    int pointNum = 0;
+    int Edge = 1;
+
+    switch (POINT_COLOR)
+    {
+        case Color::Green:
+        pointNum = 0;
+
+        case Color::Yellow:
+        pointNum = 1;
+
+        case Color::Red:
+        pointNum = 2;
+
+        case Color::Blue:
+        pointNum = 3;
+
+        default:
+        break;
+    }
 
     // ============================================================
     // 3周する
@@ -271,7 +291,7 @@ void RallyStrategy::execute()
                 // 次の基準点までライントレース
                 // ------------------------------------------------
 
-                if (!changeScene(&EnterPoint[nowEdgeIndex],0))
+                if (!changeScene(&EnterPoint[Edge],0))
                 {
                     // finish();
                     return;
@@ -333,7 +353,7 @@ void RallyStrategy::execute()
             // 基準線からゲート方向へ90度旋回
             // ----------------------------------------------------
 
-            changeScene(&GateTurn[1], 0);
+            changeScene(&GateTurn[Edge], 0);
 
             // ====================================================
             // ゲート位置に応じてゲートへ進入
@@ -408,16 +428,38 @@ void RallyStrategy::execute()
             {
                 changeScene(&EnterGate[(((yellowGatePosition - 1) / 4) - ((blueGatePosition - 21) / 5))], 0);
                 changeScene(&EnterGate[5], 0);
+                NowLine = ((yellowGatePosition - 1) / 4) - 1;
             }
             else
             {
                 changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - ((yellowGatePosition - 1) / 4)) + 5], 0);
                 changeScene(&EnterGate[1], 0);
+                NowLine = (yellowGatePosition - 1) / 4;
             }
 
             changeScene(&GateTurn[0], 0);
             changeScene(&EnterGate[(yellowGatePosition - 1) % 4], 0);
             changeScene(&EnterGate[0], 0);
+
+            if (NowLine > pointNum)
+            {
+                changeScene(&GateTurn[0], 0);
+                changeScene(&EnterGate[0], 0);
+                Edge = 0;
+            }
+            else if (NowLine < pointNum)
+            {
+                changeScene(&GateTurn[1], 0);
+                changeScene(&EnterGate[0], 0);
+                Edge = 1;
+            }
+            else 
+            {
+                changeScene(&GateTurn[0], 0);
+                changeScene(&EnterGate[0], 0);
+                changeScene(&GateTurn[2], 0);
+                Edge = 0;
+            }
     }
 
     // ============================================================
