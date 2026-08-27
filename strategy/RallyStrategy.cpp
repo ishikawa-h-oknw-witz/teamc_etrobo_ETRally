@@ -333,12 +333,7 @@ void RallyStrategy::execute()
             // 基準線からゲート方向へ90度旋回
             // ----------------------------------------------------
 
-            if (!changeScene(&GateTurn[gateApproachEdgeIndex],0))
-            {
-                // finish();
-                return;
-            }
-
+            changeScene(&GateTurn[1], 0);
 
             // ====================================================
             // ゲート位置に応じてゲートへ進入
@@ -372,7 +367,7 @@ void RallyStrategy::execute()
             //青が左
             if ((blueGatePosition - 21) / 5 > NowLine)
             {
-                changeScene(&EnterGate[((blueGatePosition - 21) / 5) - NowLine], 0);
+                changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - NowLine) - 1], 0);
             }
             //青が右
             else if ((blueGatePosition - 21) / 5 < NowLine)
@@ -411,12 +406,12 @@ void RallyStrategy::execute()
             //黄が左
             if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
             {
-                changeScene(&EnterGate[1], 0);
+                changeScene(&EnterGate[(((yellowGatePosition - 1) / 4) - ((blueGatePosition - 21) / 5))], 0);
                 changeScene(&EnterGate[5], 0);
             }
             else
             {
-                changeScene(&EnterGate[5], 0);
+                changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - ((yellowGatePosition - 1) / 4)) + 5], 0);
                 changeScene(&EnterGate[1], 0);
             }
 

@@ -51,16 +51,16 @@ const MoveScene moveScenes[] =
     {1, Direction::back,  {50.0f, 100.0f,  50.0f, 200.0f}, 200, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
     {2, Direction::front, {50.0f,  70.0f,  50.0f,  10.0f},  10, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvエリアまで
     { 3, Direction::front, {50.0f,  70.0f,  50.0f,  50.0f},   50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
-    { 4, Direction::front, {70.0f, 100.0f,  70.0f, 320.0f},  320, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインから区画
-    { 5, Direction::front, {70.0f, 100.0f,  70.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画前
-    { 6, Direction::front, {70.0f, 100.0f,  70.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画前
-    { 7, Direction::front, {70.0f, 100.0f,  70.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画前
-    { 8, Direction::front, {70.0f, 100.0f,  70.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画前
-    { 9, Direction::back,  {70.0f, 100.0f,  70.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画後
-    {10, Direction::back,  {70.0f, 100.0f,  70.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画後
-    {11, Direction::back,  {70.0f, 100.0f,  70.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画後
-    {12, Direction::back,  {70.0f, 100.0f,  70.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画後
-    {13, Direction::back,  {70.0f, 100.0f,  70.0f, 300.0f},  300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインへ復帰
+    { 4, Direction::front, {50.0f,  70.0f,  50.0f, 320.0f},  220, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインから区画
+    { 5, Direction::front, {50.0f,  70.0f,  50.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画前
+    { 6, Direction::front, {50.0f,  70.0f,  50.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画前
+    { 7, Direction::front, {50.0f,  70.0f,  50.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画前
+    { 8, Direction::front, {50.0f,  70.0f,  50.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画前
+    { 9, Direction::back,  {50.0f,  70.0f,  50.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画後
+    {10, Direction::back,  {50.0f,  70.0f,  50.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画後
+    {11, Direction::back,  {50.0f,  70.0f,  50.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画後
+    {12, Direction::back,  {50.0f,  70.0f,  50.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画後
+    {13, Direction::back,  {750.0f,  70.0f, 50.0f, 300.0f},  200, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインへ復帰
     {14, Direction::front, {30.0f,  50.0f,  30.0f, 100.0f},  100, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly目標外の基準点を通過
     {15, Direction::front, {30.0f, 100.0f,  30.0f, 300.0f},  300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートを前進通過
     {16, Direction::back,  {30.0f,  50.0f,  30.0f, 300.0f},  300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートから後退
