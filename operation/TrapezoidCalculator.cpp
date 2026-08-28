@@ -14,12 +14,18 @@ void TrapezoidCalculator::setParameter(TrapezoidParameter parameter)
     mTotalDistance = parameter.totalDistance;
 
     // 全体距離に対する割合で加速・減速距離を決定
-    mAccelDistance = mTotalDistance * 0.2f;
+    mAccelDistance = mTotalDistance * 0.1f;
     mDecelDistance = mTotalDistance * 0.3f;
 }
 
 int TrapezoidCalculator::getSpeed()
 {
+    // 距離ではなく色で終了するシーンでは、設定した最高速度を維持する。
+    if (mTotalDistance <= 0.0f)
+    {
+        return mMaxSpeed;
+    }
+    
     int currentDistance = mDistanceCalculator.getDistance();
     int remainingDistance = mTotalDistance - currentDistance;
 

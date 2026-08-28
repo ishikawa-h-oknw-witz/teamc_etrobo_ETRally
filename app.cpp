@@ -22,6 +22,7 @@
 #include "Motor.h"
 #include "ForceSensor.h"
 #include "ColorSensor.h"
+#include "IMU.h"
 
 // ログ用
 #include "Logger.h"
@@ -59,6 +60,16 @@ void main_task(intptr_t exinf)
 
     Battery battery;
 
+    IMU imu;
+
+    imu.setTilt(51.0f);
+
+    // IMUの初期キャリブレーション待ち
+    while (!imu.isReady())
+    {
+        tslp_tsk(100 * 1000);
+    }
+
     /* 演算 */
     PIDCalculator pidCalculator;
 
@@ -76,7 +87,8 @@ void main_task(intptr_t exinf)
     TargetDistanceDetector targetDistanceDetector(
         distanceCalculator);
 
-    TargetAngleDetector targetAngleDetector;
+    TargetAngleDetector targetAngleDetector(
+        imu);
 
     TargetColorDetector targetColorDetector(
         colorDetector);
@@ -93,7 +105,8 @@ void main_task(intptr_t exinf)
         rightWheel,
         distanceCalculator,
         pidCalculator,
-        trapezoidCalculator);
+        trapezoidCalculator,
+        imu);
 
     ArmController armController(
         ArmMotor);
@@ -107,7 +120,8 @@ void main_task(intptr_t exinf)
         distanceCalculator,
         targetDistanceDetector,
         targetAngleDetector,
-        targetColorDetector);
+        targetColorDetector,
+        imu);
 
     /* ログ */
     Logger logger(
@@ -139,7 +153,7 @@ void main_task(intptr_t exinf)
         battery.getCurrent());
 
     /* アーム初期位置 */
-    armController.moveArmDown();
+    armController.Armreset();
 
     // 1回目の押下
     /* キャリブレーション用
@@ -164,12 +178,56 @@ void main_task(intptr_t exinf)
     tslp_tsk(20 * 1000);
     while (forceSensor.isTouched());
 
+    Logger::printf("ビルド更新2");
+
     Logger::printf("[app]スタート\n");
 
-    /* ラップ攻略 */
-    Logger::printf("[app]ラップ開始\n");
+    ColorSensor::HSV hsv;
+    
+    /*
+    while(true){
+        colorSensor.getHSV(hsv);
+        Logger::printf("H=%d S=%d V=%d\n",hsv.h,hsv.s,hsv.v);
+        tslp_tsk(100*1000);
+    }*/
+ 
+    /*
+    distanceCalculator.reset();
+    imu.resetHeading();
+    for(int i = 0; i<1; i++)
+    {
+       
+        while(1){
+            float current_heading = imu.getHeading();
+ 
+            if (current_heading <= -90)
+            {
+                Logger::printf("%f\n",current_heading);
+                leftWheel.stop();
+                rightWheel.stop();
+                //tslp_tsk(1000*1000);
+                //Logger::printf("%f\n",current_heading);
+                //distanceCalculator.reset();
+                //imu.resetHeading();
+                break;
+            }
+ 
+            leftWheel.setPower(-40);
+            rightWheel.setPower(40);
+ 
+            tslp_tsk(10*1000);
+        }
+        while(1){
+            float current_heading = imu.getHeading();
+            Logger::printf("%f\n",current_heading);
+            tslp_tsk(1000*1000);
+        }
+    }*/
 
-    lapStrategy.execute();
+    /* ラップ攻略 */
+    //Logger::printf("[app]ラップ開始\n");
+
+    //lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");

@@ -19,7 +19,8 @@ SceneManager::SceneManager(
     DistanceCalculator& distanceCalculator,
     TargetDistanceDetector& targetDistanceDetector,
     TargetAngleDetector& targetAngleDetector,
-    TargetColorDetector& targetColorDetector
+    TargetColorDetector& targetColorDetector,
+    IMU& imu
     )
     : mLineTraceRunner(lineTraceRunner),
       mGyroTraceRunner(gyroTraceRunner),
@@ -29,6 +30,7 @@ SceneManager::SceneManager(
       mTargetDistanceDetector(targetDistanceDetector),
       mTargetAngleDetector(targetAngleDetector),
       mTargetColorDetector(targetColorDetector),
+      mImu(imu),
       mSceneId(0),
       mEventDetector(nullptr)
 {

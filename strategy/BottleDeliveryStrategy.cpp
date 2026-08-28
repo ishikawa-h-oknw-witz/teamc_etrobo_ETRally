@@ -5,7 +5,7 @@
 const SceneOrder BottleDeliveryStrategy::EnterBottle[] =
 {
     {0, static_cast<int>(MoveSceneID::MoveToBottlePosition), ActionType::Move}, // ボトル前まで移動
-    {1, static_cast<int>(StopSceneID::CheckCount),             ActionType::Stop}  // 回数確認用
+    {1, static_cast<int>(StopSceneID::CheckCount),           ActionType::Stop}  // 回数確認用
 };
 
 
@@ -19,12 +19,12 @@ const SceneOrder BottleDeliveryStrategy::DetectBottleColor[] =
 
 const SceneOrder BottleDeliveryStrategy::EnterZone[] =
 {
-    {0, static_cast<int>(TurnSceneID::AdjustEnterAngle),  ActionType::Turn},      // 角度調整
-    {1, static_cast<int>(LineTraceSceneID::EnterCurve1),  ActionType::LineTrace}, // Dlvカーブ1
-    {2, static_cast<int>(LineTraceSceneID::EnterCurve2),  ActionType::LineTrace}, // Dlvカーブ2
-    {3, static_cast<int>(LineTraceSceneID::PassBlueLine), ActionType::LineTrace}, // Dlv行き青スルー
+    {0, static_cast<int>(TurnSceneID::AdjustEnterAngle),    ActionType::Turn},      // 角度調整
+    {1, static_cast<int>(LineTraceSceneID::EnterCurve1),    ActionType::LineTrace}, // Dlvカーブ1
+    {2, static_cast<int>(LineTraceSceneID::EnterCurve2),    ActionType::LineTrace}, // Dlvカーブ2
+    {3, static_cast<int>(LineTraceSceneID::PassBlueLine),   ActionType::LineTrace}, // Dlv行き青スルー
     {4, static_cast<int>(LineTraceSceneID::EnterStraight1), ActionType::LineTrace}, // Dlv直線1
-    {5, static_cast<int>(LineTraceSceneID::EnterCurve3),  ActionType::LineTrace}  // Dlvカーブ3
+    {5, static_cast<int>(LineTraceSceneID::EnterCurve3),    ActionType::LineTrace}  // Dlvカーブ3
 };
 
 
@@ -38,16 +38,17 @@ const SceneOrder BottleDeliveryStrategy::MoveZone[] =
 
 const SceneOrder BottleDeliveryStrategy::CarryZone[] =
 {
-    {0, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
+    {0, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
     {1, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
-    {2, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
+    {2, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
     {3, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
-    {4, static_cast<int>(TurnSceneID::Turn90Right),           ActionType::Turn}, // 右に90°回転
+    {4, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
     {5, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
-    {6, static_cast<int>(MoveSceneID::ReturnToDeliveryLine),  ActionType::Move}, // Dlv線まで帰還
-    {7, static_cast<int>(TurnSceneID::TurnToRally),            ActionType::Turn}  // 右に90°回転
+    
+    {6, static_cast<int>(MoveSceneID::ReturnToDeliveryLine),   ActionType::Move}, // Dlv線まで帰還
+    {7, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn}  // 右に90°回転
 };
 
 
@@ -64,7 +65,7 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
     {0, static_cast<int>(LineTraceSceneID::ReturnCurve1),      ActionType::LineTrace}, // Dlv帰還カーブ1
     {1, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
     {2, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青半分まで
-    {3, static_cast<int>(TurnSceneID::TurnToRally),            ActionType::Turn},      // Dlv右に90°回転
+    {3, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
     {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
     {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
 };
@@ -84,7 +85,7 @@ void BottleDeliveryStrategy::execute()
     // アーム上昇
     tslp_tsk(100 * 1000);
 
-    mArmController.moveArmUp();
+    mArmController.moveArmup();
 
     // アーム上昇直後の振動が収まるまで待つ
     tslp_tsk(200 * 1000);
@@ -136,7 +137,7 @@ void BottleDeliveryStrategy::execute()
     }
 
     // アーム下降
-    mArmController.moveArmDown();
+    mArmController.Armreset();
 
     // Dlvカーブ3まで
     changeScene(EnterZone, 5);

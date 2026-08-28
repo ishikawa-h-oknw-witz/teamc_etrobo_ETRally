@@ -50,18 +50,14 @@ void Logger::printf(const char* fmt, ...)
 /*
 void Logger::output()
 {
-    ColorSensor::HSV hsv;
-    mColorSensor.getHSV(hsv);
+    //ColorSensor::HSV hsv;
+    //mColorSensor.getHSV(hsv);
 
     printf(
-        "Heading=%.2f "
-        "Ref=%d "
-        "H=%d S=%d V=%d "
-        "L=%d R=%d "
-        "LEnc=%d REnc=%d\r\n",
+        "Heading=%.2f\r\n",
 
-        mImu.getHeading(),
-        mColorSensor.getReflection(),
+        mImu.getHeading()
+        //mColorSensor.getReflection(),
 
         hsv.h,
         hsv.s,
@@ -72,6 +68,7 @@ void Logger::output()
 
         mLeftMotor.getCount(),
         mRightMotor.getCount()
+        
     );
 }
 */

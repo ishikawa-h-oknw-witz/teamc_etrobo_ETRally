@@ -79,7 +79,8 @@ public:
         DistanceCalculator& distanceCalculator,
         TargetDistanceDetector& targetDistanceDetector,
         TargetAngleDetector& targetAngleDetector,
-        TargetColorDetector& targetColorDetector);
+        TargetColorDetector& targetColorDetector,
+        IMU& imu);
 
     int getSceneID();
     void setSceneID(int sceneid);

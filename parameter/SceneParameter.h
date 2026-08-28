@@ -44,17 +44,37 @@ enum class LineTraceSceneID
 
     ReturnCurve1         = 25, // Dlv帰還カーブ1
     ReturnToBlue         = 26, // Dlv帰還青まで
-    ReturnBlueHalfway    = 27  // Dlv青半分まで
+    ReturnBlueHalfway    = 27, // Dlv青半分まで
+
+    RightEdgeLineTrace = 28,   // ラリー基準点までの右エッジ走行用
+    LeftEdgeLineTrace  = 29    // ラリー基準点までの左エッジ走行用
 };
 
 
 // 移動用シーンID
 enum class MoveSceneID
 {
-    MoveToBottlePosition = 2, // ボトル前まで移動
-    MoveToDeliveryArea   = 0, // Dlvエリアまで
-    ReturnToDeliveryLine = 1, // Dlv線まで帰還
-    ReturnToBaseline     = 0  // Dlv基準線まで
+    MoveToBottlePosition =  2, // ボトル前まで移動
+    MoveToDeliveryArea   =  0, // Dlvエリアまで
+    ReturnToDeliveryLine =  1, // Dlv線まで帰還
+    ReturnToBaseline     =  0, // Dlv基準線まで
+
+    MoveToPointCenter    =  3, //目標基準点の中央まで
+    PassPoint            = 11, //目標ではない基準点をスキップ
+    RejoinBasePoint      = 13, //基準点に帰還
+
+    GatePosition1_5_10   =  4, //ゲート通過番号1,5,10の移動
+    GatePosition2_6_11   =  5, //ゲート通過番号2,6,11の移動
+    GatePosition3_7_12   =  6, //ゲート通過番号3,7,12の移動
+    GatePosition4_8_13   =  7, //ゲート通過番号4,8,13の移動
+    GatePosition9        =  8, //ゲート通過番号9の移動
+
+    PositionReturn1_5_10  =  14, //ゲート通過番号1,5,10の移動
+    PositionReturn2_6_11  =  15, //ゲート通過番号2,6,11の移動
+    PositionReturn3_7_12  =  16, //ゲート通過番号3,7,12の移動
+    PositionReturn4_8_13  =  17, //ゲート通過番号4,8,13の移動
+    PositionReturn9       =  18, //ゲート通過番号9の移動
+
 };
 
 
@@ -63,7 +83,14 @@ enum class TurnSceneID
 {
     AdjustEnterAngle = 9, // エンターゾーン進入時の角度調整
     Turn90Right      = 1, // 右に90°回転
-    TurnToRally      = 0  // Dlv右に90°回転
+    Turn90Left       = 2, // 左に90°回転
+    Turn30Left       = 4, // 左に30°回転
+    Turn30Right      = 5, // 右に30°回転
+    Turn180Right     = 8, // 右に180°回転
+    Turn45Right      = 10, 
+    Turn45Left       = 11,
+    Turn60Right      = 12, 
+    Turn60Left       = 13,
 };
 
 

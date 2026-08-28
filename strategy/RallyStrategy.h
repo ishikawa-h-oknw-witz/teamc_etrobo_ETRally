@@ -22,4 +22,6 @@ private:
         int maxSceneNum);
 
     Color detectPointColor();
+
+    Color mOld_color;
 };

@@ -24,7 +24,8 @@ public:
             Motor& rightMotor,
             DistanceCalculator& distanceCalculator,
             PIDCalculator& pidCalculate,
-            TrapezoidCalculator& trapezoidCalculate);
+            TrapezoidCalculator& trapezoidCalculate,
+            IMU& imu);
     
     void setDirection(Direction direction);
 
@@ -45,7 +46,7 @@ private:
     DistanceCalculator& mDistanceCalculator;
     PIDCalculator& mPIDCalculator;
     TrapezoidCalculator& mTrapezoidCalculator;
-    IMU mImu;
+    IMU& mImu;
     Clock mClock;
     int mBaseSpeed;
     float mTargetAngle;

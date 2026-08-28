@@ -18,12 +18,11 @@ public:
 
     //指定角度にアームを移動
     void moveArm(int angle);
-    
-    //最低角度にアームを移動
-    void moveArmDown();
 
-    //最大角度にアームを移動
-    void moveArmUp();
+    void moveArmup();
+    
+    //初期角度にアームをリセット
+    void Armreset();
 
 private:
     Motor& mArmMotor;
