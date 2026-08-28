@@ -181,6 +181,7 @@ const SceneOrder EnterGate[] =
     {7, 11, ActionType::Move},
     {8, 12, ActionType::Move},
     {9, 13, ActionType::Move},
+    {10, 18, ActionType::Move},
 };
 
 
@@ -237,6 +238,13 @@ void RallyStrategy::execute()
     int NowLine;
     int pointNum = 0;
     int Edge = 1;
+    int minPosition = 0;
+    int maxPosition = 3;
+
+    Color minGateColor = Color::Red;
+    Color maxGateColor = Color::Yellow;
+
+    int  reigai = 0;
 
     switch (POINT_COLOR)
     {
@@ -254,6 +262,47 @@ void RallyStrategy::execute()
 
         default:
         break;
+    }
+
+    if ((redGatePosition - 1) % 4 == (yellowGatePosition - 1) % 4)
+    {
+        if ((redGatePosition - 1) % 4 > (yellowGatePosition - 1) % 4)
+        {
+            minPosition = (yellowGatePosition - 1) / 4;
+            maxPosition = (redGatePosition - 1) / 4;
+            minGateColor = Color::Yellow;
+            maxGateColor = Color::Red;
+        }
+        else
+        {
+            minPosition = (redGatePosition - 1) / 4;
+            maxPosition = (yellowGatePosition - 1) / 4;
+            minGateColor = Color::Red;
+            maxGateColor = Color::Yellow;
+        }
+
+        if ((blueGatePosition - 21) % 5 < minPosition)
+        {
+            if (minGateColor == Color::Red)
+            {
+                reigai = 2;
+            }
+            else 
+            {
+                reigai = 1;
+            }
+        }
+        else if ((blueGatePosition - 21) % 5 >= maxPosition)
+        {
+            if (maxGateColor == Color::Red)
+            {
+                reigai = 2;
+            }
+            else 
+            {
+                reigai = 1;
+            }
+        }
     }
 
     // ============================================================
@@ -359,17 +408,23 @@ void RallyStrategy::execute()
             // ゲート位置に応じてゲートへ進入
             // ====================================================
 
+            //区画へ入る
             changeScene(&EnterGate[0], 0);
-            if ((redGatePosition - 1) / 4 != 0)
+
+            //ゲート前まで移動
+            if ((redGatePosition - 1) % 4 != 0)
             {
                 changeScene(&EnterGate[(redGatePosition - 1) % 4], 0);
             }
+
+            //左を向く
             changeScene(&GateTurn[0], 0);
 
+            //ゲート通過
             if (redGatePosition >= 5)
             {
                 changeScene(&EnterGate[1], 0);
-                NowLine = ((redGatePosition - 1) / 4) - 1;
+                NowLine = (redGatePosition - 1) / 4;
             }
             else
             {
@@ -377,69 +432,155 @@ void RallyStrategy::execute()
                 NowLine = -1;
             }
 
-            if (NowLine == -1)
+            if (reigai != 1)
             {
-                changeScene(
-                    &GateCrossingTurn[TURN_AROUND_INDEX],
-                    0);
-            }
+                //青が左
+                if ((blueGatePosition - 21) / 5 > NowLine)
+                {
+                    changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - NowLine) - 1], 0);
+                }
+                //青が右
+                else if ((blueGatePosition - 21) / 5 < NowLine)
+                {
+                    changeScene(&EnterGate[(NowLine - ((blueGatePosition - 21) / 5)) + 4], 0);
+                }
 
-            //青が左
-            if ((blueGatePosition - 21) / 5 > NowLine)
-            {
-                changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - NowLine) - 1], 0);
-            }
-            //青が右
-            else if ((blueGatePosition - 21) / 5 < NowLine)
-            {
-                changeScene(&EnterGate[(NowLine - ((blueGatePosition - 21) / 5)) + 4], 0);
-            }
+                changeScene(&GateTurn[1], 0);
 
-            changeScene(&GateTurn[1], 0);
-
-            //青が上
-            if ((blueGatePosition - 21) % 5 > (redGatePosition - 1) % 4)
-            {
-                changeScene(&EnterGate[((blueGatePosition - 21) % 5) - ((redGatePosition - 1) % 4)], 0);
-                NowLine = (blueGatePosition - 21) % 5;
-            }
-            //青が下
-            else
-            {
-                changeScene(&EnterGate[(((redGatePosition - 1) % 4) - ((blueGatePosition - 21) % 5)) + 3], 0);
-                NowLine = ((blueGatePosition - 21) % 5) - 1;
-            }
-
-            //黄が上
-            if ((yellowGatePosition - 1) % 4 > NowLine)
-            {
-                changeScene(&EnterGate[((yellowGatePosition - 1) % 4) - NowLine], 0);
-            }
-            //黄が下
-            else if((yellowGatePosition - 1) % 4 < NowLine)
-            {
-                changeScene(&EnterGate[(NowLine - ((yellowGatePosition - 1) % 4)) + 4], 0);
-            }
-
-            changeScene(&GateTurn[0], 0);
-
-            //黄が左
-            if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
-            {
-                changeScene(&EnterGate[(((yellowGatePosition - 1) / 4) - ((blueGatePosition - 21) / 5))], 0);
-                changeScene(&EnterGate[5], 0);
-                NowLine = ((yellowGatePosition - 1) / 4) - 1;
+                //青が上
+                if ((blueGatePosition - 21) % 5 > (redGatePosition - 1) % 4)
+                {
+                    changeScene(&EnterGate[((blueGatePosition - 21) % 5) - ((redGatePosition - 1) % 4)], 0);
+                    NowLine = (blueGatePosition - 21) % 5;
+                }
+                //青が下
+                else
+                {
+                    changeScene(&EnterGate[(((redGatePosition - 1) % 4) - ((blueGatePosition - 21) % 5)) + 5], 0);
+                    NowLine = ((blueGatePosition - 21) % 5) - 1;
+                }
             }
             else
             {
-                changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - ((yellowGatePosition - 1) / 4)) + 5], 0);
-                changeScene(&EnterGate[1], 0);
-                NowLine = (yellowGatePosition - 1) / 4;
+                //上を向く
+                changeScene(&GateTurn[1], 0);
+
+                //青が上
+                if ((blueGatePosition - 21) % 5 > ((redGatePosition - 1) % 4) + 1)
+                {
+                    changeScene(&EnterGate[((blueGatePosition - 21) % 5) - (((redGatePosition - 1) % 4) + 1)], 0);
+                }
+                //青が下
+                else if ((blueGatePosition - 21) % 5 < (redGatePosition - 1) % 4)
+                {
+                    changeScene(&EnterGate[(((redGatePosition - 1) % 4) - ((blueGatePosition - 21) % 5)) + 4], 0);
+                }
+
+                //左を向く
+                changeScene(&GateTurn[0], 0);
+
+                //青が左
+                if ((blueGatePosition - 21) / 5 > NowLine)
+                {
+                    changeScene(&EnterGate[((blueGatePosition - 21) / 5) - NowLine], 0);
+                }
+                //青が右
+                else
+                {
+                    changeScene(&EnterGate[(NowLine - ((blueGatePosition - 21) / 5)) + 4], 0);
+                }
+
+                changeScene(&GateTurn[1], 0);
+
+                if ((redGatePosition - 1) % 4 < (blueGatePosition - 21) % 5)
+                {
+                    changeScene(&EnterGate[1], 0);
+                    NowLine = (blueGatePosition - 21) % 5;
+                }
+                else
+                {
+                    changeScene(&EnterGate[5], 0);
+                    NowLine = ((blueGatePosition - 21) % 5) - 1;
+                }
+            }
+
+            if (reigai != 2)
+            {
+                //黄が上
+                if ((yellowGatePosition - 1) % 4 > NowLine)
+                {
+                    changeScene(&EnterGate[((yellowGatePosition - 1) % 4) - NowLine], 0);
+                }
+                //黄が下
+                else if((yellowGatePosition - 1) % 4 < NowLine)
+                {
+                    changeScene(&EnterGate[(NowLine - ((yellowGatePosition - 1) % 4)) + 4], 0);
+                }
+
+                changeScene(&GateTurn[0], 0);
+
+                //黄が左
+                if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
+                {
+                    changeScene(&EnterGate[(((yellowGatePosition - 1) / 4) - ((blueGatePosition - 21) / 5))], 0);
+                    changeScene(&EnterGate[5], 0);
+                    NowLine = ((yellowGatePosition - 1) / 4) - 1;
+                }
+                else
+                {
+                    changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - ((yellowGatePosition - 1) / 4)) + 5], 0);
+                    changeScene(&EnterGate[1], 0);
+                    NowLine = (yellowGatePosition - 1) / 4;
+                }
+            }
+            else
+            {
+                changeScene(&GateTurn[0], 0);
+
+                if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
+                {
+                    changeScene(&EnterGate[(((yellowGatePosition - 1) / 4) - ((blueGatePosition - 21) / 5)) - 1], 0);
+                }
+                else
+                {
+                    changeScene(&EnterGate[(((blueGatePosition - 21) / 5) - ((yellowGatePosition - 1) / 4)) + 4], 0);
+                }
+
+                changeScene(&GateTurn[1], 0);
+
+                if ((yellowGatePosition - 1) % 4 > NowLine)
+                {
+                    changeScene(&EnterGate[((yellowGatePosition - 1) % 4) - NowLine], 0);
+                }
+                else
+                {
+                    changeScene(&EnterGate[(((yellowGatePosition - 1) % 4) - NowLine) + 4], 0);
+                }
+
+                changeScene(&GateTurn[0], 0);
+
+                if ((yellowGatePosition - 1) / 4 > (blueGatePosition - 21) / 5)
+                {
+                    changeScene(&EnterGate[1], 0);
+                    changeScene(&EnterGate[5], 0);
+                    NowLine = ((yellowGatePosition - 1) / 4) - 1;
+                }
+                else
+                {
+                    changeScene(&EnterGate[5], 0);
+                    changeScene(&EnterGate[1], 0);
+                    NowLine = (yellowGatePosition - 1) / 4;
+                }
             }
 
             changeScene(&GateTurn[0], 0);
-            changeScene(&EnterGate[(yellowGatePosition - 1) % 4], 0);
-            changeScene(&EnterGate[0], 0);
+            
+            if ((yellowGatePosition - 1) % 4 != 0)
+            {
+                changeScene(&EnterGate[(yellowGatePosition - 1) % 4], 0);
+            }
+            
+            changeScene(&EnterGate[10], 0);
 
             if (NowLine > pointNum)
             {
@@ -457,8 +598,8 @@ void RallyStrategy::execute()
             {
                 changeScene(&GateTurn[0], 0);
                 changeScene(&EnterGate[0], 0);
-                changeScene(&GateTurn[2], 0);
-                Edge = 0;
+                changeScene(&GateCrossingTurn[2], 0);
+                Edge = 1;
             }
     }
 

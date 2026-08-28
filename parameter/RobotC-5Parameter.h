@@ -50,22 +50,23 @@ const MoveScene moveScenes[] =
     {0, Direction::front, {50.0f, 100.0f,  50.0f, 100.0f}, 100, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvエリアまで
     {1, Direction::back,  {50.0f, 100.0f,  50.0f, 200.0f}, 200, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
     {2, Direction::front, {50.0f,  70.0f,  50.0f,  10.0f},  10, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvエリアまで
-    { 3, Direction::front, {50.0f,  70.0f,  50.0f,  50.0f},   50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
-    { 4, Direction::front, {50.0f,  70.0f,  50.0f, 320.0f},  220, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインから区画
-    { 5, Direction::front, {50.0f,  70.0f,  50.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画前
-    { 6, Direction::front, {50.0f,  70.0f,  50.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画前
-    { 7, Direction::front, {50.0f,  70.0f,  50.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画前
+    { 3, Direction::front, {50.0f,  70.0f,  50.0f,  70.0f},   60, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
+    { 4, Direction::front, {50.0f,  70.0f,  50.0f, 220.0f},  240, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインから区画
+    { 5, Direction::front, {50.0f,  70.0f,  50.0f, 255.0f},  255, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画前
+    { 6, Direction::front, {50.0f,  70.0f,  50.0f, 510.0f},  500, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画前
+    { 7, Direction::front, {50.0f,  70.0f,  50.0f, 765.0f},  765, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画前
     { 8, Direction::front, {50.0f,  70.0f,  50.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画前
-    { 9, Direction::back,  {50.0f,  70.0f,  50.0f, 260.0f},  260, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画後
-    {10, Direction::back,  {50.0f,  70.0f,  50.0f, 510.0f},  510, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画後
-    {11, Direction::back,  {50.0f,  70.0f,  50.0f, 770.0f},  770, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画後
-    {12, Direction::back,  {50.0f,  70.0f,  50.0f,1020.0f}, 1020, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画後
+    { 9, Direction::back,  {50.0f,  70.0f,  50.0f, 250.0f},  250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly1区画後
+    {10, Direction::back,  {50.0f,  70.0f,  50.0f, 500.0f},  500, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly2区画後
+    {11, Direction::back,  {50.0f,  70.0f,  50.0f, 750.0f},  730, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly3区画後
+    {12, Direction::back,  {50.0f,  70.0f,  50.0f,1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly4区画後
     {13, Direction::back,  {750.0f,  70.0f, 50.0f, 300.0f},  200, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyラインへ復帰
     {14, Direction::front, {30.0f,  50.0f,  30.0f, 100.0f},  100, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly目標外の基準点を通過
     {15, Direction::front, {30.0f, 100.0f,  30.0f, 300.0f},  300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートを前進通過
     {16, Direction::back,  {30.0f,  50.0f,  30.0f, 300.0f},  300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートから後退
     {17, Direction::front, {50.0f,  80.0f,  50.0f,   0.0f},    0, {Color::Green, Color::Yellow, Color::Red, Color::Blue},
-                                                                                {2.0f, 0.0f, 0.0f}}  // Rly基準点へ帰還
+                                                                                {2.0f, 0.0f, 0.0f}}, // Rly基準点へ帰還
+    {18, Direction::front, {50.0f,  70.0f,  50.0f, 320.0f},  200, {Color::None}, {1.0f, 0.0f, 0.0f}},
 };
 
 
@@ -74,9 +75,9 @@ const TurnScene turnScenes[] =
 {
     {0,  90, {1.0f, 0.0f, 0.0f}}, // 右に90°
     {1, -15, {1.0f, 0.0f, 0.0f}}, // 左に15°
-    {2, -90, {1.0f, 0.0f, 0.0f}}, // 左に90°
+    {2, -91, {1.0f, 0.0f, 0.0f}}, // 左に90°
     {3,  30, {1.0f, 0.0f, 0.0f}}, // 右に30°
-    {4, 175, {1.0f, 0.0f, 0.0f}}, // 後ろ
+    {4, 180, {1.0f, 0.0f, 0.0f}}, // 後ろ
     {5, -85, {1.0f, 0.0f, 0.0f}}, // 左へライン復帰
     {6,  96, {1.0f, 0.0f, 0.0f}}, // 右へライン復帰
 };

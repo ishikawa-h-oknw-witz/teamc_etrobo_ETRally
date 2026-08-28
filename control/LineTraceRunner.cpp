@@ -12,7 +12,7 @@ LineTraceRunner::LineTraceRunner(
       mRightMotor(rightMotor),
       mColorSensor(colorSensor),
       mPIDCalculator(pidCalculate),
-      mTargetSensorValue(45),
+      mTargetSensorValue(55),
       mBaseSpeed(60)
 {
 }

@@ -126,7 +126,7 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(
         sceneManager,
         19,
-        35,
+        33,
         6);
 
     /* 初期化 */
@@ -178,7 +178,7 @@ void main_task(intptr_t exinf)
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
 
-    //bottleDeliveryStrategy.execute();
+    bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
