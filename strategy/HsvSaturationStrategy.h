@@ -26,22 +26,18 @@ public:
     void finish() override;
 
 private:
-    static constexpr int SATURATION_VALUE_COUNT = 256;
-
     LineTraceRunner& mLineTraceRunner;
     DistanceCalculator& mDistanceCalculator;
     PIDCalculator& mPIDCalculator;
     ColorSensor& mColorSensor;
 
-    // 1,000mm走行で必要な容量に抑え、組込み環境のスタック消費を減らす。
-    uint16_t mSaturationHistogram[SATURATION_VALUE_COUNT];
     uint32_t mSampleCount;
-    uint64_t mSaturationSum;
     uint8_t mMaximumSaturation;
     uint8_t mMinimumSaturation;
+    uint8_t mValueAtMaximumSaturation;
+    uint8_t mValueAtMinimumSaturation;
 
     void resetStatistics();
-    void recordSaturation(uint8_t saturation);
-    uint32_t calculateMedianTimes10() const;
+    void recordSample(const ColorSensor::HSV& hsv);
     void printStatistics() const;
 };

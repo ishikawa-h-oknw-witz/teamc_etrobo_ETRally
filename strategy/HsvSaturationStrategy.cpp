@@ -23,9 +23,10 @@ HsvSaturationStrategy::HsvSaturationStrategy(
       mPIDCalculator(pidCalculator),
       mColorSensor(colorSensor),
       mSampleCount(0),
-      mSaturationSum(0),
       mMaximumSaturation(0),
-      mMinimumSaturation(255)
+      mMinimumSaturation(255),
+      mValueAtMaximumSaturation(0),
+      mValueAtMinimumSaturation(0)
 {
     resetStatistics();
 }
@@ -57,7 +58,7 @@ void HsvSaturationStrategy::execute()
         // 反射光でライントレースし、各制御周期でHSVも取得する。
         mLineTraceRunner.run();
         mColorSensor.getHSV(hsv);
-        recordSaturation(hsv.s);
+        recordSample(hsv);
     }
 
     finish();
@@ -83,77 +84,32 @@ void HsvSaturationStrategy::finish()
 
 void HsvSaturationStrategy::resetStatistics()
 {
-    for (int index = 0;
-         index < SATURATION_VALUE_COUNT;
-         index++)
-    {
-        mSaturationHistogram[index] = 0;
-    }
-
     mSampleCount = 0;
-    mSaturationSum = 0;
     mMaximumSaturation = 0;
     mMinimumSaturation = 255;
+    mValueAtMaximumSaturation = 0;
+    mValueAtMinimumSaturation = 0;
 }
 
-void HsvSaturationStrategy::recordSaturation(
-    uint8_t saturation)
+void HsvSaturationStrategy::recordSample(
+    const ColorSensor::HSV& hsv)
 {
-    mSaturationHistogram[saturation]++;
+    // 同じS値が複数回出た場合は、最初に取得したV値を残す。
+    if (mSampleCount == 0 ||
+        hsv.s > mMaximumSaturation)
+    {
+        mMaximumSaturation = hsv.s;
+        mValueAtMaximumSaturation = hsv.v;
+    }
+
+    if (mSampleCount == 0 ||
+        hsv.s < mMinimumSaturation)
+    {
+        mMinimumSaturation = hsv.s;
+        mValueAtMinimumSaturation = hsv.v;
+    }
+
     mSampleCount++;
-    mSaturationSum += saturation;
-
-    if (saturation > mMaximumSaturation)
-    {
-        mMaximumSaturation = saturation;
-    }
-
-    if (saturation < mMinimumSaturation)
-    {
-        mMinimumSaturation = saturation;
-    }
-}
-
-uint32_t HsvSaturationStrategy::calculateMedianTimes10() const
-{
-    if (mSampleCount == 0)
-    {
-        return 0;
-    }
-
-    const uint32_t lowerIndex =
-        (mSampleCount - 1) / 2;
-    const uint32_t upperIndex =
-        mSampleCount / 2;
-
-    uint32_t cumulativeCount = 0;
-    uint32_t lowerValue = 0;
-    uint32_t upperValue = 0;
-    bool lowerValueFound = false;
-
-    for (uint32_t saturation = 0;
-         saturation < SATURATION_VALUE_COUNT;
-         saturation++)
-    {
-        cumulativeCount +=
-            mSaturationHistogram[saturation];
-
-        if (!lowerValueFound &&
-            cumulativeCount > lowerIndex)
-        {
-            lowerValue = saturation;
-            lowerValueFound = true;
-        }
-
-        if (cumulativeCount > upperIndex)
-        {
-            upperValue = saturation;
-            break;
-        }
-    }
-
-    // (lower + upper) / 2 を小数第1位まで表す。
-    return (lowerValue + upperValue) * 5;
 }
 
 void HsvSaturationStrategy::printStatistics() const
@@ -165,24 +121,14 @@ void HsvSaturationStrategy::printStatistics() const
         return;
     }
 
-    const uint32_t averageTimes10 =
-        static_cast<uint32_t>(
-            (mSaturationSum * 10 + mSampleCount / 2) /
-            mSampleCount);
-
-    const uint32_t medianTimes10 =
-        calculateMedianTimes10();
-
     Logger::printf(
         "[HSV計測]終了 Samples=%u\r\n",
         static_cast<unsigned int>(mSampleCount));
 
     Logger::printf(
-        "[HSV計測]S Max=%u Average=%u.%u Median=%u.%u Min=%u\r\n",
+        "[HSV計測]S Max=%u V=%u Min=%u V=%u\r\n",
         static_cast<unsigned int>(mMaximumSaturation),
-        static_cast<unsigned int>(averageTimes10 / 10),
-        static_cast<unsigned int>(averageTimes10 % 10),
-        static_cast<unsigned int>(medianTimes10 / 10),
-        static_cast<unsigned int>(medianTimes10 % 10),
-        static_cast<unsigned int>(mMinimumSaturation));
+        static_cast<unsigned int>(mValueAtMaximumSaturation),
+        static_cast<unsigned int>(mMinimumSaturation),
+        static_cast<unsigned int>(mValueAtMinimumSaturation));
 }
