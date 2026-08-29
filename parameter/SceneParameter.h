@@ -62,7 +62,7 @@ enum class MoveSceneID
 enum class TurnSceneID
 {
     AdjustEnterAngle = 1, // Robot C: エンターゾーン進入時の角度調整
-    Turn90Right      = 0, // Robot C: 右に90°回転
+    Turn90Right      = 3, // Robot C: 右に90°回転
     TurnToRally      = 0  // Dlv右に90°回転
 };
 
