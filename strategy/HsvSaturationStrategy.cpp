@@ -5,8 +5,8 @@
 namespace
 {
 constexpr int TRACE_SPEED = 30;
-constexpr int TARGET_DISTANCE_MM = 1000;
-constexpr int TARGET_VALUE = 55;
+constexpr int TARGET_DISTANCE_MM = 150;
+constexpr int TARGET_VALUE = 45;
 constexpr uint8_t SATURATION_THRESHOLD = 25;
 
 constexpr float TRACE_KP = 0.4f;
@@ -28,8 +28,8 @@ HsvSaturationStrategy::HsvSaturationStrategy(
       mMinimumSaturation(255),
       mValueAtMaximumSaturation(0),
       mValueAtMinimumSaturation(0),
-      mMaximumValueAtSaturation25OrLess(0),
-      mHasSaturation25OrLessSample(false)
+      mMaximumValueAtOrAboveSaturationThreshold(0),
+      mHasSampleAtOrAboveSaturationThreshold(false)
 {
     resetStatistics();
 }
@@ -92,8 +92,8 @@ void HsvSaturationStrategy::resetStatistics()
     mMinimumSaturation = 255;
     mValueAtMaximumSaturation = 0;
     mValueAtMinimumSaturation = 0;
-    mMaximumValueAtSaturation25OrLess = 0;
-    mHasSaturation25OrLessSample = false;
+    mMaximumValueAtOrAboveSaturationThreshold = 0;
+    mHasSampleAtOrAboveSaturationThreshold = false;
 }
 
 void HsvSaturationStrategy::recordSample(
@@ -114,12 +114,12 @@ void HsvSaturationStrategy::recordSample(
         mValueAtMinimumSaturation = hsv.v;
     }
 
-    if (hsv.s <= SATURATION_THRESHOLD &&
-        (!mHasSaturation25OrLessSample ||
-         hsv.v > mMaximumValueAtSaturation25OrLess))
+    if (hsv.s >= SATURATION_THRESHOLD &&
+        (!mHasSampleAtOrAboveSaturationThreshold ||
+         hsv.v > mMaximumValueAtOrAboveSaturationThreshold))
     {
-        mMaximumValueAtSaturation25OrLess = hsv.v;
-        mHasSaturation25OrLessSample = true;
+        mMaximumValueAtOrAboveSaturationThreshold = hsv.v;
+        mHasSampleAtOrAboveSaturationThreshold = true;
     }
 
     mSampleCount++;
@@ -145,16 +145,18 @@ void HsvSaturationStrategy::printStatistics() const
         static_cast<unsigned int>(mMinimumSaturation),
         static_cast<unsigned int>(mValueAtMinimumSaturation));
 
-    if (mHasSaturation25OrLessSample)
+    if (mHasSampleAtOrAboveSaturationThreshold)
     {
         Logger::printf(
-            "[HSV計測]S<=25 V Max=%u\r\n",
+            "[HSV計測]S>=%u V Max=%u\r\n",
+            static_cast<unsigned int>(SATURATION_THRESHOLD),
             static_cast<unsigned int>(
-                mMaximumValueAtSaturation25OrLess));
+                mMaximumValueAtOrAboveSaturationThreshold));
     }
     else
     {
         Logger::printf(
-            "[HSV計測]S<=25 Sample=None\r\n");
+            "[HSV計測]S>=%u Sample=None\r\n",
+            static_cast<unsigned int>(SATURATION_THRESHOLD));
     }
 }
