@@ -4,6 +4,7 @@ APPL_CXXOBJS += \
     strategy/BottleDeliveryStrategy.o \
     strategy/LapStrategy.o \
     strategy/RallyStrategy.o \
+    strategy/HsvSaturationStrategy.o \
     operation/PIDCalculator.o \
     operation/DistanceCalculator.o \
     operation/TrapezoidCalculator.o \

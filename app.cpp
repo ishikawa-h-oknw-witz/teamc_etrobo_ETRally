@@ -4,6 +4,7 @@
 #include "LapStrategy.h"
 #include "BottleDeliveryStrategy.h"
 #include "RallyStrategy.h"
+#include "HsvSaturationStrategy.h"
 
 // シーンパッケージ
 #include "SceneManager.h"
@@ -125,6 +126,12 @@ void main_task(intptr_t exinf)
 
     RallyStrategy rallyStrategy(sceneManager);
 
+    HsvSaturationStrategy hsvSaturationStrategy(
+        lineTraceRunner,
+        distanceCalculator,
+        pidCalculator,
+        colorSensor);
+
     /* 初期化 */
     logger.init();
 
@@ -166,20 +173,10 @@ void main_task(intptr_t exinf)
 
     Logger::printf("[app]スタート\n");
 
-    /* ラップ攻略 */
-    Logger::printf("[app]ラップ開始\n");
+    /* HSVのS値計測用ライントレース */
+    Logger::printf("[app]HSV計測開始\n");
 
-    lapStrategy.execute();
-
-    /* ボトルデリバリー攻略 */
-    Logger::printf("[app]ボトルデリバリー開始\n");
-
-    bottleDeliveryStrategy.execute();
-
-    /* ETラリー攻略 */
-    Logger::printf("[app]ETラリー開始\n");
-
-    rallyStrategy.execute();
+    hsvSaturationStrategy.execute();
 
     Logger::printf("[app]終了\n");
 
