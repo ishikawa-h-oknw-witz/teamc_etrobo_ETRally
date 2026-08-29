@@ -7,6 +7,7 @@ namespace
 constexpr int TRACE_SPEED = 30;
 constexpr int TARGET_DISTANCE_MM = 1000;
 constexpr int TARGET_VALUE = 55;
+constexpr uint8_t SATURATION_THRESHOLD = 25;
 
 constexpr float TRACE_KP = 0.4f;
 constexpr float TRACE_KI = 0.0f;
@@ -26,7 +27,9 @@ HsvSaturationStrategy::HsvSaturationStrategy(
       mMaximumSaturation(0),
       mMinimumSaturation(255),
       mValueAtMaximumSaturation(0),
-      mValueAtMinimumSaturation(0)
+      mValueAtMinimumSaturation(0),
+      mMaximumValueAtSaturation25OrLess(0),
+      mHasSaturation25OrLessSample(false)
 {
     resetStatistics();
 }
@@ -89,6 +92,8 @@ void HsvSaturationStrategy::resetStatistics()
     mMinimumSaturation = 255;
     mValueAtMaximumSaturation = 0;
     mValueAtMinimumSaturation = 0;
+    mMaximumValueAtSaturation25OrLess = 0;
+    mHasSaturation25OrLessSample = false;
 }
 
 void HsvSaturationStrategy::recordSample(
@@ -107,6 +112,14 @@ void HsvSaturationStrategy::recordSample(
     {
         mMinimumSaturation = hsv.s;
         mValueAtMinimumSaturation = hsv.v;
+    }
+
+    if (hsv.s <= SATURATION_THRESHOLD &&
+        (!mHasSaturation25OrLessSample ||
+         hsv.v > mMaximumValueAtSaturation25OrLess))
+    {
+        mMaximumValueAtSaturation25OrLess = hsv.v;
+        mHasSaturation25OrLessSample = true;
     }
 
     mSampleCount++;
@@ -131,4 +144,17 @@ void HsvSaturationStrategy::printStatistics() const
         static_cast<unsigned int>(mValueAtMaximumSaturation),
         static_cast<unsigned int>(mMinimumSaturation),
         static_cast<unsigned int>(mValueAtMinimumSaturation));
+
+    if (mHasSaturation25OrLessSample)
+    {
+        Logger::printf(
+            "[HSV計測]S<=25 V Max=%u\r\n",
+            static_cast<unsigned int>(
+                mMaximumValueAtSaturation25OrLess));
+    }
+    else
+    {
+        Logger::printf(
+            "[HSV計測]S<=25 Sample=None\r\n");
+    }
 }

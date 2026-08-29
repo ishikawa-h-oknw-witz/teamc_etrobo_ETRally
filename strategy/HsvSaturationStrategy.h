@@ -36,6 +36,8 @@ private:
     uint8_t mMinimumSaturation;
     uint8_t mValueAtMaximumSaturation;
     uint8_t mValueAtMinimumSaturation;
+    uint8_t mMaximumValueAtSaturation25OrLess;
+    bool mHasSaturation25OrLessSample;
 
     void resetStatistics();
     void recordSample(const ColorSensor::HSV& hsv);
