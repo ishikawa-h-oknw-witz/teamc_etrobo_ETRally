@@ -5,8 +5,8 @@
 namespace
 {
 constexpr int TRACE_SPEED = 30;
-constexpr int TARGET_DISTANCE_MM = 1000;
-constexpr int TARGET_VALUE = 55;
+constexpr int TARGET_DISTANCE_MM = 150;
+constexpr int TARGET_VALUE = 45;
 
 constexpr float TRACE_KP = 0.4f;
 constexpr float TRACE_KI = 0.0f;
