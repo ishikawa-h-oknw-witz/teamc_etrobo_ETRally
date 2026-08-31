@@ -56,6 +56,10 @@ void HsvSaturationStrategy::execute()
         TARGET_DISTANCE_MM,
         TRACE_EDGE == RunnerEdge::RightEdge ? "Right" : "Left");
 
+    // CSV保存後にRecord列でHSV_DATAを抽出できる形式で出力する。
+    Logger::printf(
+        "Record,Sample,Distance_mm,S,V\r\n");
+
     while (mDistanceCalculator.getDistance() < TARGET_DISTANCE_MM)
     {
         ColorSensor::HSV hsv;
@@ -63,6 +67,14 @@ void HsvSaturationStrategy::execute()
         // 反射光でライントレースし、各制御周期でHSVも取得する。
         mLineTraceRunner.run();
         mColorSensor.getHSV(hsv);
+
+        Logger::printf(
+            "HSV_DATA,%u,%d,%u,%u\r\n",
+            static_cast<unsigned int>(mSampleCount + 1),
+            static_cast<int>(mDistanceCalculator.getDistance()),
+            static_cast<unsigned int>(hsv.s),
+            static_cast<unsigned int>(hsv.v));
+
         recordSample(hsv);
     }
 
