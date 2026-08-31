@@ -8,6 +8,7 @@ constexpr int TRACE_SPEED = 30;
 constexpr int TARGET_DISTANCE_MM = 150;
 constexpr int TARGET_VALUE = 45;
 constexpr uint8_t SATURATION_THRESHOLD = 25;
+constexpr RunnerEdge TRACE_EDGE = RunnerEdge::RightEdge;
 
 constexpr float TRACE_KP = 0.4f;
 constexpr float TRACE_KI = 0.0f;
@@ -46,13 +47,14 @@ void HsvSaturationStrategy::execute()
         TRACE_KD);
 
     mLineTraceRunner.setBaseSpeed(TRACE_SPEED);
-    mLineTraceRunner.setEdge(RunnerEdge::RightEdge);
+    mLineTraceRunner.setEdge(TRACE_EDGE);
     mLineTraceRunner.setTargetSensorValue(TARGET_VALUE);
 
     Logger::printf(
-        "[HSV計測]開始 ReflectionTrace Speed=%d Distance=%dmm\r\n",
+        "[HSV計測]開始 ReflectionTrace Speed=%d Distance=%dmm Edge=%s\r\n",
         TRACE_SPEED,
-        TARGET_DISTANCE_MM);
+        TARGET_DISTANCE_MM,
+        TRACE_EDGE == RunnerEdge::RightEdge ? "Right" : "Left");
 
     while (mDistanceCalculator.getDistance() < TARGET_DISTANCE_MM)
     {
