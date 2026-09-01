@@ -5,10 +5,10 @@
 namespace
 {
 constexpr int TRACE_SPEED = 30;
-constexpr int TARGET_DISTANCE_MM = 150;
-constexpr int TARGET_VALUE = 45;
-constexpr uint8_t SATURATION_THRESHOLD = 25;
-constexpr RunnerEdge TRACE_EDGE = RunnerEdge::RightEdge;
+constexpr int TARGET_DISTANCE_MM = 180;
+constexpr int TARGET_VALUE = 50;
+constexpr uint8_t SATURATION_THRESHOLD = 31;
+constexpr RunnerEdge TRACE_EDGE = RunnerEdge::LeftEdge;
 
 constexpr float TRACE_KP = 0.4f;
 constexpr float TRACE_KI = 0.0f;
