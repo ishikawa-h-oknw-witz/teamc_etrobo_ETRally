@@ -58,11 +58,11 @@ void GyroTraceRunner::move()
     mLeftMotor.setPower(leftPower);
     if(rightPower >= 0)
     {
-        mRightMotor.setPower(rightPower-3);
+        mRightMotor.setPower(rightPower-3); //A-5走行体の場合　-3
     }
     else
     {
-        mRightMotor.setPower(rightPower+3);
+        mRightMotor.setPower(rightPower+3); //A-5走行体の場合　+3
     }
     
     
@@ -118,11 +118,11 @@ void GyroTraceRunner::turn()
 
     if (error > 0) {
         mLeftMotor.setPower(turnPower);
-        mRightMotor.setPower(-turnPower);
+        mRightMotor.setPower(-turnPower+4);
     }
     else {
         mLeftMotor.setPower(-turnPower);
-        mRightMotor.setPower(turnPower-8);
+        mRightMotor.setPower(turnPower-8);    //A-5走行体の場合　-8
     }
     tslp_tsk(10*1000);
 }

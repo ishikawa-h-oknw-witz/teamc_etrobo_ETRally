@@ -30,13 +30,13 @@ enum class CalibrationData
 struct LineTraceScene
 {
     int sceneId;
+    TrapezoidParameter trapezoidParameter;
     int targetDistance;
     int speed;
     RunnerEdge edge;
     Color finishColor[7];
     CalibrationData targetSensorValue;
     PID pid;
-    IEventDetector* successEvents[7];
 };
 
 struct MoveScene

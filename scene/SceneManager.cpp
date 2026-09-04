@@ -6,7 +6,7 @@ namespace
 {
     constexpr int COLOR_SAMPLE_COUNT = 10;
     constexpr int COLOR_REQUIRED_MATCH_COUNT = 6;
-    constexpr int COLOR_SAMPLE_INTERVAL_MS = 10;
+    constexpr int COLOR_SAMPLE_INTERVAL_MS = 1;
     constexpr int MAX_SCENE_CONTROL_CYCLES = 3000;
 }
 
@@ -134,8 +134,8 @@ void SceneManager::setParameter()
     {
         const LineTraceScene& linetracescene = lineTraceScenes[mSceneId];
 
-        // ライントレース
-        mLineTraceRunner.setBaseSpeed(linetracescene.speed);
+        //台形計算
+        mTrapezoidCalculator.setParameter(linetracescene.trapezoidParameter);
 
         // PID
         mPIDCalculator.setGain(

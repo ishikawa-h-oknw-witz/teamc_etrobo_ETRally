@@ -47,7 +47,8 @@ enum class LineTraceSceneID
     ReturnBlueHalfway    = 27, // Dlv青半分まで
 
     RightEdgeLineTrace = 28,   // ラリー基準点までの右エッジ走行用
-    LeftEdgeLineTrace  = 29    // ラリー基準点までの左エッジ走行用
+    LeftEdgeLineTrace  = 29,    // ラリー基準点までの左エッジ走行用
+    GreenLeftEdgeLineTrace  = 30,  //同一基準点が緑の場合 
 };
 
 
@@ -58,10 +59,11 @@ enum class MoveSceneID
     MoveToDeliveryArea   =  0, // Dlvエリアまで
     ReturnToDeliveryLine =  1, // Dlv線まで帰還
     ReturnToBaseline     =  0, // Dlv基準線まで
+    back                 =  19,// Dlvボトルを倒さないようにバック
 
     MoveToPointCenter    =  3, //目標基準点の中央まで
     PassPoint            = 11, //目標ではない基準点をスキップ
-    RejoinBasePoint      = 13, //基準点に帰還
+    RejoinBaseLine      = 13, //基準線に帰還
 
     GatePosition1_5_10   =  4, //ゲート通過番号1,5,10の移動
     GatePosition2_6_11   =  5, //ゲート通過番号2,6,11の移動
@@ -74,6 +76,8 @@ enum class MoveSceneID
     PositionReturn3_7_12  =  16, //ゲート通過番号3,7,12の移動
     PositionReturn4_8_13  =  17, //ゲート通過番号4,8,13の移動
     PositionReturn9       =  18, //ゲート通過番号9の移動
+
+    AltMove               =  20,
 
 };
 
@@ -91,6 +95,7 @@ enum class TurnSceneID
     Turn45Left       = 11,
     Turn60Right      = 12, 
     Turn60Left       = 13,
+    Turn180Left      = 14,
 };
 
 
@@ -107,7 +112,8 @@ enum class BottleDetectSceneID
 enum class StopSceneID
 {
     CheckCount = 0, // 回数確認用
-    Finish     = 0  // 終了
+    Finish     = 0,  // 終了
+    stop = 0,
 };
 
 struct SceneOrder

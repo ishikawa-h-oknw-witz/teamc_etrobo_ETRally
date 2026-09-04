@@ -23,5 +23,7 @@ private:
 
     Color detectPointColor();
 
-    Color mOld_color;
+    Color mOld_color = Color::Unknown;
+
+    bool mIsSameBasePoint = false;
 };

@@ -51,7 +51,7 @@ int getPointOrder(Color color)
 
 // 現在の基準点から次の基準点へ進むときに
 // 使用するエッジを決定する
-bool getNextEdgeIndex(
+int getNextEdgeIndex(
     Color currentColor,
     Color nextColor,
     int& edgeIndex)
@@ -60,11 +60,13 @@ bool getNextEdgeIndex(
 
     const int nextOrder = getPointOrder(nextColor);
 
-    if (currentOrder < 0 ||
-        nextOrder < 0 ||
-        currentOrder == nextOrder)
+    if (currentOrder < 0 || nextOrder < 0)
     {
-        return false;
+        return -1;
+    }
+    else if(currentOrder == nextOrder)
+    {
+        return 1;
     }
 
     // 基準点の並びは
@@ -78,7 +80,7 @@ bool getNextEdgeIndex(
         ? RIGHT_EDGE_INDEX
         : LEFT_EDGE_INDEX;
 
-    return true;
+    return 2;
 }
 
 
@@ -92,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Blue, 3},
-    {Color::Red,  7},
-    {Color::Green, 2},
+    {Color::Green, 11},
+    {Color::Yellow, 9},
+    {Color::Red, 1},
 };
 
 
@@ -106,7 +108,7 @@ const GatePosition gatePositions[] =
 const SceneOrder EnterPoint[] =
 {
     {0, static_cast<int>(LineTraceSceneID::RightEdgeLineTrace), ActionType::LineTrace},
-    {0, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
+    {1, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
 };
 
 
@@ -116,6 +118,19 @@ const SceneOrder MovePointCenter[] =
     {0, static_cast<int>(MoveSceneID::MoveToPointCenter), ActionType::Move},
 };
 
+// 目標ではない基準点かつ目標と比べて向きが下向きに違う場合
+const SceneOrder DownTurn[] =
+{
+    {0, static_cast<int>(MoveSceneID::AltMove), ActionType::Move},
+    {1, static_cast<int>(TurnSceneID::Turn180Right), ActionType::Turn}
+};
+
+// 目標ではない基準点かつ目標と比べて向きが上向きに違う場合
+const SceneOrder UpTurn[] =
+{
+    {0, static_cast<int>(MoveSceneID::AltMove), ActionType::Move},
+    {1, static_cast<int>(TurnSceneID::Turn180Right), ActionType::Turn}
+};
 
 // 目標ではない基準点を通過
 const SceneOrder PassPoint[] =
@@ -150,15 +165,14 @@ const SceneOrder GateCrossingTurn[] =
 // 次のエッジへ復帰するための旋回
 const SceneOrder RejoinTurn[] =
 {
-    {0, static_cast<int>(TurnSceneID::Turn45Right), ActionType::Turn},
-    {1, static_cast<int>(TurnSceneID::Turn45Left),  ActionType::Turn},
+    {0, static_cast<int>(TurnSceneID::Turn90Right), ActionType::Turn},
+    {1, static_cast<int>(TurnSceneID::Turn90Left),  ActionType::Turn},
 };
 
-
-// ラインへ復帰
-const SceneOrder RejoinMove[] =
+// 次のエッジへ復帰するための旋回
+const SceneOrder BaseLineMove[] =
 {
-    {0, 13, ActionType::Move},
+    {0, static_cast<int>(MoveSceneID::RejoinBaseLine), ActionType::Move},
 };
 
 // 次のエッジへ復帰するための旋回
@@ -195,6 +209,20 @@ const SceneOrder ReturnPoint[] =
     {2, static_cast<int>(MoveSceneID::PositionReturn3_7_12), ActionType::Move},
     {3, static_cast<int>(MoveSceneID::PositionReturn4_8_13), ActionType::Move},
     {4, static_cast<int>(MoveSceneID::PositionReturn9), ActionType::Move},
+};
+
+const SceneOrder AltProc[] = 
+{
+    {0, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
+    {1, static_cast<int>(MoveSceneID::AltMove),  ActionType::Move},
+    {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
+};
+
+const SceneOrder GreenAltProc[] = 
+{
+    {0, static_cast<int>(LineTraceSceneID::GreenLeftEdgeLineTrace),  ActionType::LineTrace},
+    {1, static_cast<int>(MoveSceneID::AltMove),  ActionType::Move},
+    {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
 };
 
 // 停止
@@ -278,57 +306,70 @@ void RallyStrategy::execute()
                     return;
                 }
 
-
                 // ------------------------------------------------
                 // 現在のエッジを使用して
                 // 次の基準点までライントレース
                 // ------------------------------------------------
 
-                if (!changeScene(&EnterPoint[nowEdgeIndex],0))
+                while(true)
                 {
-                    // finish();
-                    return;
-                }
+                    changeScene(&EnterPoint[nowEdgeIndex],0);
 
-                changeScene(stop,0);
+                    changeScene(stop,0);
 
-                // ------------------------------------------------
-                // 4色を順番に判定
-                // ------------------------------------------------
+                    // ------------------------------------------------
+                    // 4色を順番に判定
+                    // ------------------------------------------------
 
-                detectedPointColor = detectPointColor();
+                    detectedPointColor = detectPointColor();
 
-                Logger::printf(
-                    "[Rally]検知基準点=%d "
-                    "目標基準点=%d\r\n",
-                    static_cast<int>(detectedPointColor),
-                    static_cast<int>(gate.pointColor));
+                    Logger::printf(
+                        "[Rally]検知基準点=%d "
+                        "目標基準点=%d\r\n",
+                        static_cast<int>(detectedPointColor),
+                        static_cast<int>(gate.pointColor));
 
 
-                // ------------------------------------------------
-                // 目標基準点なら中央まで移動
-                // それ以外なら通過
-                // ------------------------------------------------
+                    // ------------------------------------------------
+                    // 目標基準点なら中央まで移動
+                    // それ以外なら通過
+                    // ------------------------------------------------
 
-                if (detectedPointColor == gate.pointColor)
-                {
-                    mOld_color = detectedPointColor;
-
-                    if (!changeScene(MovePointCenter,0))
+                    if (detectedPointColor == gate.pointColor)
                     {
-                        // finish();
-                        return;
-                    }
-                }
-                else
-                {
-                    if (!changeScene(PassPoint,0))
-                    {
-                        // finish();
-                        return;
-                    }
-                }
+                        mOld_color = detectedPointColor;
 
+                        if (changeScene(MovePointCenter,0))
+                        {
+                            // finish();
+                            break;
+                        }
+                    }
+                    else if(detectedPointColor == Color::Unknown)
+                    {
+                        continue;
+                    }
+                    else if(detectedPointColor > gate.pointColor && nowEdgeIndex == RIGHT_EDGE_INDEX)
+                    {
+                        changeScene(DownTurn,1);
+                        nowEdgeIndex = LEFT_EDGE_INDEX;
+                        continue;
+                    }
+                    else if(detectedPointColor < gate.pointColor && nowEdgeIndex == LEFT_EDGE_INDEX)
+                    {
+                        changeScene(UpTurn,1);
+                        nowEdgeIndex = RIGHT_EDGE_INDEX;
+                        continue;
+                    }
+                    else
+                    {
+                        if (changeScene(PassPoint,0))
+                        {
+                            // finish();
+                            break;
+                        }
+                    }    
+                }
                 pointSearchCount++;
             }
 
@@ -600,56 +641,55 @@ void RallyStrategy::execute()
             // 次の基準点へ向かうエッジを決定
             // ----------------------------------------------------
 
-            if (!getNextEdgeIndex(returnedPointColor,nextPointColor,nowEdgeIndex))
+            switch(getNextEdgeIndex(returnedPointColor,nextPointColor,nowEdgeIndex))
             {
-                Logger::printf(
+                case 1:
+                    //今の基準点と次の基準点が同じ時
+                    mIsSameBasePoint = true;
+                    changeScene(&RejoinTurn[1],0);
+                    nowEdgeIndex = RIGHT_EDGE_INDEX;
+                    break;
+                case 2:
+                {
+                    //今の基準点と次の基準点が同じじゃない時
+                    mIsSameBasePoint = false;
+                    // ----------------------------------------------------
+                    // 次の基準点方向へ旋回
+                    //
+                    // RIGHT_EDGE → 上方向
+                    // LEFT_EDGE  → 下方向
+                    // ----------------------------------------------------
+
+                    const int rejoinTurnIndex =
+                        nowEdgeIndex == RIGHT_EDGE_INDEX
+                        ? UP_REJOIN_TURN_INDEX
+                        : DOWN_REJOIN_TURN_INDEX;
+
+                    changeScene(&RejoinTurn[rejoinTurnIndex],0);
+                    break;
+                }
+                default:
+                    Logger::printf(
                     "[Rally]次のエッジ決定失敗\r\n");
-
-                // finish();
-                return;
+                    break;
             }
-
 
             Logger::printf(
                 "[Rally]次のエッジ=%d\r\n",
                 nowEdgeIndex);
 
+            changeScene(BaseLineMove, 0);
 
-            // ----------------------------------------------------
-            // 次の基準点方向へ旋回
-            //
-            // RIGHT_EDGE → 上方向
-            // LEFT_EDGE  → 下方向
-            // ----------------------------------------------------
-
-            const int rejoinTurnIndex =
-                nowEdgeIndex == RIGHT_EDGE_INDEX
-                ? UP_REJOIN_TURN_INDEX
-                : DOWN_REJOIN_TURN_INDEX;
-
-
-            if (!changeScene(&RejoinTurn[rejoinTurnIndex],0))
+            if(mIsSameBasePoint == true)
             {
-                // finish();
-                return;
-            }
-
-
-            // ----------------------------------------------------
-            // 基準線に帰還
-            // ----------------------------------------------------
-
-            if (!changeScene(RejoinMove,0))
-            {
-                // finish();
-                return;
-            }
-            
-
-            if (!changeScene(&RejoinTurn2[rejoinTurnIndex],0))
-            {
-                // finish();
-                return;
+                if(mOld_color == Color::Green)
+                {
+                    changeScene(GreenAltProc,2);    
+                }
+                else
+                {
+                    changeScene(AltProc,2);
+                }
             }
 
             // ここでは nowEdgeIndex を初期化しない。
@@ -729,9 +769,9 @@ Color RallyStrategy::detectPointColor()
             {
             case YELLOW_COLOR_SCENE_ID:
                 Logger::printf(
-                    "[Rally]検出色=Yellow\r\n");
+                    "[Rally]検出色=Green\r\n");
 
-                return Color::Yellow;
+                return Color::Green;
 
             case BLUE_COLOR_SCENE_ID:
                 Logger::printf(
@@ -747,9 +787,9 @@ Color RallyStrategy::detectPointColor()
 
             case GREEN_COLOR_SCENE_ID:
                 Logger::printf(
-                    "[Rally]検出色=Green\r\n");
+                    "[Rally]検出色=Yellow\r\n");
 
-                return Color::Green;
+                return Color::Yellow;
 
             default:
                 break;

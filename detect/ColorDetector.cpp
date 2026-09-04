@@ -3,14 +3,14 @@
 
 static constexpr ColorHSVRange mColorHSVRanges[] =
 {
-    { Color::Red,      0, 29,40,120,11,100 },
-    { Color::Red,    280,360,40,120,11,100 },
-    { Color::Blue,   190,279,60,100,11,100 },
-    { Color::Yellow,  30,90, 41,100,11,100 },
-    { Color::Green,   80,190,40,100,11,100 },
-    { Color::Gray,     0,360, 0, 40,11, 89 },
-    { Color::Black,    0,360, 0,100, 0, 10 },
-    { Color::White,    0,360, 0, 40,90,100 }
+    { Color::Red,      0, 29,31,120,35,100 },
+    { Color::Red,    280,360,31,120,35,100 },
+    { Color::Blue,   200,279,41,100,35,100 },
+    { Color::Yellow,  30,79, 31,100,35,100 },
+    { Color::Green,   80,175,31,100,35,100 },
+    { Color::Gray,     0,360, 0, 30,35, 89 },
+    { Color::Black,    0,360, 0,100, 0, 30 },
+    { Color::White,    0,360, 0, 30,90,100 }
 };
 
 ColorDetector::ColorDetector(ColorSensor& sensor)
@@ -29,6 +29,26 @@ Color ColorDetector::detect()
             hsv.s >= range.sMin && hsv.s <= range.sMax &&
             hsv.v >= range.vMin && hsv.v <= range.vMax)
         {
+            if(range.color == Color::Red)
+            {
+                Logger::printf("判定色:赤\n");
+                Logger::printf("赤：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+            }
+            else if(range.color == Color::Yellow)
+            {
+                Logger::printf("判定色:黄\n");
+                Logger::printf("黄：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+            }
+            else if(range.color == Color::Blue)
+            {
+                Logger::printf("判定色:青\n");
+                Logger::printf("青：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+            }
+            else if(range.color == Color::Green)
+            {
+                Logger::printf("判定色:緑\n");
+                Logger::printf("緑：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+            }
             return range.color;
         }
     }

@@ -53,7 +53,7 @@ void ArmController::moveArm(int angle)
 void ArmController::moveArmup()
 {
      mArmMotor.setPower(50);
-    tslp_tsk(450*1000);
+    tslp_tsk(350*1000);
 
     mArmMotor.stop();
 }

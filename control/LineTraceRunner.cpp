@@ -7,11 +7,13 @@ LineTraceRunner::LineTraceRunner(
     Motor& leftMotor,
     Motor& rightMotor,
     ColorSensor& colorSensor,
-    PIDCalculator& pidCalculate)
+    PIDCalculator& pidCalculate,
+    TrapezoidCalculator& trapezoidCalculator)
     : mLeftMotor(leftMotor),
       mRightMotor(rightMotor),
       mColorSensor(colorSensor),
       mPIDCalculator(pidCalculate),
+      mTrapezoidCalculator(trapezoidCalculator),
       mTargetSensorValue(50),
       mBaseSpeed(60)
 {
@@ -69,6 +71,8 @@ void LineTraceRunner::setTargetSensorValue(int targetSensorValue)
 void LineTraceRunner::run()
 {
     int turn = 0;
+
+    mBaseSpeed = mTrapezoidCalculator.getSpeed();
 
     // 反射光取得
     int reflection =

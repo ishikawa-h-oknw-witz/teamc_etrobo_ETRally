@@ -16,6 +16,11 @@ const SceneOrder BottleDeliveryStrategy::DetectBottleColor[] =
     {2, static_cast<int>(BottleDetectSceneID::DetectRedBottle),    ActionType::BottleDetect}  // 赤ボトル検知
 };
 
+const SceneOrder BottleDeliveryStrategy::back[] =
+{
+    {0, static_cast<int>(MoveSceneID::back), ActionType::Move}, // ボトル前まで移動
+    {1, static_cast<int>(StopSceneID::stop),ActionType::Stop}  // 停止用
+};
 
 const SceneOrder BottleDeliveryStrategy::EnterZone[] =
 {
@@ -64,10 +69,9 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
 {
     {0, static_cast<int>(LineTraceSceneID::ReturnCurve1),      ActionType::LineTrace}, // Dlv帰還カーブ1
     {1, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
-    {2, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青半分まで
-    {3, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
-    {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
-    {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
+    {2, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
+    {3, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
+    {4, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
 };
 
 BottleDeliveryStrategy::BottleDeliveryStrategy(
@@ -98,43 +102,49 @@ void BottleDeliveryStrategy::execute()
 
     mSkipCount = -1;
 
-    for (int sceneNum = 0; sceneNum < 3; sceneNum++)
-    {
-        const SceneOrder& sceneOrder =
-            DetectBottleColor[sceneNum];
-
-        mSceneManager.setActionType(
-            sceneOrder.actionType);
-
-        mSceneManager.setSceneID(
-            sceneOrder.sceneId);
-
-        Logger::printf(
-            "[BottleDelivery]SceneID=%d\n",
-            sceneOrder.sceneId);
-
-        if (mSceneManager.SceneExecute())
+    while(true){
+        for (int sceneNum = 0; sceneNum < 3; sceneNum++)
         {
-            mSkipCount = sceneNum;
+            const SceneOrder& sceneOrder =
+                DetectBottleColor[sceneNum];
+
+            mSceneManager.setActionType(
+                sceneOrder.actionType);
+
+            mSceneManager.setSceneID(
+                sceneOrder.sceneId);
 
             Logger::printf(
-                "[BottleDelivery]色検知:%s\n",
-                colorName[sceneNum]);
+                "[BottleDelivery]SceneID=%d\n",
+                sceneOrder.sceneId);
 
-            break;
+            if (mSceneManager.SceneExecute())
+            {
+                mSkipCount = sceneNum;
+
+                Logger::printf(
+                    "[BottleDelivery]色検知:%s\n",
+                    colorName[sceneNum]);
+
+                break;
+            }
         }
+
+        // ボトル検知失敗
+        if (mSkipCount < 0)
+        {
+            tslp_tsk(200 * 1000);
+
+            Logger::printf(
+                "[BottleDelivery]ボトル検知失敗\n");
+
+            changeScene(EnterBottle, 1);
+            continue;
+        }
+        break;
     }
 
-    // ボトル検知失敗
-    if (mSkipCount < 0)
-    {
-        tslp_tsk(200 * 1000);
-
-        Logger::printf(
-            "[BottleDelivery]ボトル検知失敗\n");
-
-        changeScene(EnterBottle, 1);
-    }
+    changeScene(back, 1);
 
     // アーム下降
     mArmController.Armreset();
@@ -152,7 +162,7 @@ void BottleDeliveryStrategy::execute()
     changeScene(&ReturnZone[mSkipCount], 0);
 
     //ラリーへ向かう
-    changeScene(EnterRally, 5);
+    changeScene(EnterRally, 4);
 }
 
 

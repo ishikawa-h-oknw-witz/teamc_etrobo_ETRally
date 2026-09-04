@@ -3,6 +3,7 @@
 
 #include "ColorSensor.h"
 #include "PIDCalculator.h"
+#include "TrapezoidCalculator.h"
 #include "Motor.h"
 #include "kernel.h"
 
@@ -21,7 +22,8 @@ public:
         Motor& leftMotor,
         Motor& rightMotor,
         ColorSensor& colorSensor,
-        PIDCalculator& pidController);
+        PIDCalculator& pidController,
+        TrapezoidCalculator& trapezoidCalculate);
 
     //Refllection用キャリブレーション
     void calibrateTargetReflection(int index);
@@ -58,6 +60,8 @@ private:
     ColorSensor& mColorSensor;
 
     PIDCalculator& mPIDCalculator;
+
+    TrapezoidCalculator& mTrapezoidCalculator;
 
     int mTargetSensorValue;
 

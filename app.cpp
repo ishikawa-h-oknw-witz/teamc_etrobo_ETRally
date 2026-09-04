@@ -98,7 +98,8 @@ void main_task(intptr_t exinf)
         leftWheel,
         rightWheel,
         colorSensor,
-        pidCalculator);
+        pidCalculator,
+        trapezoidCalculator);
 
     GyroTraceRunner gyroTraceRunner(
         leftWheel,
@@ -155,79 +156,17 @@ void main_task(intptr_t exinf)
     /* アーム初期位置 */
     armController.Armreset();
 
-    // 1回目の押下
-    /* キャリブレーション用
-    while (!forceSensor.isTouched());
-    tslp_tsk(20 * 1000);
-    while (forceSensor.isTouched());
-
-    lineTraceRunner.calibrateTargetReflection(0);
-    Logger::printf("キャリブレーション１完了\n");
-
-    // 2回目の押下
-    while (!forceSensor.isTouched());
-    tslp_tsk(20 * 1000);
-    while (forceSensor.isTouched());
-
-    lineTraceRunner.calibrateTargetReflection(1);
-    Logger::printf("キャリブレーション２完了\n");
-    */
-
     /* スタート待ち */
     while (!forceSensor.isTouched());
     tslp_tsk(20 * 1000);
     while (forceSensor.isTouched());
 
-    Logger::printf("ビルド更新2");
-
     Logger::printf("[app]スタート\n");
 
-    ColorSensor::HSV hsv;
-    
-    /*
-    while(true){
-        colorSensor.getHSV(hsv);
-        Logger::printf("H=%d S=%d V=%d\n",hsv.h,hsv.s,hsv.v);
-        tslp_tsk(100*1000);
-    }*/
- 
-    /*
-    distanceCalculator.reset();
-    imu.resetHeading();
-    for(int i = 0; i<1; i++)
-    {
-       
-        while(1){
-            float current_heading = imu.getHeading();
- 
-            if (current_heading <= -90)
-            {
-                Logger::printf("%f\n",current_heading);
-                leftWheel.stop();
-                rightWheel.stop();
-                //tslp_tsk(1000*1000);
-                //Logger::printf("%f\n",current_heading);
-                //distanceCalculator.reset();
-                //imu.resetHeading();
-                break;
-            }
- 
-            leftWheel.setPower(-40);
-            rightWheel.setPower(40);
- 
-            tslp_tsk(10*1000);
-        }
-        while(1){
-            float current_heading = imu.getHeading();
-            Logger::printf("%f\n",current_heading);
-            tslp_tsk(1000*1000);
-        }
-    }*/
-
     /* ラップ攻略 */
-    //Logger::printf("[app]ラップ開始\n");
+    Logger::printf("[app]ラップ開始\n");
 
-    //lapStrategy.execute();
+    lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
@@ -236,7 +175,7 @@ void main_task(intptr_t exinf)
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
-
+    
     rallyStrategy.execute();
 
     Logger::printf("[app]終了\n");

@@ -30,6 +30,7 @@ private:
     static const SceneOrder EnterBottle[];
     static const SceneOrder DetectBottleColor[];
     static const SceneOrder EnterZone[];
+    static const SceneOrder back[];
     static const SceneOrder MoveZone[];
     static const SceneOrder CarryZone[];
     static const SceneOrder ReturnZone[];
