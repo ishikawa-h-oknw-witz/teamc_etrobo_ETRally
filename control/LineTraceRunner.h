@@ -25,15 +25,6 @@ public:
         PIDCalculator& pidController,
         TrapezoidCalculator& trapezoidCalculate);
 
-    //Refllection用キャリブレーション
-    void calibrateTargetReflection(int index);
-
-    //Value用キャリブレーション
-    void calibrateTargetValue(int index);
-
-    //キャリブレーション値取得用のゲッター
-    int getTargetSensorValue(int index) const;
-
     //基準速度設定用のセッター
     void setBaseSpeed(int speed);
 
@@ -45,9 +36,6 @@ public:
 
     //Reflectionを使った走行
     void run();
-
-    //Valueを使った走行
-    void vrun();
 
     //停止
     void stop();
@@ -68,9 +56,6 @@ private:
     int mBaseSpeed;
 
     RunnerEdge mEdge = RunnerEdge::RightEdge;
-
-    static const int CALIBRATION_NUM = 2;
-    int mTargetSensorValues[CALIBRATION_NUM];
 };
 
 #endif

@@ -75,33 +75,6 @@ void GyroTraceRunner::turn()
 
     float error = mTargetAngle - currentHeading;
 
-    /*
-    // パルス制御
-    // 誤差が5°以下になったら最低出力で5msだけ旋回し、一旦停止して再度誤差を確認する。
-    // これを繰り返すことで、目標角度付近でのオーバーシュートを抑える。
-    if (abs(error) <= 5)
-    {
-        if (error > 0)
-        {
-            mLeftMotor.setPower(40);
-            mRightMotor.setPower(-40);
-        }
-        else
-        {
-            mLeftMotor.setPower(-40);
-            mRightMotor.setPower(40);
-        }
-
-        tslp_tsk(5 * 1000);
-
-        mLeftMotor.stop();
-        mRightMotor.stop();
-        tslp_tsk(10 * 1000);
-    }
-    */
-
-    // PID制御
-    // 誤差が5°を超える間はPID制御により旋回出力を計算する。
     int turnPower = abs(mPIDCalculator.calculate(error)); 
 
     //PID計算結果が40以上なら40に制限し、30以下なら30に引き上げる

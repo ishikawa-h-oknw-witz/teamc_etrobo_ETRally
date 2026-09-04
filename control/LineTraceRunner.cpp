@@ -19,40 +19,6 @@ LineTraceRunner::LineTraceRunner(
 {
 }
 
-void LineTraceRunner::calibrateTargetReflection(int index)
-{
-    int sum = 0;
-
-    for (int i = 0; i < 10; i++)
-    {
-        sum += mColorSensor.getReflection();
-        tslp_tsk(10 * 1000);
-    }
-
-    mTargetSensorValues[index] = sum / 10;
-    Logger::printf("[LineTraceRunner]目標輝度:%d",mTargetSensorValues[index]);
-}
-
-void LineTraceRunner::calibrateTargetValue(int index)
-{
-    int sum = 0;
-    ColorSensor::HSV hsv;
-
-    for (int i = 0; i < 10; i++)
-    {
-        mColorSensor.getHSV(hsv);
-        sum += hsv.v;
-        tslp_tsk(10*1000);   // 10ms待機
-    }
-
-    mTargetSensorValues[index] = sum / 10;
-}
-
-int LineTraceRunner::getTargetSensorValue(int index) const
-{
-    return mTargetSensorValues[index];
-}
-
 void LineTraceRunner::setBaseSpeed(int speed)
 {
     mBaseSpeed = speed;
@@ -81,31 +47,6 @@ void LineTraceRunner::run()
     // 偏差計算
     int error =
         mTargetSensorValue - reflection;
-
-    // PID制御依頼
-    turn = mPIDCalculator.calculate(error);
-
-    // モータ出力
-    mLeftMotor.setPower(
-        mBaseSpeed - mEdge * turn);
- 
-    mRightMotor.setPower(
-        mBaseSpeed + mEdge * turn);
-
-    tslp_tsk(10*1000);   // 約10ms周期
-}
-
-void LineTraceRunner::vrun()
-{
-    ColorSensor::HSV hsv;
-    int turn = 0;
-
-    // 反射光取得
-    mColorSensor.getHSV(hsv);
-
-    // 偏差計算
-    int error =
-        mTargetSensorValue - hsv.v;
 
     // PID制御依頼
     turn = mPIDCalculator.calculate(error);

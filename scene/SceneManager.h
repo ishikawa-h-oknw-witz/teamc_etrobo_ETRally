@@ -23,8 +23,8 @@ enum class ActionType
 
 enum class CalibrationData
 {
-    BlackWhiteCenter,
-    LineCenter
+    BlackWhiteCenter = 50,  //A走行体なら50、C走行体なら55
+    LineCenter = 45         //A走行体なら45、C走行体なら50
 };
 
 struct LineTraceScene

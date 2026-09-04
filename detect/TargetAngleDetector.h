@@ -12,12 +12,10 @@ public:
         IMU& imu);
 
     void setTargetAngle(float angle);
-    void setAngleTolerance(float tolerance);
 
     bool judge() override;
 
 private:
     IMU mImu;
     float mTargetAngle;
-    float mAngleTolerance;
 };
