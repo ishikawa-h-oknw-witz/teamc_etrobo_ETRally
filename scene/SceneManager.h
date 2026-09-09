@@ -23,20 +23,20 @@ enum class ActionType
 
 enum class CalibrationData
 {
-    BlackWhiteCenter,
-    LineCenter
+    BlackWhiteCenter = 50,  //A走行体なら50、C走行体なら55
+    LineCenter = 45         //A走行体なら45、C走行体なら50
 };
 
 struct LineTraceScene
 {
     int sceneId;
+    TrapezoidParameter trapezoidParameter;
     int targetDistance;
     int speed;
     RunnerEdge edge;
     Color finishColor[7];
     CalibrationData targetSensorValue;
     PID pid;
-    IEventDetector* successEvents[7];
 };
 
 struct MoveScene
@@ -79,7 +79,8 @@ public:
         DistanceCalculator& distanceCalculator,
         TargetDistanceDetector& targetDistanceDetector,
         TargetAngleDetector& targetAngleDetector,
-        TargetColorDetector& targetColorDetector);
+        TargetColorDetector& targetColorDetector,
+        IMU& imu);
 
     int getSceneID();
     void setSceneID(int sceneid);

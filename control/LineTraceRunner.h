@@ -3,6 +3,7 @@
 
 #include "ColorSensor.h"
 #include "PIDCalculator.h"
+#include "TrapezoidCalculator.h"
 #include "Motor.h"
 #include "kernel.h"
 
@@ -21,16 +22,8 @@ public:
         Motor& leftMotor,
         Motor& rightMotor,
         ColorSensor& colorSensor,
-        PIDCalculator& pidController);
-
-    //Refllection用キャリブレーション
-    void calibrateTargetReflection(int index);
-
-    //Value用キャリブレーション
-    void calibrateTargetValue(int index);
-
-    //キャリブレーション値取得用のゲッター
-    int getTargetSensorValue(int index) const;
+        PIDCalculator& pidController,
+        TrapezoidCalculator& trapezoidCalculate);
 
     //基準速度設定用のセッター
     void setBaseSpeed(int speed);
@@ -44,9 +37,6 @@ public:
     //Reflectionを使った走行
     void run();
 
-    //Valueを使った走行
-    void vrun();
-
     //停止
     void stop();
 
@@ -59,14 +49,13 @@ private:
 
     PIDCalculator& mPIDCalculator;
 
+    TrapezoidCalculator& mTrapezoidCalculator;
+
     int mTargetSensorValue;
 
     int mBaseSpeed;
 
     RunnerEdge mEdge = RunnerEdge::RightEdge;
-
-    static const int CALIBRATION_NUM = 2;
-    int mTargetSensorValues[CALIBRATION_NUM];
 };
 
 #endif

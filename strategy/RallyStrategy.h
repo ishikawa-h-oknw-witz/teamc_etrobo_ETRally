@@ -22,4 +22,8 @@ private:
         int maxSceneNum);
 
     Color detectPointColor();
+
+    Color mOld_color = Color::Unknown;
+
+    bool mIsSameBasePoint = false;
 };

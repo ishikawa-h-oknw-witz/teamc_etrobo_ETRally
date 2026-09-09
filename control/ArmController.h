@@ -12,25 +12,14 @@ public:
     ArmController(
         Motor& ArmMotor);
 
-    void setMaxAngle(int maxangle);
-
-    void resetAngle();
-
-    //指定角度にアームを移動
-    void moveArm(int angle);
+    //アームを前向きに制御
+    void moveArmup();
     
-    //最低角度にアームを移動
-    void moveArmDown();
-
-    //最大角度にアームを移動
-    void moveArmUp();
+    //初期角度にアームをリセット
+    void Armreset();
 
 private:
     Motor& mArmMotor;
-
-    int mCurrentAngle;
-
-    int mMaxAngle;
 };
 
 #endif

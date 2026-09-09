@@ -22,6 +22,7 @@
 #include "Motor.h"
 #include "ForceSensor.h"
 #include "ColorSensor.h"
+#include "IMU.h"
 
 // ログ用
 #include "Logger.h"
@@ -59,6 +60,16 @@ void main_task(intptr_t exinf)
 
     Battery battery;
 
+    IMU imu;
+
+    imu.setTilt(51.0f);
+
+    // IMUの初期キャリブレーション待ち
+    while (!imu.isReady())
+    {
+        tslp_tsk(100 * 1000);
+    }
+
     /* 演算 */
     PIDCalculator pidCalculator;
 
@@ -76,7 +87,8 @@ void main_task(intptr_t exinf)
     TargetDistanceDetector targetDistanceDetector(
         distanceCalculator);
 
-    TargetAngleDetector targetAngleDetector;
+    TargetAngleDetector targetAngleDetector(
+        imu);
 
     TargetColorDetector targetColorDetector(
         colorDetector);
@@ -86,14 +98,16 @@ void main_task(intptr_t exinf)
         leftWheel,
         rightWheel,
         colorSensor,
-        pidCalculator);
+        pidCalculator,
+        trapezoidCalculator);
 
     GyroTraceRunner gyroTraceRunner(
         leftWheel,
         rightWheel,
         distanceCalculator,
         pidCalculator,
-        trapezoidCalculator);
+        trapezoidCalculator,
+        imu);
 
     ArmController armController(
         ArmMotor);
@@ -107,7 +121,8 @@ void main_task(intptr_t exinf)
         distanceCalculator,
         targetDistanceDetector,
         targetAngleDetector,
-        targetColorDetector);
+        targetColorDetector,
+        imu);
 
     /* ログ */
     Logger logger(
@@ -139,25 +154,7 @@ void main_task(intptr_t exinf)
         battery.getCurrent());
 
     /* アーム初期位置 */
-    armController.moveArmDown();
-
-    // 1回目の押下
-    /* キャリブレーション用
-    while (!forceSensor.isTouched());
-    tslp_tsk(20 * 1000);
-    while (forceSensor.isTouched());
-
-    lineTraceRunner.calibrateTargetReflection(0);
-    Logger::printf("キャリブレーション１完了\n");
-
-    // 2回目の押下
-    while (!forceSensor.isTouched());
-    tslp_tsk(20 * 1000);
-    while (forceSensor.isTouched());
-
-    lineTraceRunner.calibrateTargetReflection(1);
-    Logger::printf("キャリブレーション２完了\n");
-    */
+    armController.Armreset();
 
     /* スタート待ち */
     while (!forceSensor.isTouched());
@@ -178,7 +175,7 @@ void main_task(intptr_t exinf)
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
-
+    
     rallyStrategy.execute();
 
     Logger::printf("[app]終了\n");

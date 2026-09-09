@@ -8,15 +8,14 @@ using namespace spikeapi;
 class TargetAngleDetector : public IEventDetector
 {
 public:
-    TargetAngleDetector();
+    TargetAngleDetector(
+        IMU& imu);
 
     void setTargetAngle(float angle);
-    void setAngleTolerance(float tolerance);
 
     bool judge() override;
 
 private:
-    IMU mIMU;
+    IMU mImu;
     float mTargetAngle;
-    float mAngleTolerance;
 };

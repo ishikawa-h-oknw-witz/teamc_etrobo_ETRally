@@ -9,7 +9,7 @@ extern "C" {
 #define LOGGER_PRIORITY 6
 
 /* タスク周期の定義 */
-#define LOGGER_PERIOD  (100 * 1000) /* ログタスク:1sec周期 */
+#define LOGGER_PERIOD  (10 * 1000) /* ログタスク:100msec周期 */
 
 #ifndef STACK_SIZE
 #define STACK_SIZE      4096
