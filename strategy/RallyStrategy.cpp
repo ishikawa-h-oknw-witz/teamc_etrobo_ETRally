@@ -268,7 +268,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 1;
+    constexpr int LAP_COUNT = 3;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ

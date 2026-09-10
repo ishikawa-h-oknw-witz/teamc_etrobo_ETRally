@@ -68,7 +68,7 @@ const MoveScene moveScenes[] =
     {12, Direction::back,  {30.0f,  70.0f,  30.0f, 280.0f}, 280, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
     {13, Direction::front, {30.0f,  40.0f,  30.0f, 50.0f}, 50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
     {14, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還1
-    {15, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 470, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還2
+    {15, Direction::front, {70.0f, 100.0f,  30.0f, 480.0f}, 480, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還2
     {16, Direction::front, {70.0f, 100.0f,  30.0f, 750.0f}, 750, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還3
     {17, Direction::front, {70.0f, 100.0f,  30.0f, 1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還4
     {18, Direction::front, {70.0f, 100.0f,  30.0f,1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還5
