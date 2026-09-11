@@ -96,7 +96,7 @@ const GatePosition gatePositions[] =
 {
     {Color::Green, 11},
     {Color::Yellow, 9},
-    {Color::Red, 1},
+    {Color::Blue, 1},
 };
 
 
@@ -223,6 +223,25 @@ const SceneOrder GreenAltProc[] =
     {0, static_cast<int>(LineTraceSceneID::GreenLeftEdgeLineTrace),  ActionType::LineTrace},
     {1, static_cast<int>(MoveSceneID::AltMove),  ActionType::Move},
     {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
+};
+
+const SceneOrder EnterGarageLine[] =
+{
+    {0, static_cast<int>(MoveSceneID::MoveGarageLine), ActionType::Move},
+    {1, static_cast<int>(TurnSceneID::Turn90Left), ActionType::Turn},
+};
+
+const SceneOrder MoveGarageLine[] =
+{
+    {0, static_cast<int>(LineTraceSceneID::EnterGarageGreen), ActionType::LineTrace},
+    {1, static_cast<int>(LineTraceSceneID::EnterGarageYellow), ActionType::LineTrace},
+    {2, static_cast<int>(LineTraceSceneID::EnterGarageRed), ActionType::LineTrace},
+    {3, static_cast<int>(LineTraceSceneID::EnterGarageBlue), ActionType::LineTrace},
+};
+
+const SceneOrder InGarage[] =
+{
+    {0, static_cast<int>(MoveSceneID::MoveInGarage), ActionType::Move},
 };
 
 // 停止
@@ -706,7 +725,7 @@ void RallyStrategy::execute()
     Logger::printf(
         "[Rally]ラリー終了\r\n");
 
-    // finish();
+    finish();
 }
 
 
@@ -726,7 +745,27 @@ void RallyStrategy::updateNextScene()
 
 void RallyStrategy::finish()
 {
-    //
+    changeScene(EnterGarageLine, 1);
+
+    if (gatePositions[2].pointColor == Color::Green)
+    {
+        changeScene(&MoveGarageLine[0], 0);
+    }
+    else if (gatePositions[2].pointColor == Color::Yellow)
+    {
+        changeScene(&MoveGarageLine[1], 0);
+    }
+    else if (gatePositions[2].pointColor == Color::Red)
+    {
+        changeScene(&MoveGarageLine[2], 0);
+    }
+    else
+    {
+        changeScene(&MoveGarageLine[3], 0);
+    }
+
+    changeScene(InGarage, 0);
+    changeScene(stop, 0);
 }
 
 
