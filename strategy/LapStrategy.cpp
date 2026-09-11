@@ -16,7 +16,10 @@ const SceneOrder LapStrategy::LAP[] =
     {11, static_cast<int>(LapLineTraceSceneID::SShape2),   ActionType::LineTrace},  //蛇行2
     {12, static_cast<int>(LapLineTraceSceneID::Straight4), ActionType::LineTrace},  //最後の直線
     {13, static_cast<int>(LapLineTraceSceneID::SlowDown),  ActionType::LineTrace},  //ボトル前の減速
-    {14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
+    {14, static_cast<int>(TurnSceneID::AdjustEnterAngle),    ActionType::Turn},      // 角度調整
+    {15, static_cast<int>(LineTraceSceneID::EnterCurve1),    ActionType::LineTrace}, // ラップ後カーブ1
+    {16, static_cast<int>(LineTraceSceneID::EnterCurve2),    ActionType::LineTrace}, // ラップ後カーブ2
+    //{14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
 };
 
 LapStrategy::LapStrategy(
@@ -27,7 +30,7 @@ LapStrategy::LapStrategy(
 
 void LapStrategy::execute()
 {
-    changeScene(LAP, 14);
+    changeScene(LAP, 16);
 }
 
 void LapStrategy::update(

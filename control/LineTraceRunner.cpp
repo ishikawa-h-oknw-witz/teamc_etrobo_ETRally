@@ -14,7 +14,7 @@ LineTraceRunner::LineTraceRunner(
       mColorSensor(colorSensor),
       mPIDCalculator(pidCalculate),
       mTrapezoidCalculator(trapezoidCalculator),
-      mTargetSensorValue(50),
+      mTargetSensorValue(48),
       mBaseSpeed(60)
 {
 }
@@ -56,7 +56,7 @@ void LineTraceRunner::run()
         mBaseSpeed - mEdge * turn);
  
     mRightMotor.setPower(
-        mBaseSpeed + mEdge * turn);
+        mBaseSpeed + mEdge * turn -4);
 
     tslp_tsk(10*1000);   // 約10ms周期
 }

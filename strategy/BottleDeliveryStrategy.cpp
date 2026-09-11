@@ -8,6 +8,17 @@ const SceneOrder BottleDeliveryStrategy::EnterBottle[] =
     {1, static_cast<int>(StopSceneID::CheckCount),           ActionType::Stop}  // 回数確認用
 };
 
+const SceneOrder BottleDeliveryStrategy::RecoveryBottleDetect[] =
+{
+    {1, static_cast<int>(MoveSceneID::RecoveryBottleDetectFront), ActionType::Move}, // ボトル前まで移動
+    {2, static_cast<int>(StopSceneID::CheckCount),           ActionType::Stop}  // 回数確認用
+};
+
+const SceneOrder BottleDeliveryStrategy::RecoveryBack[] =
+{
+    {0, static_cast<int>(MoveSceneID::RecoveryBottleDetectBack), ActionType::Move},
+    {1, static_cast<int>(StopSceneID::CheckCount),           ActionType::Stop}  // 回数確認用
+};
 
 const SceneOrder BottleDeliveryStrategy::DetectBottleColor[] =
 {
@@ -16,7 +27,7 @@ const SceneOrder BottleDeliveryStrategy::DetectBottleColor[] =
     {2, static_cast<int>(BottleDetectSceneID::DetectRedBottle),    ActionType::BottleDetect}  // 赤ボトル検知
 };
 
-const SceneOrder BottleDeliveryStrategy::back[] =
+const SceneOrder BottleDeliveryStrategy::Back[] =
 {
     {0, static_cast<int>(MoveSceneID::back), ActionType::Move}, // ボトル前まで移動
     {1, static_cast<int>(StopSceneID::stop),ActionType::Stop}  // 停止用
@@ -24,12 +35,9 @@ const SceneOrder BottleDeliveryStrategy::back[] =
 
 const SceneOrder BottleDeliveryStrategy::EnterZone[] =
 {
-    {0, static_cast<int>(TurnSceneID::AdjustEnterAngle),    ActionType::Turn},      // 角度調整
-    {1, static_cast<int>(LineTraceSceneID::EnterCurve1),    ActionType::LineTrace}, // Dlvカーブ1
-    {2, static_cast<int>(LineTraceSceneID::EnterCurve2),    ActionType::LineTrace}, // Dlvカーブ2
-    {3, static_cast<int>(LineTraceSceneID::PassBlueLine),   ActionType::LineTrace}, // Dlv行き青スルー
-    {4, static_cast<int>(LineTraceSceneID::EnterStraight1), ActionType::LineTrace}, // Dlv直線1
-    {5, static_cast<int>(LineTraceSceneID::EnterCurve3),    ActionType::LineTrace}  // Dlvカーブ3
+    //{0, static_cast<int>(LineTraceSceneID::PassBlueLine),   ActionType::LineTrace}, // Dlv行き青スルー
+    {0, static_cast<int>(LineTraceSceneID::EnterStraight1), ActionType::LineTrace}, // Dlv直線1
+    {1, static_cast<int>(LineTraceSceneID::EnterCurve3),    ActionType::LineTrace}  // Dlvカーブ3
 };
 
 
@@ -69,9 +77,10 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
 {
     {0, static_cast<int>(LineTraceSceneID::ReturnCurve1),      ActionType::LineTrace}, // Dlv帰還カーブ1
     {1, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
-    {2, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
-    {3, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
-    {4, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
+    {2, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青線半分まで
+    {3, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
+    {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
+    {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
 };
 
 BottleDeliveryStrategy::BottleDeliveryStrategy(
@@ -86,6 +95,8 @@ BottleDeliveryStrategy::BottleDeliveryStrategy(
 
 void BottleDeliveryStrategy::execute()
 {
+    changeScene(Back, 1);
+
     // アーム上昇
     tslp_tsk(100 * 1000);
 
@@ -102,6 +113,7 @@ void BottleDeliveryStrategy::execute()
 
     mSkipCount = -1;
 
+    bool recoveryflag = false;
     while(true){
         for (int sceneNum = 0; sceneNum < 3; sceneNum++)
         {
@@ -133,24 +145,32 @@ void BottleDeliveryStrategy::execute()
         // ボトル検知失敗
         if (mSkipCount < 0)
         {
+            recoveryflag = true;
+
             tslp_tsk(200 * 1000);
 
             Logger::printf(
                 "[BottleDelivery]ボトル検知失敗\n");
 
-            changeScene(EnterBottle, 1);
+            changeScene(RecoveryBottleDetect, 1);
             continue;
         }
         break;
     }
 
-    changeScene(back, 1);
+    if(recoveryflag)
+    {
+        changeScene(RecoveryBack, 1);
+        recoveryflag = false;
+    }
+
+    changeScene(Back, 1);
 
     // アーム下降
     mArmController.Armreset();
 
     // Dlvカーブ3まで
-    changeScene(EnterZone, 5);
+    changeScene(EnterZone, 1);
 
     // 検知した色のエリアまで移動
     changeScene(&MoveZone[mSkipCount], 0);
@@ -162,7 +182,7 @@ void BottleDeliveryStrategy::execute()
     changeScene(&ReturnZone[mSkipCount], 0);
 
     //ラリーへ向かう
-    changeScene(EnterRally, 4);
+    changeScene(EnterRally, 5);
 }
 
 

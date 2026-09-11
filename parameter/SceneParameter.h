@@ -84,8 +84,10 @@ enum class MoveSceneID
 
     AltMove               =  20,
 
-    MoveGarageLine = 22, //ガレージ線まで
-    MoveInGarage = 23, //ガレージ中まで
+    RecoveryBottleDetectFront = 22,
+    RecoveryBottleDetectBack = 23,
+    MoveGarageLine = 24, //ガレージ線まで
+    MoveInGarage = 25, //ガレージ中まで
 
 };
 
@@ -104,6 +106,7 @@ enum class TurnSceneID
     Turn60Right      = 12, 
     Turn60Left       = 13,
     Turn180Left      = 14,
+    Turn15Right      = 15,
 };
 
 
