@@ -49,6 +49,11 @@ enum class LineTraceSceneID
     RightEdgeLineTrace = 28,   // ラリー基準点までの右エッジ走行用
     LeftEdgeLineTrace  = 29,    // ラリー基準点までの左エッジ走行用
     GreenLeftEdgeLineTrace  = 30,  //同一基準点が緑の場合 
+
+    EnterGarageGreen = 31, //緑からガレージ
+    EnterGarageYellow = 32, //黄からガレージ
+    EnterGarageRed = 33, //赤からガレージ
+    EnterGarageBlue = 34, //青からガレージ
 };
 
 
@@ -81,6 +86,9 @@ enum class MoveSceneID
 
     RecoveryBottleDetectFront = 22,
     RecoveryBottleDetectBack = 23,
+    MoveGarageLine = 24, //ガレージ線まで
+    MoveInGarage = 25, //ガレージ中まで
+
 };
 
 

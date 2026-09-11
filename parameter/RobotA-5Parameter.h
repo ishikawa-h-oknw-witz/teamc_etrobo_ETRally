@@ -44,6 +44,11 @@ const LineTraceScene lineTraceScenes[] =
     {29,  {40.0f, 40.0f,  40.0f,   0.0f}, 0,  40, RunnerEdge::LeftEdge,  {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly左エッジで次の色地点まで
 
     {30,  {40.0f, 40.0f,  40.0f,  150.0f}, 150,  40, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.2f, 0.0f, 0.5f}}, // 今の基準点と次の基準点が同じかつその基準点の色が緑だった場合
+
+    {31,  {30.0f, 50.0f, 30.0f, 250.0f}, 250, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //緑からガレージ
+    {32,  {30.0f, 50.0f, 30.0f, 500.0f}, 500, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //黄からガレージ
+    {33,  {30.0f, 50.0f, 30.0f, 750.0f}, 750, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //赤からガレージ
+    {34,  {30.0f, 50.0f, 30.0f,1000.0f},1000, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
 };
 
 const MoveScene moveScenes[] =
@@ -63,7 +68,7 @@ const MoveScene moveScenes[] =
     {12, Direction::back,  {30.0f,  70.0f,  30.0f, 280.0f}, 280, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
     {13, Direction::front, {30.0f,  40.0f,  30.0f, 50.0f}, 50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
     {14, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還1
-    {15, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還2
+    {15, Direction::front, {70.0f, 100.0f,  30.0f, 480.0f}, 480, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還2
     {16, Direction::front, {70.0f, 100.0f,  30.0f, 750.0f}, 750, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還3
     {17, Direction::front, {70.0f, 100.0f,  30.0f, 1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還4
     {18, Direction::front, {70.0f, 100.0f,  30.0f,1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還5
@@ -72,6 +77,8 @@ const MoveScene moveScenes[] =
     {21, Direction::front, {30.0f, 80.0f,  30.0f, 1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 実験用move
     {22, Direction::front, {40.0f,  40.0f,  40.0f,  20.0f},  20, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
     {23, Direction::back,  {40.0f, 40.0f,   40.0f,  30.0f}, 30, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
+    {24, Direction::front, {30.0f, 80.0f, 30.0f, 600.0f}, 600, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ線まで
+    {25, Direction::front, {30.0f, 50.0f, 30.0f, 150.0f}, 150, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ中まで
 };
 
 const TurnScene turnScenes[] =
