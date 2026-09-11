@@ -7,6 +7,7 @@
 
 // シーンパッケージ
 #include "SceneManager.h"
+#include "CourseParameter.h"
 
 // 制御パッケージ
 #include "LineTraceRunner.h"
@@ -144,6 +145,11 @@ void main_task(intptr_t exinf)
     logger.init();
 
     Logger::printf("[app]接続完了\n");
+
+    Logger::printf(
+        "[app]Course=%s (%d)\n",
+        COURSE_DIRECTION == 1 ? "Left" : "Right",
+        COURSE_DIRECTION);
 
     Logger::printf(
         "[app]出力電圧:%d\n",

@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "RobotParameter.h"
+#include "CourseParameter.h"
 #include "Logger.h"
 
 namespace
@@ -143,8 +144,11 @@ void SceneManager::setParameter()
             linetracescene.pid.ki,
             linetracescene.pid.kd);
 
-        // エッジ
-        mLineTraceRunner.setEdge(linetracescene.edge);
+        // Leftコース基準のエッジを、選択したコースへ変換する。
+        // RunnerEdgeはLeftEdge=1、RightEdge=-1。
+        const RunnerEdge courseEdge = static_cast<RunnerEdge>(
+            static_cast<int>(linetracescene.edge) * COURSE_DIRECTION);
+        mLineTraceRunner.setEdge(courseEdge);
 
         // 目標輝度
         /*
@@ -211,6 +215,8 @@ void SceneManager::setParameter()
     case ActionType::Turn:
     {
         const TurnScene& turnscene = turnScenes[mSceneId];
+        const float courseTargetAngle =
+            turnscene.targetAngle * COURSE_DIRECTION;
 
         //PID
         mPIDCalculator.setGain(
@@ -218,10 +224,11 @@ void SceneManager::setParameter()
             turnscene.pid.ki,
             turnscene.pid.kd);
         
-        if (turnscene.targetAngle != 0)
+        if (courseTargetAngle != 0)
         {
-            mGyroTraceRunner.setTargetAngle(turnscene.targetAngle);
-            mTargetAngleDetector.setTargetAngle(turnscene.targetAngle);
+            // 旋回制御と終了判定で、同じ反転後の角度を使用する。
+            mGyroTraceRunner.setTargetAngle(courseTargetAngle);
+            mTargetAngleDetector.setTargetAngle(courseTargetAngle);
             mEventDetector = &mTargetAngleDetector;
         }
 
