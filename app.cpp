@@ -141,7 +141,7 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager);
 
     /* 初期化 */
-    logger.init();
+    //logger.init();
 
     Logger::printf("[app]接続完了\n");
 
@@ -166,12 +166,12 @@ void main_task(intptr_t exinf)
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
-    lapStrategy.execute();
+    //lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
 
-    bottleDeliveryStrategy.execute();
+    //bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
