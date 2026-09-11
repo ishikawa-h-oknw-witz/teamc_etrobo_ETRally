@@ -75,10 +75,12 @@ void GyroTraceRunner::turn()
 
     float error = mTargetAngle - currentHeading;
 
-    int turnPower = abs(mPIDCalculator.calculate(error)); 
+    int turnPower = 30;
+    //int turnPower = abs(mPIDCalculator.calculate(error)); 
 
     //PID計算結果が40以上なら40に制限し、30以下なら30に引き上げる
     //上限を決めるのは安定させるため、下限を決めるのは走行体のスタックを防ぐため
+    /*
     if (turnPower > 45)
     {
         turnPower = 45;
@@ -86,16 +88,16 @@ void GyroTraceRunner::turn()
 
     if (turnPower < 30) //最低動作出力
     {
-        turnPower = 30;
-    }
+        turnPower = 45;
+    }*/
 
     if (error > 0) {
         mLeftMotor.setPower(turnPower);
-        mRightMotor.setPower(-turnPower+4);
+        mRightMotor.setPower(-turnPower);
     }
     else {
         mLeftMotor.setPower(-turnPower);
-        mRightMotor.setPower(turnPower-8);    //A-5走行体の場合　-8
+        mRightMotor.setPower(turnPower);    //A-5走行体の場合　-8
     }
     tslp_tsk(10*1000);
 }

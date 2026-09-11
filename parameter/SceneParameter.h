@@ -79,6 +79,8 @@ enum class MoveSceneID
 
     AltMove               =  20,
 
+    RecoveryBottleDetectFront = 22,
+    RecoveryBottleDetectBack = 23,
 };
 
 
@@ -96,6 +98,7 @@ enum class TurnSceneID
     Turn60Right      = 12, 
     Turn60Left       = 13,
     Turn180Left      = 14,
+    Turn15Right      = 15,
 };
 
 
