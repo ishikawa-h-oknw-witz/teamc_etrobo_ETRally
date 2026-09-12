@@ -3,18 +3,20 @@
 
 static constexpr ColorHSVRange mColorHSVRanges[] =
 {
-    { Color::Red,      0, 29,0,100,0,100 },
-    { Color::Red,    280,360,0,100,0,100 },
-    { Color::Blue,   200,279,41,100,0,100 },
-    { Color::Yellow,  30,79, 0,100,0,100 },
-    { Color::Green,   80,175,0,100,0,100 },
+    { Color::Red,      0, 29,0,120,0,100 },
+    { Color::Red,    280,360,0,120,0,100 },
+    { Color::Blue,   180,279,41,100,35,100 },
+    { Color::Yellow,  30,159, 0,100,0,100 },
+    { Color::Green,   160,179,0,100,0,100 },
     { Color::Gray,     0,360, 0, 30,35, 89 },
-    { Color::Black,    0,360, 0,100, 0, 30 },
+    { Color::Black,    0,360, 0, 40, 0, 34 },
     { Color::White,    0,360, 0, 30,90,100 }
 };
 
-ColorDetector::ColorDetector(ColorSensor& sensor)
-    : mColorSensor(sensor)
+ColorDetector::ColorDetector(ColorSensor& sensor,
+                             Light& light)
+    : mColorSensor(sensor),
+      mLight(light)
 {
 }
 
@@ -23,6 +25,7 @@ Color ColorDetector::detect()
     ColorSensor::HSV hsv;
     mColorSensor.getHSV(hsv);
 
+    Logger::printf("今だけ：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
     for (const auto& range : mColorHSVRanges)
     {
         if (hsv.h >= range.hMin && hsv.h <= range.hMax &&
@@ -33,25 +36,30 @@ Color ColorDetector::detect()
             {
                 Logger::printf("判定色:赤\n");
                 Logger::printf("赤：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+                mLight.turnOnColor(Light::EColor::RED);
             }
             else if(range.color == Color::Yellow)
             {
                 Logger::printf("判定色:黄\n");
                 Logger::printf("黄：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+                mLight.turnOnColor(Light::EColor::YELLOW);
             }
             else if(range.color == Color::Blue)
             {
                 Logger::printf("判定色:青\n");
                 Logger::printf("青：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+                mLight.turnOnColor(Light::EColor::BLUE);
             }
             else if(range.color == Color::Green)
             {
                 Logger::printf("判定色:緑\n");
                 Logger::printf("緑：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
+                mLight.turnOnColor(Light::EColor::GREEN);
             }
             return range.color;
         }
     }
 
+    mLight.turnOnColor(Light::EColor::BLACK);
     return Color::Unknown;   // または適切なデフォルト
 }
