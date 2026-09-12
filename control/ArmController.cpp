@@ -10,7 +10,7 @@ ArmController::ArmController(
 void ArmController::moveArmup()
 {
      mArmMotor.setPower(50);
-    tslp_tsk(350*1000);
+    tslp_tsk(330*1000);
 
     mArmMotor.stop();
 }

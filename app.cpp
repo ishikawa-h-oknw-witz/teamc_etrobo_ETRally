@@ -37,6 +37,9 @@
 // LED
 #include "Light.h"
 
+// フロントディスプレイ
+#include "Display.h"
+
 using namespace spikeapi;
 
 /* メインタスク */
@@ -66,6 +69,8 @@ void main_task(intptr_t exinf)
     IMU imu;
 
     Light light;
+  
+    Display display;
 
     imu.setTilt(51.0f);
 
@@ -158,6 +163,9 @@ void main_task(intptr_t exinf)
     Logger::printf(
         "[app]出力電流:%d\n",
         battery.getCurrent());
+ 
+    /* 出力電圧表示(上位2桁：8335=8 3) */
+    display.showNumber(battery.getVoltage() / 100);
 
     /* アーム初期位置 */
     armController.Armreset();
