@@ -24,13 +24,7 @@
 #include "ForceSensor.h"
 #include "ColorSensor.h"
 #include "IMU.h"
-
-// Hub内蔵ボタンと5×5ディスプレイ（SPIKE-RT C API）
-extern "C"
-{
-#include <spike/hub/button.h>
-#include <spike/hub/display.h>
-}
+#include "Button.h"
 
 // ログ用
 #include "Logger.h"
@@ -43,117 +37,6 @@ extern "C"
 #include "Battery.h"
 
 using namespace spikeapi;
-
-// CourseParameter.hのextern宣言に対応する、全ファイル共通のコース係数。
-int COURSE_DIRECTION = DEFAULT_COURSE_DIRECTION;
-
-namespace
-{
-constexpr int START_POLL_INTERVAL_US = 20 * 1000;
-constexpr int REQUIRED_STABLE_SAMPLES = 2;
-
-void showCourseSelection()
-{
-    const char courseLetter = COURSE_DIRECTION == 1 ? 'L' : 'R';
-    const pbio_error_t result = hub_display_char(courseLetter);
-
-    Logger::printf(
-        "[app]Course=%c (%d)\n",
-        courseLetter,
-        COURSE_DIRECTION);
-
-    if (result != PBIO_SUCCESS)
-    {
-        Logger::printf(
-            "[app]Course display failed: %d\n",
-            static_cast<int>(result));
-    }
-}
-
-void waitForStartAndSelectCourse(ForceSensor& forceSensor)
-{
-    int candidateDirection = COURSE_DIRECTION;
-    int stableButtonSamples = 0;
-    int stableStartSamples = 0;
-    bool startPressed = false;
-
-    showCourseSelection();
-    Logger::printf(
-        "[app]Left button: L / Right button: R / Force sensor: Start\n");
-
-    while (true)
-    {
-        // フォースセンサーの押下が確定するまではコースを選択できる。
-        if (!startPressed)
-        {
-            hub_button_t pressed = static_cast<hub_button_t>(0);
-            if (hub_button_is_pressed(&pressed) == PBIO_SUCCESS)
-            {
-                const bool leftPressed = (pressed & HUB_BUTTON_LEFT) != 0;
-                const bool rightPressed = (pressed & HUB_BUTTON_RIGHT) != 0;
-
-                // 両方押された場合・どちらも押されていない場合は選択を維持。
-                if (leftPressed != rightPressed)
-                {
-                    const int selectedDirection = leftPressed ? 1 : -1;
-                    if (selectedDirection != candidateDirection)
-                    {
-                        candidateDirection = selectedDirection;
-                        stableButtonSamples = 1;
-                    }
-                    else if (stableButtonSamples < REQUIRED_STABLE_SAMPLES)
-                    {
-                        ++stableButtonSamples;
-                    }
-
-                    // 短い接点の揺れを除き、長押しではログ・表示を繰り返さない。
-                    if (stableButtonSamples >= REQUIRED_STABLE_SAMPLES &&
-                        COURSE_DIRECTION != candidateDirection)
-                    {
-                        COURSE_DIRECTION = candidateDirection;
-                        showCourseSelection();
-                    }
-                }
-                else
-                {
-                    stableButtonSamples = 0;
-                }
-            }
-            else
-            {
-                // ボタンを取得できなかった回の値は使用しない。
-                stableButtonSamples = 0;
-            }
-        }
-
-        const bool touched = forceSensor.isTouched();
-        if (!startPressed)
-        {
-            stableStartSamples = touched ? stableStartSamples + 1 : 0;
-            if (stableStartSamples >= REQUIRED_STABLE_SAMPLES)
-            {
-                startPressed = true;
-                stableStartSamples = 0;
-            }
-        }
-        else
-        {
-            stableStartSamples = !touched ? stableStartSamples + 1 : 0;
-            if (stableStartSamples >= REQUIRED_STABLE_SAMPLES)
-            {
-                break;
-            }
-        }
-
-        tslp_tsk(START_POLL_INTERVAL_US);
-    }
-
-    Logger::printf(
-        "[app]Course confirmed=%s (%d)\n",
-        COURSE_DIRECTION == 1 ? "Left" : "Right",
-        COURSE_DIRECTION);
-}
-} // namespace
 
 /* メインタスク */
 void main_task(intptr_t exinf)
@@ -180,6 +63,8 @@ void main_task(intptr_t exinf)
     Battery battery;
 
     IMU imu;
+
+    Button button;
 
     imu.setTilt(51.0f);
 
@@ -275,20 +160,29 @@ void main_task(intptr_t exinf)
     /* アーム初期位置 */
     armController.Armreset();
 
-    /* コースを選択し、フォースセンサーを押して離すまで待つ */
-    waitForStartAndSelectCourse(forceSensor);
+    /*中央ボタンが押されると確定*/
+    while (!button.isCenterPressed())
+    {
+        if (button.isLeftPressed())
+        {
+        }
+    }
+    /* スタート待ち */
+    while (!forceSensor.isTouched());
+    tslp_tsk(20 * 1000);
+    while (forceSensor.isTouched());
 
     Logger::printf("[app]スタート\n");
 
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
-    lapStrategy.execute();
+    //lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
 
-    bottleDeliveryStrategy.execute();
+    //bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
