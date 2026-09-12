@@ -75,7 +75,7 @@ void GyroTraceRunner::turn()
 
     float error = mTargetAngle - currentHeading;
 
-    int turnPower = 30;
+    int turnPower = 40;
     //int turnPower = abs(mPIDCalculator.calculate(error)); 
 
     //PID計算結果が40以上なら40に制限し、30以下なら30に引き上げる

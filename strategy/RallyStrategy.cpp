@@ -94,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Green, 11},
-    {Color::Yellow, 9},
-    {Color::Blue, 1},
+    {Color::Yellow, 10},
+    {Color::Red, 7},
+    {Color::Yellow, 13},
 };
 
 

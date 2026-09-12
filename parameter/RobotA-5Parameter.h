@@ -23,7 +23,7 @@ const LineTraceScene lineTraceScenes[] =
     {11,  {80.0f, 80.0f, 80.0f,  900.0f}, 900,  80, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 0.4f}}, // Lap蛇行2
     {12,  {80.0f, 100.0f, 70.0f,  900.0f}, 900, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Lap直線4
     {13,  {70.0f, 70.0f,  30.0f,  280.0f}, 280,  70, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Lap減速
-    {14,  {30.0f, 70.0f,  40.0f,  600.0f}, 600,  60, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // ラップ後カーブ1
+    {14,  {30.0f, 70.0f,  40.0f,  600.0f}, 600,  60, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.8f, 0.0f, 0.4f}}, // ラップ後カーブ1
     {15,  {40.0f, 40.0f,  40.0f,  400.0f}, 400,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // ラップ後カーブ2
 
     {16,  {40.0f, 40.0f,  30.0f,  100.0f}, 100,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv最初の青スルー
