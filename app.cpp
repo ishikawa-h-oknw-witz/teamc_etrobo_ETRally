@@ -34,6 +34,9 @@
 // バッテリー
 #include "Battery.h"
 
+// LED
+#include "Light.h"
+
 // フロントディスプレイ
 #include "Display.h"
 
@@ -65,6 +68,8 @@ void main_task(intptr_t exinf)
 
     IMU imu;
 
+    Light light;
+  
     Display display;
 
     imu.setTilt(51.0f);
@@ -87,7 +92,8 @@ void main_task(intptr_t exinf)
 
     /* 検出 */
     ColorDetector colorDetector(
-        colorSensor);
+        colorSensor,
+        light);
 
     TargetDistanceDetector targetDistanceDetector(
         distanceCalculator);
@@ -163,6 +169,8 @@ void main_task(intptr_t exinf)
 
     /* アーム初期位置 */
     armController.Armreset();
+
+    light.turnOff();
 
     /* スタート待ち */
     while (!forceSensor.isTouched());
