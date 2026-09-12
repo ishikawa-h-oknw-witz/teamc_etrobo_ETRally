@@ -34,6 +34,9 @@
 // バッテリー
 #include "Battery.h"
 
+// LED
+#include "Light.h"
+
 using namespace spikeapi;
 
 /* メインタスク */
@@ -62,6 +65,8 @@ void main_task(intptr_t exinf)
 
     IMU imu;
 
+    Light light;
+
     imu.setTilt(51.0f);
 
     // IMUの初期キャリブレーション待ち
@@ -82,7 +87,8 @@ void main_task(intptr_t exinf)
 
     /* 検出 */
     ColorDetector colorDetector(
-        colorSensor);
+        colorSensor,
+        light);
 
     TargetDistanceDetector targetDistanceDetector(
         distanceCalculator);

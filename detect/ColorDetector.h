@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ColorSensor.h"
+#include "Light.h"
 
 using namespace spikeapi;
 
@@ -34,10 +35,12 @@ struct ColorHSVRange
 class ColorDetector
 {
 public:
-    ColorDetector(ColorSensor& sensor);
+    ColorDetector(ColorSensor& sensor,
+                  Light& light);
 
     Color detect();
 
 private:
     ColorSensor& mColorSensor;
+    Light& mLight;
 };
