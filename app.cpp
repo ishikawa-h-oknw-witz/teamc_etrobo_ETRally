@@ -147,7 +147,7 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager);
 
     /* 初期化 */
-    logger.init();
+    //logger.init();
 
     Logger::printf("[app]接続完了\n");
 
@@ -161,6 +161,8 @@ void main_task(intptr_t exinf)
 
     /* アーム初期位置 */
     armController.Armreset();
+
+    light.turnOff();
 
     /* スタート待ち */
     while (!forceSensor.isTouched());
