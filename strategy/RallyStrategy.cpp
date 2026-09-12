@@ -94,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Blue,  3},
-    {Color::Red, 9},
-    {Color::Yellow, 11},
+    {Color::Yellow,  10},
+    {Color::Red, 7},
+    {Color::Green, 4},
 };
 
 
@@ -764,7 +764,7 @@ void RallyStrategy::finish()
         changeScene(&MoveGarageLine[3], 0);
     }
 
-    changeScene(InGarage, 0);
+    //changeScene(InGarage, 0);
     changeScene(stop, 0);
 }
 

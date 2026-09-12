@@ -31,11 +31,11 @@ const LineTraceScene lineTraceScenes[] =
     {18,  {30.0f, 30.0f,  30.0f,  200.0f}, 200,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlvカーブ3
     {19,  {30.0f, 80.0f,  50.0f,  300.0f}, 300,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // 黄ボトル位置まで
     {20,  {30.0f, 100.0f, 50.0f,  550.0f}, 550,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // 青ボトル位置まで
-    {21,  {30.0f, 100.0f, 50.0f,  800.0f}, 800,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // 赤ボトル位置まで
+    {21,  {30.0f, 100.0f, 50.0f,  850.0f}, 850,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // 赤ボトル位置まで
 
     {22,  {30.0f, 80.0f,  50.0f,  400.0f}, 400,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv帰還直線 黄
     {23,  {30.0f, 80.0f, 50.0f,  650.0f}, 650,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv帰還直線 青
-    {24,  {30.0f, 100.0f, 50.0f,  900.0f}, 900,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv帰還直線 赤
+    {24,  {30.0f, 100.0f, 50.0f,  950.0f}, 950,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv帰還直線 赤
     {25,  {30.0f, 30.0f,  30.0f,  200.0f}, 200,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlv帰還カーブ1
     {26,  {30.0f, 100.0f, 30.0f, 1200.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv基準線下まで
     {27,  {40.0f, 40.0f,  30.0f,  70.0f}, 70,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
@@ -43,12 +43,12 @@ const LineTraceScene lineTraceScenes[] =
     {28,  {35.0f, 35.0f,  35.0f,   0.0f}, 0,  40, RunnerEdge::RightEdge, {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // Rly右エッジで次の色地点まで
     {29,  {35.0f, 35.0f,  35.0f,   0.0f}, 0,  40, RunnerEdge::LeftEdge,  {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // Rly左エッジで次の色地点まで
 
-    {30,  {40.0f, 40.0f,  40.0f,  150.0f}, 150,  40, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // 今の基準点と次の基準点が同じかつその基準点の色が緑だった場合
+    {30,  {40.0f, 40.0f,  40.0f,  130.0f}, 130,  40, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // 今の基準点と次の基準点が同じかつその基準点の色が緑だった場合
 
-    {31,  {30.0f, 50.0f, 30.0f, 230.0f}, 230, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //緑からガレージ
-    {32,  {30.0f, 50.0f, 30.0f, 430.0f}, 430, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //黄からガレージ
-    {33,  {30.0f, 50.0f, 30.0f, 650.0f}, 650, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //赤からガレージ
-    {34,  {30.0f, 50.0f, 30.0f, 850.0f}, 850, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
+    {31,  {30.0f, 50.0f, 30.0f, 200.0f}, 200, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //緑からガレージ
+    {32,  {30.0f, 50.0f, 30.0f, 430.0f}, 400, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //黄からガレージ
+    {33,  {30.0f, 50.0f, 30.0f, 650.0f}, 600, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //赤からガレージ
+    {34,  {30.0f, 50.0f, 30.0f, 850.0f}, 800, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
 };
 
 const MoveScene moveScenes[] =
@@ -65,7 +65,7 @@ const MoveScene moveScenes[] =
     { 9, Direction::front, {70.0f,  80.0f,  30.0f, 300.0f}, 300, {Color::None}, {4.0f, 0.0f, 1.0f}}, // Rlyゲートを通過
     {10, Direction::front, {80.0f,  80.0f,  80.0f,   0.0f},   0, {Color::Green, Color::Yellow, Color::Red, Color::Blue},{1.0f, 0.0f, 0.0f}}, //基準点帰還
     {11, Direction::front, {30.0f,  50.0f,  50.0f, 100.0f}, 100, {Color::None}, {5.0f, 0.0f, 1.0f}}, // Rly目標外の基準点を通過
-    {12, Direction::back,  {30.0f,  70.0f,  30.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
+    {12, Direction::back,  {30.0f,  70.0f,  30.0f, 280.0f}, 280, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
     {13, Direction::front, {30.0f,  40.0f,  30.0f, 50.0f}, 50, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
     {14, Direction::front, {70.0f,  80.0f,  30.0f, 250.0f}, 250, {Color::None}, {5.0f, 0.0f, 1.0f}}, // 帰還1
     {15, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {5.0f, 0.0f, 1.0f}}, // 帰還2
@@ -77,7 +77,7 @@ const MoveScene moveScenes[] =
     {21, Direction::front, {30.0f, 80.0f,  30.0f, 1250.0f},1250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 実験用move
     {22, Direction::front, {40.0f,  40.0f,  40.0f,  20.0f},  20, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
     {23, Direction::back,  {40.0f, 40.0f,   40.0f,  30.0f}, 30, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
-    {24, Direction::front, {30.0f, 80.0f, 30.0f, 580.0f}, 580, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ線まで
+    {24, Direction::front, {30.0f, 80.0f, 30.0f, 600.0f}, 600, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ線まで
     {25, Direction::front, {30.0f, 50.0f, 30.0f, 150.0f}, 150, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ中まで
 };
 
@@ -92,7 +92,7 @@ const TurnScene turnScenes[] =
     {6,-150, {1.0f, 0.0f, 0.0f}}, //L150°
     {7, 150, {1.0f, 0.0f, 0.0f}}, //R150°
     {8, 180, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {9, -15, {1.0f, 0.0f, 0.0f}}, //左15°
+    {9, -10, {1.0f, 0.0f, 0.0f}}, //左10°
     {10, 45, {1.0f, 0.0f, 0.0f}}, //右45°
     {11,-45, {1.0f, 0.0f, 0.0f}},  //左45°
     {12, 60, {1.0f, 0.0f, 0.0f}}, //右60°
