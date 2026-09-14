@@ -153,7 +153,7 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager);
 
     /* 初期化 */
-    //logger.init();
+    logger.init();
 
     Logger::printf("[app]接続完了\n");
 
