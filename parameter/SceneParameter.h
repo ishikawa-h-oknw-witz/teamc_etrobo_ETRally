@@ -54,6 +54,7 @@ enum class LineTraceSceneID
     EnterGarageYellow = 32, //黄からガレージ
     EnterGarageRed = 33, //赤からガレージ
     EnterGarageBlue = 34, //青からガレージ
+    GrageLineTrace = 35,  //ガレージの前の線に復帰
 };
 
 
@@ -88,6 +89,7 @@ enum class MoveSceneID
     RecoveryBottleDetectBack = 23,
     MoveGarageLine = 24, //ガレージ線まで
     MoveInGarage = 25, //ガレージ中まで
+    MoveException = 26, //ポールをよけるための例外移動
 
 };
 
