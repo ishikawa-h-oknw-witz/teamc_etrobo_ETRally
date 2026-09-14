@@ -90,6 +90,10 @@ enum class MoveSceneID
     MoveGarageLine = 24, //ガレージ線まで
     MoveInGarage = 25, //ガレージ中まで
     MoveException = 26, //ポールをよけるための例外移動
+    EnterGarageGreen = 27, //緑からガレージ
+    EnterGarageYellow = 28, //黄からガレージ
+    EnterGarageRed = 29, //赤からガレージ
+    EnterGarageBlue = 30, //青からガレージ
 
 };
 

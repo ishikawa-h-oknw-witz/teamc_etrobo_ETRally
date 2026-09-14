@@ -94,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Yellow,  13},
-    {Color::Red, 8},
-    {Color::Blue, 4},
+    {Color::Yellow, 12},
+    {Color::Yellow, 6},
+    {Color::Blue, 10},
 };
 
 
@@ -233,10 +233,10 @@ const SceneOrder EnterGarageLine[] =
 
 const SceneOrder MoveGarageLine[] =
 {
-    {0, static_cast<int>(LineTraceSceneID::EnterGarageGreen), ActionType::LineTrace},
-    {1, static_cast<int>(LineTraceSceneID::EnterGarageYellow), ActionType::LineTrace},
-    {2, static_cast<int>(LineTraceSceneID::EnterGarageRed), ActionType::LineTrace},
-    {3, static_cast<int>(LineTraceSceneID::EnterGarageBlue), ActionType::LineTrace},
+    {0, static_cast<int>(MoveSceneID::EnterGarageGreen), ActionType::Move},
+    {1, static_cast<int>(MoveSceneID::EnterGarageYellow), ActionType::Move},
+    {2, static_cast<int>(MoveSceneID::EnterGarageRed), ActionType::Move},
+    {3, static_cast<int>(MoveSceneID::EnterGarageBlue), ActionType::Move},
 };
 
 const SceneOrder YellowException[] =
@@ -275,7 +275,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 1;
+    constexpr int LAP_COUNT = 3;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -305,6 +305,17 @@ void RallyStrategy::execute()
 
         for (int gateIndex = 0; gateIndex < gatePositionCount; gateIndex++)
         {
+            // 直前のゲートと目標基準点が同じなら、このゲートは攻略しない
+            if (gateIndex == 1 &&
+                gatePositions[0].pointColor == gatePositions[1].pointColor)
+            {
+                Logger::printf(
+                    "Skip Gate. GateIndex=%d\r\n",
+                    gateIndex);
+
+                continue;
+            }
+
             const GatePosition& gate = gatePositions[gateIndex];
 
             Logger::printf(
@@ -622,46 +633,40 @@ void RallyStrategy::execute()
             //   Gate 13 → Gate 3
             // --------------------------------------------
 
-            const bool hasNextGate = (gateIndex + 1 < gatePositionCount);
+            const Color returnedPointColor = mOld_color;
 
+            int nextGateIndex = gateIndex + 1;
+
+            // 1つ目と2つ目の基準点が同じ場合、2つ目をスキップ
+            if (gateIndex == 0 &&
+                gatePositionCount >= 3 &&
+                gatePositions[0].pointColor == gatePositions[1].pointColor)
+            {
+                nextGateIndex = 2;
+            }
+
+            const bool hasNextGate = (nextGateIndex < gatePositionCount);
             const bool hasNextLap = (lap + 1 < LAP_COUNT);
 
-            // 最終周の最後のゲートなら終了
+            // 今の周の最後まで来ていて、次の周がある場合
+            if (!hasNextGate && hasNextLap)
+            {
+                nextGateIndex = 0;
+            }
+
+            // 今の周が最後で、次のゲートもない場合
             if (!hasNextGate && !hasNextLap)
             {
                 continue;
             }
 
-            // ----------------------------------------------------
-            // 帰還した基準点の色を4色判定
-            // ----------------------------------------------------
-
-            const Color returnedPointColor = mOld_color;
-            //detectPointColor();
-
-            // ----------------------------------------------------
-            // 次に攻略するゲートを決定
-            //
-            // 同じ周の途中
-            //   gateIndex + 1
-            //
-            // 周の最後
-            //   次周の gateIndex 0
-            // ----------------------------------------------------
-
-            const int nextGateIndex =
-                hasNextGate
-                ? gateIndex + 1
-                : 0;
-
-
-            const Color nextPointColor = gatePositions[nextGateIndex].pointColor;
+            const Color nextPointColor =
+                gatePositions[nextGateIndex].pointColor;
 
             Logger::printf(
                 "[Rally]次のゲート=%d\r\n",
                 gatePositions[
                     nextGateIndex].gatePositionNum);
-
 
             // ----------------------------------------------------
             // 次の基準点へ向かうエッジを決定
@@ -759,7 +764,6 @@ void RallyStrategy::finish()
 
     changeScene(EnterGarageLine, 1);
 
-    /*
     if (gatePositions[2].pointColor == Color::Green)
     {
         changeScene(&MoveGarageLine[0], 0);
@@ -775,9 +779,7 @@ void RallyStrategy::finish()
     else
     {
         changeScene(&MoveGarageLine[3], 0);
-    }*/
-
-    changeScene(InGarage, 0);
+    }
     changeScene(stop, 0);
 }
 
