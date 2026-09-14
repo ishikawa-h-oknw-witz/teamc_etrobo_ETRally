@@ -94,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Yellow,  10},
-    {Color::Red, 7},
-    {Color::Green, 4},
+    {Color::Yellow,  13},
+    {Color::Red, 8},
+    {Color::Blue, 4},
 };
 
 
@@ -239,9 +239,16 @@ const SceneOrder MoveGarageLine[] =
     {3, static_cast<int>(LineTraceSceneID::EnterGarageBlue), ActionType::LineTrace},
 };
 
+const SceneOrder YellowException[] =
+{
+    {0, static_cast<int>(TurnSceneID::Turn90Left), ActionType::Turn},
+    {1, static_cast<int>(MoveSceneID::MoveException), ActionType::Move},
+    {2, static_cast<int>(TurnSceneID::Turn90Right), ActionType::Turn},
+};
+
 const SceneOrder InGarage[] =
 {
-    {0, static_cast<int>(MoveSceneID::MoveInGarage), ActionType::Move},
+    {0, static_cast<int>(LineTraceSceneID::GrageLineTrace), ActionType::LineTrace},
 };
 
 // 停止
@@ -268,7 +275,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 2;
+    constexpr int LAP_COUNT = 1;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -745,8 +752,14 @@ void RallyStrategy::updateNextScene()
 
 void RallyStrategy::finish()
 {
+    if (gatePositions[2].pointColor == Color::Yellow)
+    {
+        changeScene(YellowException, 2);
+    }
+
     changeScene(EnterGarageLine, 1);
 
+    /*
     if (gatePositions[2].pointColor == Color::Green)
     {
         changeScene(&MoveGarageLine[0], 0);
@@ -762,9 +775,9 @@ void RallyStrategy::finish()
     else
     {
         changeScene(&MoveGarageLine[3], 0);
-    }
+    }*/
 
-    //changeScene(InGarage, 0);
+    changeScene(InGarage, 0);
     changeScene(stop, 0);
 }
 
