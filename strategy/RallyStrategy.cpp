@@ -1,5 +1,6 @@
 #include "RallyStrategy.h"
 #include "Logger.h"
+#include "kernel.h"
 
 namespace
 {
@@ -111,6 +112,11 @@ const SceneOrder EnterPoint[] =
     {1, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
 };
 
+// 次の基準点までMove
+const SceneOrder MoveBasePoint[] =
+{
+    {0, static_cast<int>(MoveSceneID::MoveBasepoint), ActionType::Move},
+};
 
 // 目標基準点の中央まで移動
 const SceneOrder MovePointCenter[] =
@@ -351,7 +357,7 @@ void RallyStrategy::execute()
                 while(true)
                 {
                     changeScene(&EnterPoint[nowEdgeIndex],0);
-
+                    //changeScene(MoveBasePoint,0);
                     changeScene(stop,0);
 
                     // ------------------------------------------------

@@ -8,6 +8,7 @@ namespace
     constexpr int COLOR_SAMPLE_COUNT = 10;
     constexpr int COLOR_REQUIRED_MATCH_COUNT = 6;
     constexpr int COLOR_SAMPLE_INTERVAL_MS = 1;
+    constexpr int CONTROL_INTERVAL_MS = 4;
     constexpr int MAX_SCENE_CONTROL_CYCLES = 3000;
 }
 
@@ -118,7 +119,7 @@ bool SceneManager::SceneExecute()
         default:
             break;
         }
-        tslp_tsk(10*1000);
+        tslp_tsk(CONTROL_INTERVAL_MS * 1000);
         controlCycleCount++;
     }
 
