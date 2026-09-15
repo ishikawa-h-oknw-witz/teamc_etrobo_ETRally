@@ -45,13 +45,12 @@ const LineTraceScene lineTraceScenes[] =
 
     {30,  {40.0f, 40.0f,  40.0f,  130.0f}, 130,  40, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // 今の基準点と次の基準点が同じかつその基準点の色が緑だった場合
 
+    /*現在は使っていない。ガレージをライントレースで成立させたいときに使用*/
     {31,  {30.0f, 60.0f, 50.0f, 250.0f}, 250, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //緑からガレージ
     {32,  {30.0f, 60.0f, 50.0f, 250.0f}, 250, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //黄からガレージ
     {33,  {30.0f, 60.0f, 50.0f, 700.0f}, 700, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //赤からガレージ
     {34,  {30.0f, 60.0f, 50.0f, 950.0f}, 950, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
     {35,  {30.0f, 50.0f, 50.0f,   0.0f},   0, 30, RunnerEdge::RightEdge, {Color::White}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //ガレージ中に移動
-    {36,  {35.0f, 35.0f,  35.0f, 100.0f}, 100,  40, RunnerEdge::RightEdge, {Color::None},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly右エッジで次の色5cm前まで
-    {37,  {35.0f, 35.0f,  35.0f, 100.0f}, 100,  40, RunnerEdge::LeftEdge,  {Color::None},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly左エッジで次の色5cm前まで
 };
 
 const MoveScene moveScenes[] =
@@ -81,32 +80,41 @@ const MoveScene moveScenes[] =
     {22, Direction::front, {40.0f,  40.0f,  40.0f,  20.0f},  20, {Color::None}, {2.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
     {23, Direction::back,  {40.0f, 40.0f,   40.0f,  30.0f}, 30, {Color::None}, {2.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
     {24, Direction::front, {30.0f, 80.0f, 30.0f, 580.0f}, 580, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ガレージ線まで
-    {25, Direction::front, {50.0f, 50.0f, 50.0f, 0.0f}, 0, {Color::White}, {2.0f, 0.0f, 0.0f}}, //ガレージ中まで
+    {25, Direction::front, {50.0f, 50.0f, 50.0f, 0.0f}, 0, {Color::White}, {2.0f, 0.0f, 0.0f}}, //ガレージ中まで。現在未使用。
     {26, Direction::front, {30.0f, 50.0f, 30.0f, 200.0f}, 200, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ポールをよけるための移動
-    {27, Direction::front, {30.0f, 70.0f, 50.0f, 250.0f}, 250, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ポールをよけるための移動
-    {28, Direction::front, {30.0f, 70.0f, 50.0f, 250.0f}, 250, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ポールをよけるための移動
-    {29, Direction::front, {30.0f, 100.0f, 50.0f, 700.0f}, 700, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ポールをよけるための移動
-    {30, Direction::front, {30.0f, 100.0f, 50.0f, 950.0f}, 950, {Color::None}, {2.0f, 0.0f, 0.0f}}, //ポールをよけるための移動
+    /*現在使用中。ガレージをジャイロトレースで成立させる。*/
+    {27, Direction::front, {30.0f, 70.0f, 50.0f, 250.0f}, 250, {Color::None}, {2.0f, 0.0f, 0.0f}}, //緑からガレージ
+    {28, Direction::front, {30.0f, 70.0f, 50.0f, 250.0f}, 250, {Color::None}, {2.0f, 0.0f, 0.0f}}, //黄からガレージ
+    {29, Direction::front, {30.0f, 100.0f, 50.0f, 700.0f}, 700, {Color::None}, {2.0f, 0.0f, 0.0f}}, //赤からガレージ
+    {30, Direction::front, {30.0f, 100.0f, 50.0f, 950.0f}, 950, {Color::None}, {2.0f, 0.0f, 0.0f}}, //青からガレージ
 };
 
 const TurnScene turnScenes[] =
 {
-    {0,   0, {1.0f, 0.0f, 0.0f}}, //正面
-    {1,  90, {1.0f, 0.0f, 0.0f}}, //R90°
-    {2, -90, {1.0f, 0.0f, 0.0f}}, //L90°
-    {3, -60, {1.0f, 0.0f, 0.0f}}, //L60°
-    {4, -30, {1.0f, 0.0f, 0.0f}}, //L30°
-    {5,  30, {1.0f, 0.0f, 0.0f}}, //R30°
-    {6,-150, {1.0f, 0.0f, 0.0f}}, //L150°
-    {7, 150, {1.0f, 0.0f, 0.0f}}, //R150°
-    {8, 180, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {9, -10, {1.0f, 0.0f, 0.0f}}, //左10°
-    {10, 45, {1.0f, 0.0f, 0.0f}}, //右45°
-    {11,-45, {1.0f, 0.0f, 0.0f}},  //左45°
-    {12, 60, {1.0f, 0.0f, 0.0f}}, //右60°
-    {13,-60, {1.0f, 0.0f, 0.0f}},  //左60°
-    {14,-180, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {15, 15, {1.0f, 0.0f, 0.0f}}, //右15°
+    {0,    0, {1.0f, 0.0f, 0.0f}}, // 正面
+
+    {1,  -180, {1.0f, 0.0f, 0.0f}}, // 左180°
+    {2,   180, {1.0f, 0.0f, 0.0f}}, // 右180°
+
+    {3,  -150, {1.0f, 0.0f, 0.0f}}, // 左150°
+    {4,   150, {1.0f, 0.0f, 0.0f}}, // 右150°
+
+    {5,   -90, {1.0f, 0.0f, 0.0f}}, // 左90°
+    {6,    90, {1.0f, 0.0f, 0.0f}}, // 右90°
+
+    {7,   -60, {1.0f, 0.0f, 0.0f}}, // 左60°
+    {8,    60, {1.0f, 0.0f, 0.0f}}, // 右60°
+
+    {9,   -45, {1.0f, 0.0f, 0.0f}}, // 左45°
+    {10,   45, {1.0f, 0.0f, 0.0f}}, // 右45°
+
+    {11,  -30, {1.0f, 0.0f, 0.0f}}, // 左30°
+    {12,   30, {1.0f, 0.0f, 0.0f}}, // 右30°
+
+    {13,  -15, {1.0f, 0.0f, 0.0f}}, // 左15°
+    {14,   15, {1.0f, 0.0f, 0.0f}}, // 右15°
+
+    {15,  -10, {1.0f, 0.0f, 0.0f}}, // 左10°
 };
 
 const BottleDetectScene bottleDetectScenes[] =
