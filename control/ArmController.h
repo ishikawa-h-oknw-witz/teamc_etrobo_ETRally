@@ -1,8 +1,6 @@
-#ifndef ARM_CONTROLLER_H
-#define ARM_CONTROLLER_H
+#pragma once
 
 #include "Motor.h"
-#include "kernel.h"
 
 using namespace spikeapi;
 
@@ -21,5 +19,3 @@ public:
 private:
     Motor& mArmMotor;
 };
-
-#endif

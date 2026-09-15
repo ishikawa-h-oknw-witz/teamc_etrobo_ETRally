@@ -1,12 +1,10 @@
-#ifndef GYRO_TRACE_RUNNER_H
-#define GYRO_TRACE_RUNNER_H
+#pragma once
 
 #include "Motor.h"
 #include "DistanceCalculator.h"
 #include "PIDCalculator.h"
 #include "TrapezoidCalculator.h"
 #include "IMU.h"
-#include "Clock.h"
 
 using namespace spikeapi;
 
@@ -47,9 +45,7 @@ private:
     PIDCalculator& mPIDCalculator;
     TrapezoidCalculator& mTrapezoidCalculator;
     IMU& mImu;
-    Clock mClock;
     int mBaseSpeed;
     float mTargetAngle;
     Direction mDirection;
 };
-#endif

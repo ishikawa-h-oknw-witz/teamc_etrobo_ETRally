@@ -2,6 +2,7 @@
 #include "RobotParameter.h"
 #include "CourseParameter.h"
 #include "Logger.h"
+#include "kernel.h"
 
 namespace
 {

@@ -34,7 +34,6 @@ void GyroTraceRunner::setTargetAngle(float targetAngle)
 void GyroTraceRunner::move()
 {
     // 毎周期、台形加減速で算出した正の速度から設定し直す
-    // （前回の後退時に負へ変換した値を次周期へ持ち越さない）
     mBaseSpeed = mTrapezoidCalculator.getSpeed();
 
     // 後退の場合は速度を負にする
@@ -46,6 +45,7 @@ void GyroTraceRunner::move()
     float heading = mImu.getHeading();
     
     // 目標角度は0°
+    // 絶対角度にするときはこの目標角度をメンバにしてセットするようにする
     float error = 0.0f - heading;
     float correction = mPIDCalculator.calculate(error);
 
@@ -58,15 +58,14 @@ void GyroTraceRunner::move()
     mLeftMotor.setPower(leftPower);
     if(rightPower >= 0)
     {
-        mRightMotor.setPower(rightPower-3); //A-5走行体の場合　-3
+        mRightMotor.setPower(rightPower);   //バイアスが必要ならここに-
     }
     else
     {
-        mRightMotor.setPower(rightPower); //A-5走行体の場合　+3
+        mRightMotor.setPower(rightPower);   //バイアスが必要ならここに+
     }
     
-    
-    tslp_tsk(10*1000);
+    //tslp_tsk(10*1000);
 }
 
 void GyroTraceRunner::turn()
