@@ -37,6 +37,8 @@ public:
     //Reflectionを使った走行
     void run();
 
+    void vrun();
+
     //停止
     void stop();
 

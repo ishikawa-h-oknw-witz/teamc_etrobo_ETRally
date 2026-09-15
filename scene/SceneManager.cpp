@@ -11,6 +11,8 @@ namespace
     constexpr int MAX_SCENE_CONTROL_CYCLES = 3000;
 }
 
+static bool UltSonic = false;
+
 //コンストラクタ
 SceneManager::SceneManager(
     LineTraceRunner& lineTraceRunner,
@@ -21,7 +23,8 @@ SceneManager::SceneManager(
     TargetDistanceDetector& targetDistanceDetector,
     TargetAngleDetector& targetAngleDetector,
     TargetColorDetector& targetColorDetector,
-    IMU& imu
+    IMU& imu,
+    UltrasonicSensor& ultrasonicDetector
     )
     : mLineTraceRunner(lineTraceRunner),
       mGyroTraceRunner(gyroTraceRunner),
@@ -32,6 +35,7 @@ SceneManager::SceneManager(
       mTargetAngleDetector(targetAngleDetector),
       mTargetColorDetector(targetColorDetector),
       mImu(imu),
+      mUltrasonicDetector(ultrasonicDetector),
       mSceneId(0),
       mEventDetector(nullptr)
 {
@@ -98,6 +102,12 @@ bool SceneManager::SceneExecute()
             Logger::printf("Scene timeout. SceneID=%d\r\n", mSceneId);
             mGyroTraceRunner.stop();
             return false;
+        }
+
+        if (UltSonic == true && 
+            mUltrasonicDetector.getDistance() != -1)
+        {
+            return true;
         }
 
         // 走行実行
@@ -224,6 +234,11 @@ void SceneManager::setParameter()
             turnscene.pid.ki,
             turnscene.pid.kd);
         
+        if (turnscene.ultSonic != false)
+        {
+            UltSonic = turnscene.ultSonic;
+        }
+
         if (courseTargetAngle != 0)
         {
             // 旋回制御と終了判定で、同じ反転後の角度を使用する。

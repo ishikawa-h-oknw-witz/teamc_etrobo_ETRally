@@ -251,6 +251,15 @@ const SceneOrder InGarage[] =
     {0, static_cast<int>(LineTraceSceneID::GrageLineTrace), ActionType::LineTrace},
 };
 
+const SceneOrder Sumou[] =
+{
+    {0, 4,  ActionType::Turn},
+    {1, 26, ActionType::Move},
+    {2, 16, ActionType::Turn},
+    {3, 9,  ActionType::Turn},
+    {4, 27, ActionType::Move},
+};
+
 // 停止
 const SceneOrder stop[] =
 {
@@ -737,6 +746,49 @@ void RallyStrategy::execute()
     Logger::printf(
         "[Rally]ラリー終了\r\n");
 
+    changeScene(&RejoinTurn[0], 0);
+
+    while(true)
+    {
+        Color detectedPointColor = Color::Unknown;
+
+        changeScene(&EnterPoint[nowEdgeIndex],0);
+
+        changeScene(stop,0);
+
+        // ------------------------------------------------
+        // 4色を順番に判定
+        // ------------------------------------------------
+
+        detectedPointColor = detectPointColor();
+
+        // ------------------------------------------------
+        // 目標基準点なら中央まで移動
+        // それ以外なら通過
+        // ------------------------------------------------
+
+        if (detectedPointColor == Color::Blue)
+        {
+            mOld_color = detectedPointColor;
+
+            if (changeScene(Sumou,4))
+            {
+                break;
+            }
+        }
+        else if(detectedPointColor == Color::Unknown)
+        {
+            continue;
+        }
+        else
+        {
+            if (changeScene(PassPoint,0))
+            {
+                continue;
+            }
+        }
+    }
+    
     finish();
 }
 
