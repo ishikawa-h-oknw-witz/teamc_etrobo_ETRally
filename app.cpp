@@ -36,6 +36,12 @@
 // バッテリー
 #include "Battery.h"
 
+// LED
+#include "Light.h"
+
+// フロントディスプレイ
+#include "Display.h"
+
 using namespace spikeapi;
 
 /* メインタスク */
@@ -64,6 +70,10 @@ void main_task(intptr_t exinf)
 
     IMU imu;
 
+    Light light;
+  
+    Display display;
+
     Button button;
 
     imu.setTilt(51.0f);
@@ -86,7 +96,8 @@ void main_task(intptr_t exinf)
 
     /* 検出 */
     ColorDetector colorDetector(
-        colorSensor);
+        colorSensor,
+        light);
 
     TargetDistanceDetector targetDistanceDetector(
         distanceCalculator);
@@ -145,9 +156,14 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager);
 
     /* 初期化 */
-    logger.init();
+    //logger.init();
 
     Logger::printf("[app]接続完了\n");
+
+    Logger::printf(
+        "[app]Course=%s (%d)\n",
+        COURSE_DIRECTION == 1 ? "Left" : "Right",
+        COURSE_DIRECTION);
 
     Logger::printf(
         "[app]出力電圧:%d\n",
@@ -156,17 +172,41 @@ void main_task(intptr_t exinf)
     Logger::printf(
         "[app]出力電流:%d\n",
         battery.getCurrent());
-
-    /* アーム初期位置 */
-    armController.Armreset();
-
+ 
     /*中央ボタンが押されると確定*/
     while (!button.isCenterPressed())
     {
         if (button.isLeftPressed())
         {
+            COURSE_DIRECTION = 1;
+        }
+        else if (button.isRightPressed())
+        {
+            COURSE_DIRECTION = -1;
+        }
+
+        if (COURSE_DIRECTION == 1)
+        {
+            display.showChar('L');
+        }
+        else if (COURSE_DIRECTION == -1)
+        {
+            display.showChar('R');
+        }
+        else
+        {
+            display.showChar('X');
         }
     }
+
+    /* 出力電圧表示(上位2桁：8335=8 3) */
+    display.showNumber(battery.getVoltage() / 100);
+
+    /* アーム初期位置 */
+    armController.Armreset();
+
+    light.turnOff();
+
     /* スタート待ち */
     while (!forceSensor.isTouched());
     tslp_tsk(20 * 1000);
@@ -177,12 +217,12 @@ void main_task(intptr_t exinf)
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
-    //lapStrategy.execute();
+    lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
 
-    //bottleDeliveryStrategy.execute();
+    bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
