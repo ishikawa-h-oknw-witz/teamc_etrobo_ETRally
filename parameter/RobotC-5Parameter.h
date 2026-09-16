@@ -90,24 +90,33 @@ const MoveScene moveScenes[] =
 
 const TurnScene turnScenes[] =
 {
-    {0,   0, false, false, {1.0f, 0.0f, 0.0f}}, //正面
-    {1,  90, false, false, {1.0f, 0.0f, 0.0f}}, //R90°
-    {2, -90, false, false, {1.0f, 0.0f, 0.0f}}, //L90°
-    {3, -60, false, false, {1.0f, 0.0f, 0.0f}}, //L60°
-    {4, -30, false, false, {1.0f, 0.0f, 0.0f}}, //L30°
-    {5,  30, false, false, {1.0f, 0.0f, 0.0f}}, //R30°
-    {6,-150, false, false, {1.0f, 0.0f, 0.0f}}, //L150°
-    {7, 150, false, false, {1.0f, 0.0f, 0.0f}}, //R150°
-    {8, 180, false, false, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {9, -10, false, false, {1.0f, 0.0f, 0.0f}}, //左15°
-    {10, 45, false, false, {1.0f, 0.0f, 0.0f}}, //右45°
-    {11,-45, false, false, {1.0f, 0.0f, 0.0f}},  //左45°
-    {12, 60, false, false, {1.0f, 0.0f, 0.0f}}, //右60°
-    {13,-60, false, false, {1.0f, 0.0f, 0.0f}},  //左60°
-    {14,-180, false, false, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {15, 15, false, false, {1.0f, 0.0f, 0.0f}}, //右15°
+    {0,    0, false, false, {1.0f, 0.0f, 0.0f}}, // 正面
+
+    {1,  -180, false, false, {1.0f, 0.0f, 0.0f}}, // 左180°
+    {2,   180, false, false, {1.0f, 0.0f, 0.0f}}, // 右180°
+
+    {3,  -150, false, false, {1.0f, 0.0f, 0.0f}}, // 左150°
+    {4,   150, false, false, {1.0f, 0.0f, 0.0f}}, // 右150°
+
+    {5,   -90, false, false, {1.0f, 0.0f, 0.0f}}, // 左90°
+    {6,    90, false, false, {1.0f, 0.0f, 0.0f}}, // 右90°
+
+    {7,   -60, false, false, {1.0f, 0.0f, 0.0f}}, // 左60°
+    {8,    60, false, false, {1.0f, 0.0f, 0.0f}}, // 右60°
+
+    {9,   -45, false, false, {1.0f, 0.0f, 0.0f}}, // 左45°
+    {10,   45, false, false, {1.0f, 0.0f, 0.0f}}, // 右45°
+
+    {11,  -30, false, false, {1.0f, 0.0f, 0.0f}}, // 左30°
+    {12,   30, false, false, {1.0f, 0.0f, 0.0f}}, // 右30°
+
+    {13,  -15, false, false, {1.0f, 0.0f, 0.0f}}, // 左15°
+    {14,   15, false, false, {1.0f, 0.0f, 0.0f}}, // 右15°
+
+    {15,  -10, false, false, {1.0f, 0.0f, 0.0f}}, // 左10°
+
     {16,-360, true, false, {1.0f, 0.0f, 0.0f}}, //測距1
-    {17, 0, false, true, {1.0f, 0.0f, 0.0f}}, //測距1
+    {17, 0, false, true, {1.0f, 0.0f, 0.0f}} //測距1
 };
 
 const BottleDetectScene bottleDetectScenes[] =

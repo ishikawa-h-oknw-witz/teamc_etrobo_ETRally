@@ -102,7 +102,7 @@ private:
     TargetDistanceDetector& mTargetDistanceDetector;
     TargetAngleDetector& mTargetAngleDetector;
     TargetColorDetector& mTargetColorDetector;
-    IMU mImu;
+    IMU& mImu;
     UltrasonicSensor& mUltrasonicDetector;
     int mSceneId;
     ActionType mActionType;
