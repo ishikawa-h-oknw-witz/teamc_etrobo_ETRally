@@ -1,18 +1,87 @@
 #include "ColorDetector.h"
 #include "Logger.h"
 
-static constexpr ColorHSVRange mColorHSVRanges[] =
+#include <cmath>
+
+// ============================================================
+// 各色の基準となるHSV値
+//
+// カラーセンサーで実際に各色を測定し、代表的なHSV値を設定する。
+// detect()では、センサーから取得したHSV値と各基準値との距離を計算し、
+// 最も近い色を判定結果とする。
+//
+// hWeight / sWeight / vWeight は、
+// H・S・Vのどの値を判定で重視するかを表す重み。
+// 値が大きいほど、その項目の差が距離に強く影響する。
+//
+// H：色相（Hue）
+// S：彩度（Saturation）
+// V：明度（Value）
+// ============================================================
+static constexpr ColorHSVReference mColorReferences[] =
 {
-    { Color::Red,      0, 29, 40,120,0,100 },
-    { Color::Red,    280,360, 40,120,0,100 },
-    { Color::Blue,   180,279, 40,100,35,100 },
-    { Color::Yellow,  30,129, 40,100,0,100 },
-    { Color::Green,   130,179,40,100,0,100 },
-    { Color::Gray,     0,360, 0, 30,35, 89 },
-    { Color::Black,    0,360, 0, 40, 0, 34 },
-    { Color::White,    0,360, 0, 30,90,100 }
+    // 色              H , S, V, hWeight, sWeight, vWeight
+    // --------------------------------------------------------
+
+    // --------------------------------------------------------
+    // 無彩色
+    //
+    // 黒・灰・白は彩度(S)が低いため、Sだけでは区別しにくい。
+    // そのため、H・S・Vをバランスよく使用する。
+    // --------------------------------------------------------
+    { Color::Black,   220,  37,  9, 1.0, 0.5, 0.5 },
+    { Color::White,   200,  30, 99, 1.0, 0.5, 0.5 },
+    { Color::Gray,    210,  27, 73, 1.0, 0.5, 0.5 },
+
+    // --------------------------------------------------------
+    // 有彩色
+    //
+    // Green / Yellow は今回の測定環境では誤判定しやすいため、
+    // 色相(H)を強めに評価する。
+    //
+    // Vは照明やセンサーと対象物との距離などの影響を
+    // 受けやすいため、Green / Yellowでは重みを小さくしている。
+    // --------------------------------------------------------
+    { Color::Green,   150,  79, 64, 2.5, 1.0, 1.0 },
+    { Color::Yellow,   51,  64, 99, 1.0, 1.0, 1.0 },
+
+    // Red / BlueはH・S・Vを比較的バランスよく評価する。
+    { Color::Red,     351,  94, 92, 1.0, 0.5, 0.5 },
+    { Color::Blue,    212,  96, 65, 1.0, 2.0, 0.5 }
 };
 
+
+// ============================================================
+// H(色相)の距離を計算する
+//
+// Hは0～360度の円形になっている。
+// そのため、例えば359度と1度は、
+// 単純な引き算では358度離れているように見えるが、
+// 実際には2度しか離れていない。
+//
+// そこで、180度を超える場合は、
+// 反対方向から回った距離を使用する。
+// ============================================================
+static double hueDistance(int h1, int h2)
+{
+    // まず通常の差を計算する。
+    int diff = std::abs(h1 - h2);
+
+    // 180度を超える場合は、360度側からの距離を使用する。
+    if (diff > 180)
+    {
+        diff = 360 - diff;
+    }
+
+    return static_cast<double>(diff);
+}
+
+
+// ============================================================
+// コンストラクタ
+//
+// カラーセンサーとLEDライトをColorDetectorに登録する。
+// ============================================================
 ColorDetector::ColorDetector(ColorSensor& sensor,
                              Light& light)
     : mColorSensor(sensor),
@@ -20,46 +89,316 @@ ColorDetector::ColorDetector(ColorSensor& sensor,
 {
 }
 
+
+// ============================================================
+// HSV同士の距離を計算する
+//
+// 現在のセンサー値と、基準色のHSV値との差を計算する。
+//
+// H・S・Vはそれぞれ値の範囲が異なるため、
+// そのまま比較すると各項目の影響度が偏ってしまう。
+//
+// そこで、
+//   H：0～180
+//   S：0～100
+//   V：0～100
+//
+// となるように正規化してから距離を計算する。
+//
+// また、H・S・Vそれぞれに重みを掛けることで、
+// 色ごとに重要な項目を強く評価できる。
+// ============================================================
+double ColorDetector::calculateDistance(
+    const ColorSensor::HSV& hsv,
+    const ColorHSVReference& reference)
+{
+    // --------------------------------------------------------
+    // 現在値と基準値の差を計算
+    // --------------------------------------------------------
+
+    // Hは0度と360度がつながっているため、
+    // 通常の引き算ではなくhueDistance()を使用する。
+    double dh = hueDistance(hsv.h, reference.h);
+
+    // S(彩度)の差
+    double ds = std::abs(hsv.s - reference.s);
+
+    // V(明度)の差
+    double dv = std::abs(hsv.v - reference.v);
+
+
+    // --------------------------------------------------------
+    // 正規化
+    //
+    // Hは最大180度の差になるため180で割る。
+    // SとVは0～100なので100で割る。
+    //
+    // これにより、H・S・Vを同じようなスケールで
+    // 比較できるようにする。
+    // --------------------------------------------------------
+    dh /= 180.0;
+    ds /= 100.0;
+    dv /= 100.0;
+
+
+    // --------------------------------------------------------
+    // 重み付きユークリッド距離を計算
+    //
+    // 距離が小さいほど、現在のHSV値が
+    // 基準色のHSV値に近いことを意味する。
+    //
+    // hWeight / sWeight / vWeight によって、
+    // 色ごとにH・S・Vの重要度を調整する。
+    // --------------------------------------------------------
+    return std::sqrt(
+        reference.hWeight * dh * dh +
+        reference.sWeight * ds * ds +
+        reference.vWeight * dv * dv
+    );
+}
+
+
+// ============================================================
+// 判定結果に応じてLEDを点灯する
+//
+// 赤・黄・青・緑の場合は、判定した色のLEDを点灯する。
+// 黒・白・灰・Unknownなど、対応するLED色がない場合は
+// LEDを黒色にする。
+// ============================================================
+void ColorDetector::setLight(Color color)
+{
+    switch (color)
+    {
+    case Color::Red:
+        mLight.turnOnColor(Light::EColor::RED);
+        break;
+
+    case Color::Yellow:
+        mLight.turnOnColor(Light::EColor::YELLOW);
+        break;
+
+    case Color::Blue:
+        mLight.turnOnColor(Light::EColor::BLUE);
+        break;
+
+    case Color::Green:
+        mLight.turnOnColor(Light::EColor::GREEN);
+        break;
+
+    default:
+        // 対応するLED色がない場合は消灯相当として黒を指定する。
+        mLight.turnOnColor(Light::EColor::BLACK);
+        break;
+    }
+}
+
+
+// ============================================================
+// 色を判定する
+//
+// 以下の手順で色を判定する。
+//
+// 1. カラーセンサーからHSV値を取得
+// 2. Vが極端に低い場合は黒と判断
+// 3. 彩度(S)が低い場合は、黒・灰・白をVで判定
+// 4. 彩度(S)が十分に高い場合は、有彩色を距離計算で判定
+// 5. 最も近い色と2番目に近い色を比較
+// 6. 判定結果の信頼性が低い場合はUnknownとする
+// 7. 判定結果に応じてLEDを点灯する
+// ============================================================
 Color ColorDetector::detect()
 {
+    // --------------------------------------------------------
+    // 色判定の閾値
+    // --------------------------------------------------------
+
+    // 最小距離がこの値より大きい場合、
+    // どの基準色にも十分近くないと判断してUnknownとする。
+    constexpr double UNKNOWN_DISTANCE = 0.7;
+
+    // 最も近い色と2番目に近い色の距離差が
+    // この値未満の場合、2色の判別が難しいと判断する。
+    constexpr double MIN_DISTANCE_GAP = 0.05;
+
+
+    // --------------------------------------------------------
+    // カラーセンサーからHSV値を取得
+    // --------------------------------------------------------
     ColorSensor::HSV hsv;
     mColorSensor.getHSV(hsv);
 
-    Logger::printf("今だけ：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
-    for (const auto& range : mColorHSVRanges)
+
+    // --------------------------------------------------------
+    // 判定結果と距離を初期化
+    // --------------------------------------------------------
+
+    // 最初はUnknownとしておく。
+    Color nearestColor = Color::Unknown;
+
+    // 有彩色の距離計算を行う場合に使用する初期値。
+    //
+    // 最初の色が見つかるとminDistanceが更新され、
+    // その後2番目に近い色がmin2ndDistanceに保存される。
+    double minDistance = UNKNOWN_DISTANCE;
+    double min2ndDistance = UNKNOWN_DISTANCE;
+
+
+    // ========================================================
+    // 極端に暗い場合
+    // ========================================================
+    //
+    // Vが3未満の場合は、センサー値がほぼ0であり、
+    // 色相や彩度による判定を行う必要がないため、
+    // この場合はUnknownのままとする。
+    //
+    // ※ V=0を黒として扱いたい場合は、
+    //     nearestColor = Color::Black;
+    // に変更する。
+    // ========================================================
+    if (!(hsv.v < 3))
     {
-        if (hsv.h >= range.hMin && hsv.h <= range.hMax &&
-            hsv.s >= range.sMin && hsv.s <= range.sMax &&
-            hsv.v >= range.vMin && hsv.v <= range.vMax)
+        // ====================================================
+        // 無彩色の判定
+        // ====================================================
+        //
+        // Sが35未満の場合、色味が弱いため
+        // 有彩色としての距離計算は行わない。
+        //
+        // 黒・灰・白はVの値によって判定する。
+        // ====================================================
+        if (hsv.s < 35)
         {
-            if(range.color == Color::Red)
+            // Vが20未満なら黒
+            if (hsv.v < 20)
             {
-                Logger::printf("判定色:赤\n");
-                Logger::printf("赤：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
-                mLight.turnOnColor(Light::EColor::RED);
+                nearestColor = Color::Black;
             }
-            else if(range.color == Color::Yellow)
+
+            // Vが20以上80未満なら灰色
+            else if (hsv.v < 80)
             {
-                Logger::printf("判定色:黄\n");
-                Logger::printf("黄：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
-                mLight.turnOnColor(Light::EColor::YELLOW);
+                nearestColor = Color::Gray;
             }
-            else if(range.color == Color::Blue)
+
+            // Vが80以上なら白
+            else
             {
-                Logger::printf("判定色:青\n");
-                Logger::printf("青：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
-                mLight.turnOnColor(Light::EColor::BLUE);
+                nearestColor = Color::White;
             }
-            else if(range.color == Color::Green)
+        }
+        else
+        {
+            // ====================================================
+            // 有彩色の判定
+            // ====================================================
+            //
+            // Sが十分に高い場合は、
+            // Black / Gray / Whiteを候補から除外し、
+            // Green / Yellow / Red / Blueだけを比較する。
+            // ====================================================
+            for (const auto& reference : mColorReferences)
             {
-                Logger::printf("判定色:緑\n");
-                Logger::printf("緑：H=%d,S=%d,V=%d\n",hsv.h,hsv.s,hsv.v);
-                mLight.turnOnColor(Light::EColor::GREEN);
+                // 無彩色はここでは判定対象にしない。
+                if (reference.color == Color::Black ||
+                    reference.color == Color::Gray ||
+                    reference.color == Color::White)
+                {
+                    continue;
+                }
+
+                // 現在のHSV値と基準色との距離を計算する。
+                const double distance =
+                    calculateDistance(hsv, reference);
+
+
+                // ------------------------------------------------
+                // 最も近い色を更新
+                // ------------------------------------------------
+                if (distance < minDistance)
+                {
+                    // 今までの1位を2位へ移動する。
+                    min2ndDistance = minDistance;
+
+                    // 新しい距離を1位として保存する。
+                    minDistance = distance;
+
+                    // 最も近い色を保存する。
+                    nearestColor = reference.color;
+                }
+
+                // ------------------------------------------------
+                // 2番目に近い色を更新
+                // ------------------------------------------------
+                else if (distance < min2ndDistance)
+                {
+                    min2ndDistance = distance;
+                }
             }
-            return range.color;
+
+
+            // ====================================================
+            // 判定結果の信頼性を確認
+            // ====================================================
+
+            // 1位と2位の距離差を計算する。
+            //
+            // 距離差が大きいほど、1位の色が明確。
+            // 距離差が小さいほど、2色の判別が難しい。
+            const double distanceGap =
+                std::abs(min2ndDistance - minDistance);
+
+
+            // ----------------------------------------------------
+            // Unknown判定
+            // ----------------------------------------------------
+            //
+            // ① 最も近い色でも距離が大きすぎる
+            //    → どの色にも十分近くない
+            //
+            // ② 1位と2位の距離差が小さい
+            //    → 2色の判別が難しい
+            //
+            // どちらかに該当した場合はUnknownとする。
+            // ----------------------------------------------------
+            if (minDistance > UNKNOWN_DISTANCE ||
+                distanceGap < MIN_DISTANCE_GAP)
+            {
+                nearestColor = Color::Unknown;
+            }
         }
     }
 
-    mLight.turnOnColor(Light::EColor::BLACK);
-    return Color::Unknown;   // または適切なデフォルト
+
+    // ========================================================
+    // 判定結果をログ出力
+    // ========================================================
+    //
+    // color : 判定結果
+    // d     : 最も近い色との距離
+    // d2    : 2番目に近い色との距離
+    // gap   : 1位と2位の距離差
+    // HSV   : センサーから取得したHSV値
+    // ========================================================
+    Logger::printf(
+        "color=%d d=%f d2=%f gap=%f HSV=%d,%d,%d\n",
+        static_cast<int>(nearestColor),
+        minDistance,
+        min2ndDistance,
+        std::abs(min2ndDistance - minDistance),
+        hsv.h,
+        hsv.s,
+        hsv.v
+    );
+
+
+    // ========================================================
+    // 判定結果に応じてLEDを点灯
+    // ========================================================
+    setLight(nearestColor);
+
+
+    // ========================================================
+    // 判定結果を返す
+    // ========================================================
+    return nearestColor;
 }

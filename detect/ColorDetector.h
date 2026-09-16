@@ -5,31 +5,32 @@
 
 using namespace spikeapi;
 
+
+
 enum class Color
-{
-    None,
-    Black,
-    White,
-    Gray,
-    Green,
-    Yellow,
-    Red,
-    Blue,
-    Unknown
+{ 
+    Black = 0,  //  黒
+    White = 1,  //  白
+    Gray = 2,   //  灰色
+    Green = 3,  //  緑
+    Yellow = 4,//  黄
+    Red = 5,    //  赤
+    Blue = 6,   //  青
+    Unknown = 7, //  未知の色
+    None = 8   //  未検出
 };
 
-struct ColorHSVRange
+struct ColorHSVReference
 {
     Color color;
 
-    int hMin;
-    int hMax;
+    int h;
+    int s;
+    int v;
 
-    int sMin;
-    int sMax;
-
-    int vMin;
-    int vMax;
+    double hWeight;
+    double sWeight;
+    double vWeight;
 };
 
 class ColorDetector
@@ -43,4 +44,10 @@ public:
 private:
     ColorSensor& mColorSensor;
     Light& mLight;
+
+    double calculateDistance(
+        const ColorSensor::HSV& hsv,
+        const ColorHSVReference& reference);
+
+    void setLight(Color color);
 };

@@ -17,7 +17,9 @@ enum class LapLineTraceSceneID
     SShape1   = 10, // Lap蛇行1
     SShape2   = 11, // Lap蛇行2
     Straight4 = 12, // Lap直線4
-    SlowDown  = 13  // Lap減速
+    SlowDown  = 13,  // Lap減速
+    EnterCurve1 = 14, // ラップ後カーブ1
+    EnterCurve2 = 15, // ラップ後カーブ2
 };
 
 enum class LapStopSceneID
@@ -28,8 +30,6 @@ enum class LapStopSceneID
 // ライントレース用シーンID
 enum class LineTraceSceneID
 {
-    EnterCurve1          = 14, // Dlvカーブ1
-    EnterCurve2          = 15, // Dlvカーブ2
     PassBlueLine         = 16, // Dlv行き青スルー
     EnterStraight1       = 17, // Dlv直線1
     EnterCurve3          = 18, // Dlvカーブ3
@@ -94,25 +94,34 @@ enum class MoveSceneID
     EnterGarageYellow = 28, //黄からガレージ
     EnterGarageRed = 29, //赤からガレージ
     EnterGarageBlue = 30, //青からガレージ
-
 };
 
 
 // 旋回用シーンID
 enum class TurnSceneID
 {
-    AdjustEnterAngle = 9, // エンターゾーン進入時の角度調整
-    Turn90Right      = 1, // 右に90°回転
-    Turn90Left       = 2, // 左に90°回転
-    Turn30Left       = 4, // 左に30°回転
-    Turn30Right      = 5, // 右に30°回転
-    Turn180Right     = 8, // 右に180°回転
-    Turn45Right      = 10, 
-    Turn45Left       = 11,
-    Turn60Right      = 12, 
-    Turn60Left       = 13,
-    Turn180Left      = 14,
-    Turn15Right      = 15,
+    Turn180Left  = 1,  // 左180°
+    Turn180Right = 2,  // 右180°
+
+    Turn150Left  = 3,  // 左150°
+    Turn150Right = 4,  // 右150°
+
+    Turn90Left   = 5,  // 左90°
+    Turn90Right  = 6,  // 右90°
+
+    Turn60Left   = 7,  // 左60°
+    Turn60Right  = 8,  // 右60°
+
+    Turn45Left   = 9,  // 左45°
+    Turn45Right  = 10, // 右45°
+
+    Turn30Left   = 11, // 左30°
+    Turn30Right  = 12, // 右30°
+
+    Turn15Left   = 13, // 左15°
+    Turn15Right  = 14, // 右15°
+
+    Turn10Left   = 15, // 左10°
 };
 
 

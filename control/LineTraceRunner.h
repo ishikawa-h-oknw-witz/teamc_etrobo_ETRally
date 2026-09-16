@@ -1,11 +1,9 @@
-#ifndef LINE_TRACE_RUNNNER_H
-#define LINE_TRACE_RUNNNER_H
+#pragma once
 
 #include "ColorSensor.h"
 #include "PIDCalculator.h"
 #include "TrapezoidCalculator.h"
 #include "Motor.h"
-#include "kernel.h"
 
 using namespace spikeapi;
 
@@ -38,7 +36,7 @@ public:
     void run();
 
     void vrun();
-
+    
     //停止
     void stop();
 
@@ -59,5 +57,3 @@ private:
 
     RunnerEdge mEdge = RunnerEdge::RightEdge;
 };
-
-#endif

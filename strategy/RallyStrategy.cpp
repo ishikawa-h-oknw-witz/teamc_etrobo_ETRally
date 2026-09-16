@@ -1,5 +1,6 @@
 #include "RallyStrategy.h"
 #include "Logger.h"
+#include "kernel.h"
 
 namespace
 {
@@ -110,7 +111,6 @@ const SceneOrder EnterPoint[] =
     {0, static_cast<int>(LineTraceSceneID::RightEdgeLineTrace), ActionType::LineTrace},
     {1, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
 };
-
 
 // 目標基準点の中央まで移動
 const SceneOrder MovePointCenter[] =
@@ -364,7 +364,6 @@ void RallyStrategy::execute()
                 while(true)
                 {
                     changeScene(&EnterPoint[nowEdgeIndex],0);
-
                     changeScene(stop,0);
 
                     // ------------------------------------------------
@@ -388,7 +387,7 @@ void RallyStrategy::execute()
                     if (detectedPointColor == gate.pointColor)
                     {
                         mOld_color = detectedPointColor;
-
+                        
                         if (changeScene(MovePointCenter,0))
                         {
                             // finish();
@@ -446,7 +445,8 @@ void RallyStrategy::execute()
                 // finish();
                 return;
             }
-
+            changeScene(stop,0);
+            tslp_tsk(500*1000);
 
             // ====================================================
             // ゲート位置に応じてゲートへ進入
@@ -508,7 +508,8 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
-
+                changeScene(stop,0);
+                tslp_tsk(500*1000);
 
                 // ------------------------------------------------
                 // ゲートを通過
@@ -530,6 +531,8 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
+                changeScene(stop,0);
+                tslp_tsk(500*1000);
             }
             else
             {
