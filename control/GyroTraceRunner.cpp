@@ -97,6 +97,7 @@ void GyroTraceRunner::turn()
         mLeftMotor.setPower(-turnPower);
         mRightMotor.setPower(turnPower);    //A-5走行体の場合　-8
     }
+
     //tslp_tsk(10*1000);
 }
 

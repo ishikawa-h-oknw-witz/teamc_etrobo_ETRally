@@ -374,7 +374,7 @@ void RallyStrategy::execute()
                     if (detectedPointColor == gate.pointColor)
                     {
                         mOld_color = detectedPointColor;
-
+                        
                         if (changeScene(MovePointCenter,0))
                         {
                             // finish();
@@ -432,7 +432,8 @@ void RallyStrategy::execute()
                 // finish();
                 return;
             }
-
+            changeScene(stop,0);
+            tslp_tsk(500*1000);
 
             // ====================================================
             // ゲート位置に応じてゲートへ進入
@@ -494,7 +495,8 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
-
+                changeScene(stop,0);
+                tslp_tsk(500*1000);
 
                 // ------------------------------------------------
                 // ゲートを通過
@@ -516,6 +518,8 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
+                changeScene(stop,0);
+                tslp_tsk(500*1000);
             }
             else
             {
