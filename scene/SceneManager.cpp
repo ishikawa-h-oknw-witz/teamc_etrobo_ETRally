@@ -12,6 +12,7 @@ namespace
 }
 
 static bool UltSonic = false;
+static float SumouAngle = 0.0f;
 
 //コンストラクタ
 SceneManager::SceneManager(
@@ -107,6 +108,8 @@ bool SceneManager::SceneExecute()
         if (UltSonic == true && 
             mUltrasonicDetector.getDistance() != -1)
         {
+            UltSonic = false;
+            SumouAngle = mImu.getHeading() * -1;
             return true;
         }
 
@@ -237,6 +240,13 @@ void SceneManager::setParameter()
         if (turnscene.ultSonic != false)
         {
             UltSonic = turnscene.ultSonic;
+        }
+
+        if (turnscene.variable != false)
+        {
+            mGyroTraceRunner.setTargetAngle(SumouAngle - 60);
+            mTargetAngleDetector.setTargetAngle(SumouAngle - 60);
+            mEventDetector = &mTargetAngleDetector;
         }
 
         if (courseTargetAngle != 0)

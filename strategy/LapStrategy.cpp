@@ -22,12 +22,6 @@ const SceneOrder LapStrategy::LAP[] =
     //{14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
 };
 
-const SceneOrder Sumou[] =
-{
-    {0, 16, ActionType::Turn},
-    {1, 0, ActionType::Stop}
-};
-
 LapStrategy::LapStrategy(
     SceneManager& sceneManager)
     : mSceneManager(sceneManager)
@@ -36,8 +30,7 @@ LapStrategy::LapStrategy(
 
 void LapStrategy::execute()
 {
-    changeScene(Sumou, 1);
-    //changeScene(LAP, 16);
+    changeScene(LAP, 16);
 }
 
 void LapStrategy::update(

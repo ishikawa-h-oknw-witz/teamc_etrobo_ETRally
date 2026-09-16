@@ -55,6 +55,7 @@ struct TurnScene
     int sceneId;
     float targetAngle;
     bool ultSonic;
+    bool variable;
     PID pid;
 };
 

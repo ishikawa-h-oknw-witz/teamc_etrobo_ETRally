@@ -79,28 +79,32 @@ const MoveScene moveScenes[] =
     {24, Direction::front, {30.0f, 80.0f, 30.0f, 600.0f}, 600, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ線まで
     {25, Direction::front, {30.0f, 50.0f, 30.0f, 150.0f}, 150, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ中まで
     {26, Direction::front, {50.0f, 80.0f, 50.0f, 470.0f}, 470, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
-    {27, Direction::front, {50.0f, 80.0f, 50.0f,1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
+    {27, Direction::front, {40.0f, 50.0f,50.0f, 300.0f}, 170, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
+    {28, Direction::back, {30.0f, 50.0f, 50.0f, 300.0f}, 170, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
+    {29, Direction::front, {70.0f,100.0f, 80.0f,1300.0f}, 1300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
+    {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
 };
 
 const TurnScene turnScenes[] =
 {
-    {0,   0, false, {1.0f, 0.0f, 0.0f}}, //正面
-    {1,  90, false, {1.0f, 0.0f, 0.0f}}, //R90°
-    {2, -90, false, {1.0f, 0.0f, 0.0f}}, //L90°
-    {3, -60, false, {1.0f, 0.0f, 0.0f}}, //L60°
-    {4, -30, false, {1.0f, 0.0f, 0.0f}}, //L30°
-    {5,  30, false, {1.0f, 0.0f, 0.0f}}, //R30°
-    {6,-150, false, {1.0f, 0.0f, 0.0f}}, //L150°
-    {7, 150, false, {1.0f, 0.0f, 0.0f}}, //R150°
-    {8, 180, false, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {9, -10, false, {1.0f, 0.0f, 0.0f}}, //左15°
-    {10, 45, false, {1.0f, 0.0f, 0.0f}}, //右45°
-    {11,-45, false, {1.0f, 0.0f, 0.0f}},  //左45°
-    {12, 60, false, {1.0f, 0.0f, 0.0f}}, //右60°
-    {13,-60, false, {1.0f, 0.0f, 0.0f}},  //左60°
-    {14,-180, false, {1.0f, 0.0f, 0.0f}}, //後ろ
-    {15, 15, false, {1.0f, 0.0f, 0.0f}}, //右15°
-    {16,-360, true, {1.0f, 0.0f, 0.0f}}, //測距1
+    {0,   0, false, false, {1.0f, 0.0f, 0.0f}}, //正面
+    {1,  90, false, false, {1.0f, 0.0f, 0.0f}}, //R90°
+    {2, -90, false, false, {1.0f, 0.0f, 0.0f}}, //L90°
+    {3, -60, false, false, {1.0f, 0.0f, 0.0f}}, //L60°
+    {4, -30, false, false, {1.0f, 0.0f, 0.0f}}, //L30°
+    {5,  30, false, false, {1.0f, 0.0f, 0.0f}}, //R30°
+    {6,-150, false, false, {1.0f, 0.0f, 0.0f}}, //L150°
+    {7, 150, false, false, {1.0f, 0.0f, 0.0f}}, //R150°
+    {8, 180, false, false, {1.0f, 0.0f, 0.0f}}, //後ろ
+    {9, -10, false, false, {1.0f, 0.0f, 0.0f}}, //左15°
+    {10, 45, false, false, {1.0f, 0.0f, 0.0f}}, //右45°
+    {11,-45, false, false, {1.0f, 0.0f, 0.0f}},  //左45°
+    {12, 60, false, false, {1.0f, 0.0f, 0.0f}}, //右60°
+    {13,-60, false, false, {1.0f, 0.0f, 0.0f}},  //左60°
+    {14,-180, false, false, {1.0f, 0.0f, 0.0f}}, //後ろ
+    {15, 15, false, false, {1.0f, 0.0f, 0.0f}}, //右15°
+    {16,-360, true, false, {1.0f, 0.0f, 0.0f}}, //測距1
+    {17, 0, false, true, {1.0f, 0.0f, 0.0f}}, //測距1
 };
 
 const BottleDetectScene bottleDetectScenes[] =

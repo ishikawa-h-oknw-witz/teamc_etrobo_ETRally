@@ -257,6 +257,11 @@ const SceneOrder Sumou[] =
     {1, 26, ActionType::Move},
     {2, 16, ActionType::Turn},
     {3, 27, ActionType::Move},
+    {4, 28, ActionType::Move},
+    {5, 17, ActionType::Turn},
+    {6, 30, ActionType::Move},
+    {7, 2,  ActionType::Turn},
+    {8, 29, ActionType::Move},
 };
 
 // 停止
@@ -770,9 +775,8 @@ void RallyStrategy::execute()
         {
             mOld_color = detectedPointColor;
 
-            if (changeScene(Sumou,3))
+            if (changeScene(Sumou,8))
             {
-                changeScene(&Sumou[3], 0);
                 break;
             }
         }
@@ -809,29 +813,6 @@ void RallyStrategy::updateNextScene()
 
 void RallyStrategy::finish()
 {
-    if (gatePositions[2].pointColor == Color::Yellow)
-    {
-        changeScene(YellowException, 2);
-    }
-
-    changeScene(EnterGarageLine, 1);
-
-    if (gatePositions[2].pointColor == Color::Green)
-    {
-        changeScene(&MoveGarageLine[0], 0);
-    }
-    else if (gatePositions[2].pointColor == Color::Yellow)
-    {
-        changeScene(&MoveGarageLine[1], 0);
-    }
-    else if (gatePositions[2].pointColor == Color::Red)
-    {
-        changeScene(&MoveGarageLine[2], 0);
-    }
-    else
-    {
-        changeScene(&MoveGarageLine[3], 0);
-    }
     changeScene(stop, 0);
 }
 
