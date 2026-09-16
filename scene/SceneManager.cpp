@@ -106,7 +106,7 @@ bool SceneManager::SceneExecute()
         switch (mActionType)
         {
         case ActionType::LineTrace:
-            mLineTraceRunner.run();
+            mLineTraceRunner.vrun();
             break;
 
         case ActionType::Move:
