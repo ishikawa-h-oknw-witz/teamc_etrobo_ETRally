@@ -94,9 +94,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Yellow, 12},
+    {Color::Green, 12},
     {Color::Yellow, 6},
-    {Color::Blue, 10},
+    {Color::Red, 10},
 };
 
 
@@ -256,8 +256,7 @@ const SceneOrder Sumou[] =
     {0, 4,  ActionType::Turn},
     {1, 26, ActionType::Move},
     {2, 16, ActionType::Turn},
-    {3, 9,  ActionType::Turn},
-    {4, 27, ActionType::Move},
+    {3, 27, ActionType::Move},
 };
 
 // 停止
@@ -284,7 +283,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 3;
+    constexpr int LAP_COUNT = 1;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -771,8 +770,9 @@ void RallyStrategy::execute()
         {
             mOld_color = detectedPointColor;
 
-            if (changeScene(Sumou,4))
+            if (changeScene(Sumou,3))
             {
+                changeScene(&Sumou[3], 0);
                 break;
             }
         }

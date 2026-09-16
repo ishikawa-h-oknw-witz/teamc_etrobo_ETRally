@@ -78,7 +78,7 @@ const MoveScene moveScenes[] =
     {23, Direction::back,  {40.0f, 40.0f,   40.0f,  30.0f}, 30, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
     {24, Direction::front, {30.0f, 80.0f, 30.0f, 600.0f}, 600, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ線まで
     {25, Direction::front, {30.0f, 50.0f, 30.0f, 150.0f}, 150, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ中まで
-    {26, Direction::front, {50.0f, 80.0f, 50.0f, 500.0f}, 500, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
+    {26, Direction::front, {50.0f, 80.0f, 50.0f, 470.0f}, 470, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
     {27, Direction::front, {50.0f, 80.0f, 50.0f,1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
 };
 
