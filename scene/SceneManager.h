@@ -10,6 +10,7 @@
 #include "TargetAngleDetector.h"
 #include "TargetColorDetector.h"
 #include "ColorDetector.h"
+#include "UltrasonicSensor.h"
 
 enum class ActionType
 {
@@ -53,6 +54,8 @@ struct TurnScene
 {
     int sceneId;
     float targetAngle;
+    bool ultSonic;
+    bool variable;
     PID pid;
 };
 
@@ -80,7 +83,8 @@ public:
         TargetDistanceDetector& targetDistanceDetector,
         TargetAngleDetector& targetAngleDetector,
         TargetColorDetector& targetColorDetector,
-        IMU& imu);
+        IMU& imu,
+        UltrasonicSensor& ultrasonicDetector);
 
     int getSceneID();
     void setSceneID(int sceneid);
@@ -98,6 +102,7 @@ private:
     TargetAngleDetector& mTargetAngleDetector;
     TargetColorDetector& mTargetColorDetector;
     IMU mImu;
+    UltrasonicSensor& mUltrasonicDetector;
     int mSceneId;
     ActionType mActionType;
     IEventDetector* mEventDetector;
