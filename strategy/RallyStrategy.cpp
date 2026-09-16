@@ -251,6 +251,19 @@ const SceneOrder InGarage[] =
     {0, static_cast<int>(LineTraceSceneID::GrageLineTrace), ActionType::LineTrace},
 };
 
+const SceneOrder Sumou[] =
+{
+    {0, 4,  ActionType::Turn},
+    {1, 26, ActionType::Move},
+    {2, 16, ActionType::Turn},
+    {3, 27, ActionType::Move},
+    {4, 28, ActionType::Move},
+    {5, 17, ActionType::Turn},
+    {6, 30, ActionType::Move},
+    {7, 2,  ActionType::Turn},
+    {8, 29, ActionType::Move},
+};
+
 // 停止
 const SceneOrder stop[] =
 {
@@ -275,7 +288,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 3;
+    constexpr int LAP_COUNT = 1;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -734,6 +747,49 @@ void RallyStrategy::execute()
     Logger::printf(
         "[Rally]ラリー終了\r\n");
 
+    changeScene(&RejoinTurn[0], 0);
+
+    while(true)
+    {
+        Color detectedPointColor = Color::Unknown;
+
+        changeScene(&EnterPoint[nowEdgeIndex],0);
+
+        changeScene(stop,0);
+
+        // ------------------------------------------------
+        // 4色を順番に判定
+        // ------------------------------------------------
+
+        detectedPointColor = detectPointColor();
+
+        // ------------------------------------------------
+        // 目標基準点なら中央まで移動
+        // それ以外なら通過
+        // ------------------------------------------------
+
+        if (detectedPointColor == Color::Blue)
+        {
+            mOld_color = detectedPointColor;
+
+            if (changeScene(Sumou,8))
+            {
+                break;
+            }
+        }
+        else if(detectedPointColor == Color::Unknown)
+        {
+            continue;
+        }
+        else
+        {
+            if (changeScene(PassPoint,0))
+            {
+                continue;
+            }
+        }
+    }
+    
     finish();
 }
 
@@ -754,6 +810,7 @@ void RallyStrategy::updateNextScene()
 
 void RallyStrategy::finish()
 {
+    /*
     if (gatePositions[2].pointColor == Color::Yellow)
     {
         changeScene(YellowException, 2);
@@ -777,6 +834,7 @@ void RallyStrategy::finish()
     {
         changeScene(&MoveGarageLine[3], 0);
     }
+    */
     changeScene(stop, 0);
 }
 

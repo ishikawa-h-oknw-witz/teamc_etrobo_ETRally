@@ -24,6 +24,7 @@
 #include "ForceSensor.h"
 #include "ColorSensor.h"
 #include "IMU.h"
+#include "UltrasonicSensor.h"
 
 // ログ用
 #include "Logger.h"
@@ -72,6 +73,8 @@ void main_task(intptr_t exinf)
     Light light;
   
     Display display;
+
+    UltrasonicSensor UltSonic(EPort::PORT_F);
 
     imu.setTilt(51.0f);
 
@@ -134,7 +137,8 @@ void main_task(intptr_t exinf)
         targetDistanceDetector,
         targetAngleDetector,
         targetColorDetector,
-        imu);
+        imu,
+        UltSonic);
 
     /* ログ */
     Logger logger(
