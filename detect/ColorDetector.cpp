@@ -18,7 +18,7 @@
 // S：彩度（Saturation）
 // V：明度（Value）
 // ============================================================
-static constexpr ColorHSVReference mColorReferences[] =
+/*static constexpr ColorHSVReference mColorReferences[] =
 {
     // 色              H , S, V, hWeight, sWeight, vWeight
     // --------------------------------------------------------
@@ -31,7 +31,7 @@ static constexpr ColorHSVReference mColorReferences[] =
     // --------------------------------------------------------
     { Color::Black,   220,  37,  9, 1.0, 0.5, 0.5 },
     { Color::White,   200,  30, 99, 1.0, 0.5, 0.5 },
-    { Color::Gray,    210,  27, 73, 1.0, 0.5, 0.5 },
+    { Color::Gray,    210,  27, 73, 0.5, 0.5, 0.5 },
 
     // --------------------------------------------------------
     // 有彩色
@@ -42,15 +42,47 @@ static constexpr ColorHSVReference mColorReferences[] =
     // Vは照明やセンサーと対象物との距離などの影響を
     // 受けやすいため、Green / Yellowでは重みを小さくしている。
     // --------------------------------------------------------
-    { Color::Green,   150,  79, 64, 2.5, 1.0, 1.0 },
+    { Color::Green,   150,  79, 64, 1.5, 2.0, 1.5 },
     { Color::Yellow,   51,  64, 99, 1.0, 1.0, 1.0 },
 
     // Red / BlueはH・S・Vを比較的バランスよく評価する。
     { Color::Red,     351,  94, 92, 1.0, 0.5, 0.5 },
-    { Color::Blue,    212,  96, 65, 1.0, 2.0, 0.5 }
+    { Color::Blue,    212,  96, 65, 0.8, 1.25, 1.0 }
 };
+*/
 
+// 走行体C
+static constexpr ColorHSVReference mColorReferences[] =
+{
+    // 色              H , S, V, hWeight, sWeight, vWeight
+    // --------------------------------------------------------
 
+    // --------------------------------------------------------
+    // 無彩色
+    //
+    // 黒・灰・白は彩度(S)が低いため、Sだけでは区別しにくい。
+    // そのため、H・S・Vをバランスよく使用する。
+    // --------------------------------------------------------
+    { Color::Black,   210,  32,  7, 1.0, 0.5, 0.5 },
+    { Color::White,   204,  27, 98, 1.0, 0.5, 0.5 },
+    { Color::Gray,    210,  27, 68, 0.5, 0.5, 0.5 },
+
+    // --------------------------------------------------------
+    // 有彩色
+    //
+    // Green / Yellow は今回の測定環境では誤判定しやすいため、
+    // 色相(H)を強めに評価する。
+    //
+    // Vは照明やセンサーと対象物との距離などの影響を
+    // 受けやすいため、Green / Yellowでは重みを小さくしている。
+    // --------------------------------------------------------
+    { Color::Green,   150,  79, 49, 1.5, 2.0, 1.5 },
+    { Color::Yellow,   51,  69, 91, 1.0, 1.0, 1.0 },
+
+    // Red / BlueはH・S・Vを比較的バランスよく評価する。
+    { Color::Red,     354,  95, 80, 1.0, 0.5, 0.5 },
+    { Color::Blue,    213,  97, 55, 0.8, 1.25, 1.0 }
+};
 // ============================================================
 // H(色相)の距離を計算する
 //
@@ -214,12 +246,11 @@ Color ColorDetector::detect()
 
     // 最小距離がこの値より大きい場合、
     // どの基準色にも十分近くないと判断してUnknownとする。
-    constexpr double UNKNOWN_DISTANCE = 0.7;
+    constexpr double UNKNOWN_DISTANCE = 0.65;
 
     // 最も近い色と2番目に近い色の距離差が
     // この値未満の場合、2色の判別が難しいと判断する。
-    constexpr double MIN_DISTANCE_GAP = 0.05;
-
+    constexpr double MIN_DISTANCE_GAP = 0.020;
 
     // --------------------------------------------------------
     // カラーセンサーからHSV値を取得
@@ -266,20 +297,16 @@ Color ColorDetector::detect()
         //
         // 黒・灰・白はVの値によって判定する。
         // ====================================================
-        if (hsv.s < 35)
+        if (hsv.s < (mColorReferences[static_cast<int>(Color::Black)].s) + 20)
         {
-            // Vが20未満なら黒
-            if (hsv.v < 20)
-            {
+            // Vが黒の理論値＋10未満なら黒とする
+            if (hsv.v < (mColorReferences[static_cast<int>(Color::Black)].v)+10) {
                 nearestColor = Color::Black;
             }
-
-            // Vが20以上80未満なら灰色
-            else if (hsv.v < 80)
-            {
+            // Vが白の理論値‐10未満なら灰色
+            else if (hsv.v < (mColorReferences[static_cast<int>(Color::White)].v)-5){
                 nearestColor = Color::Gray;
             }
-
             // Vが80以上なら白
             else
             {

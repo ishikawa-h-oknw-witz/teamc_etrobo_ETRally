@@ -84,9 +84,9 @@ void GyroTraceRunner::turn()
         turnPower = 45;
     }
 
-    if (turnPower < 30) //最低動作出力
+    if (turnPower < 35) //最低動作出力
     {
-        turnPower = 30;
+        turnPower = 35;
     }
 
     if (error > 0) {

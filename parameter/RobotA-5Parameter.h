@@ -38,7 +38,7 @@ const LineTraceScene lineTraceScenes[] =
     {24,  {30.0f, 100.0f, 50.0f,  950.0f}, 950,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv帰還直線 赤
     {25,  {30.0f, 30.0f,  30.0f,  200.0f}, 200,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlv帰還カーブ1
     {26,  {30.0f, 100.0f, 30.0f, 1200.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv基準線下まで
-    {27,  {40.0f, 40.0f,  30.0f,  70.0f}, 70,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
+    {27,  {40.0f, 40.0f,  30.0f,  30.0f}, 30,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
 
     {28,  {35.0f, 35.0f,  35.0f,   0.0f}, 0,  40, RunnerEdge::RightEdge, {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly右エッジで次の色地点まで
     {29,  {35.0f, 35.0f,  35.0f,   0.0f}, 0,  40, RunnerEdge::LeftEdge,  {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly左エッジで次の色地点まで
@@ -56,7 +56,7 @@ const LineTraceScene lineTraceScenes[] =
 const MoveScene moveScenes[] =
 {
     { 0, Direction::front, {30.0f, 50.0f,  30.0f,   70.0f},  70, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvエリアまで
-    { 1, Direction::back,  {30.0f, 60.0f,  30.0f,  160.0f}, 160, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
+    { 1, Direction::back,  {30.0f, 60.0f,  30.0f,  190.0f}, 190, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
     { 2, Direction::front, {40.0f,  40.0f,  40.0f,  60.0f},  60, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvボトルまで
     { 3, Direction::front, {30.0f,  30.0f,  30.0f,  70.0f}, 70, {Color::None}, {5.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
     { 4, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前1
@@ -67,7 +67,7 @@ const MoveScene moveScenes[] =
     { 9, Direction::front, {70.0f,  80.0f,  30.0f, 300.0f}, 300, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲートを通過
     {10, Direction::front, {35.0f,  35.0f,  35.0f,   0.0f},   0, {Color::Green, Color::Yellow, Color::Red, Color::Blue},{2.0f, 0.0f, 0.0f}}, //基準点まで
     {11, Direction::front, {30.0f,  50.0f,  50.0f, 100.0f}, 100, {Color::None}, {5.0f, 0.0f, 0.0f}}, // Rly目標外の基準点を通過
-    {12, Direction::back,  {30.0f,  70.0f,  30.0f, 280.0f}, 280, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
+    {12, Direction::back,  {30.0f,  70.0f,  30.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
     {13, Direction::front, {30.0f,  40.0f,  30.0f, 50.0f}, 50, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
     {14, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還1
     {15, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還2
@@ -99,7 +99,7 @@ const TurnScene turnScenes[] =
     {3,  -150, {1.0f, 0.0f, 0.0f}}, // 左150°
     {4,   150, {1.0f, 0.0f, 0.0f}}, // 右150°
 
-    {5,   -87, {1.0f, 0.0f, 0.0f}}, // 左90°
+    {5,   -90, {1.0f, 0.0f, 0.0f}}, // 左90°
     {6,    90, {1.0f, 0.0f, 0.0f}}, // 右90°
 
     {7,   -60, {1.0f, 0.0f, 0.0f}}, // 左60°

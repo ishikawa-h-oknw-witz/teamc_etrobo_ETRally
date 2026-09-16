@@ -19,9 +19,9 @@ TargetColorDetector::TargetColorDetector(
 void TargetColorDetector::setTargetColors(
     const Color targetColors[])
 {
-    mTargetColorNum = 7;
+    mTargetColorNum = 4;
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 4; i++)
     {
         mTargetColors[i] = targetColors[i];
     }

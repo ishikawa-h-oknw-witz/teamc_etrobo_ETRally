@@ -95,8 +95,8 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Yellow, 12},
-    {Color::Yellow, 6},
+    {Color::Green, 12},
+    {Color::Green, 6},
     {Color::Blue, 10},
 };
 
@@ -108,8 +108,8 @@ const GatePosition gatePositions[] =
 // 次の基準点までライントレース
 const SceneOrder EnterPoint[] =
 {
-    {0, static_cast<int>(LineTraceSceneID::RightEdgeLineTrace), ActionType::LineTrace},
-    {1, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
+    {0, static_cast<int>(LineTraceSceneID::RightEdgeLineTrace), ActionType::VLineTrace},
+    {1, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::VLineTrace},
 };
 
 // 目標基準点の中央まで移動
@@ -213,14 +213,14 @@ const SceneOrder ReturnPoint[] =
 
 const SceneOrder AltProc[] = 
 {
-    {0, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::LineTrace},
+    {0, static_cast<int>(LineTraceSceneID::LeftEdgeLineTrace),  ActionType::VLineTrace},
     {1, static_cast<int>(MoveSceneID::AltMove),  ActionType::Move},
     {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
 };
 
 const SceneOrder GreenAltProc[] = 
 {
-    {0, static_cast<int>(LineTraceSceneID::GreenLeftEdgeLineTrace),  ActionType::LineTrace},
+    {0, static_cast<int>(LineTraceSceneID::GreenLeftEdgeLineTrace),  ActionType::VLineTrace},
     {1, static_cast<int>(MoveSceneID::AltMove),  ActionType::Move},
     {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
 };
@@ -432,8 +432,6 @@ void RallyStrategy::execute()
                 // finish();
                 return;
             }
-            changeScene(stop,0);
-            tslp_tsk(500*1000);
 
             // ====================================================
             // ゲート位置に応じてゲートへ進入
@@ -495,8 +493,6 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
-                changeScene(stop,0);
-                tslp_tsk(500*1000);
 
                 // ------------------------------------------------
                 // ゲートを通過
@@ -518,8 +514,6 @@ void RallyStrategy::execute()
                     // finish();
                     return;
                 }
-                changeScene(stop,0);
-                tslp_tsk(500*1000);
             }
             else
             {

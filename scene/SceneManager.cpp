@@ -106,6 +106,10 @@ bool SceneManager::SceneExecute()
         switch (mActionType)
         {
         case ActionType::LineTrace:
+            mLineTraceRunner.run();
+            break;
+
+        case ActionType::VLineTrace:
             mLineTraceRunner.vrun();
             break;
 
@@ -133,6 +137,7 @@ void SceneManager::setParameter()
 
     switch(mActionType)
     {
+    case ActionType::VLineTrace:
     case ActionType::LineTrace:
     {
         const LineTraceScene& linetracescene = lineTraceScenes[mSceneId];

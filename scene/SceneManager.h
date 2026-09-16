@@ -14,6 +14,7 @@
 enum class ActionType
 {
     LineTrace,
+    VLineTrace,
     Move,
     Turn,
     BottleDetect,
