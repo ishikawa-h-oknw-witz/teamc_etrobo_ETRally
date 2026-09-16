@@ -19,7 +19,7 @@ const SceneOrder LapStrategy::LAP[] =
     {14, static_cast<int>(TurnSceneID::Turn10Left),        ActionType::Turn},      // エッジ切り替え角度調整
     {15, static_cast<int>(LapLineTraceSceneID::EnterCurve1),    ActionType::LineTrace}, // ラップ後カーブ1
     {16, static_cast<int>(LapLineTraceSceneID::EnterCurve2),    ActionType::LineTrace}, // ラップ後カーブ2
-    //{14, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
+    //{17, static_cast<int>(LapStopSceneID::Finish),          ActionType::Stop}       //ボトル前で停止
 };
 
 LapStrategy::LapStrategy(
