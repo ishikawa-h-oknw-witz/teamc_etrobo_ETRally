@@ -188,7 +188,7 @@ void main_task(intptr_t exinf)
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
-    //lapStrategy.execute();
+    lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
@@ -198,7 +198,7 @@ void main_task(intptr_t exinf)
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");
     
-    rallyStrategy.execute();
+    //rallyStrategy.execute();
 
     Logger::printf("[app]終了\n");
 
