@@ -184,7 +184,7 @@ void main_task(intptr_t exinf)
     while (forceSensor.isTouched());
 
     Logger::printf("[app]スタート\n");
-
+    
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
