@@ -816,6 +816,31 @@ void RallyStrategy::updateNextScene()
 
 void RallyStrategy::finish()
 {
+    /*
+    if (gatePositions[2].pointColor == Color::Yellow)
+    {
+        changeScene(YellowException, 2);
+    }
+
+    changeScene(EnterGarageLine, 1);
+
+    if (gatePositions[2].pointColor == Color::Green)
+    {
+        changeScene(&MoveGarageLine[0], 0);
+    }
+    else if (gatePositions[2].pointColor == Color::Yellow)
+    {
+        changeScene(&MoveGarageLine[1], 0);
+    }
+    else if (gatePositions[2].pointColor == Color::Red)
+    {
+        changeScene(&MoveGarageLine[2], 0);
+    }
+    else
+    {
+        changeScene(&MoveGarageLine[3], 0);
+    }
+    */
     changeScene(stop, 0);
 }
 
