@@ -44,6 +44,8 @@
 
 using namespace spikeapi;
 
+/* MARK:インスタンス生成
+ */
 /* メインタスク */
 void main_task(intptr_t exinf)
 {
@@ -177,6 +179,8 @@ void main_task(intptr_t exinf)
     /* 出力電圧表示(上位2桁：8335=8 3) */
     display.showNumber(battery.getVoltage() / 100);
 
+    /* MARK:初期化処理
+     */
     /* アーム初期位置 */
     armController.Armreset();
 

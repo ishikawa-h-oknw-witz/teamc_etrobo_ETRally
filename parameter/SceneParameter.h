@@ -27,6 +27,8 @@ enum class LapStopSceneID
     Finish = 0 // 停止
 };
 
+/* MARK:ラインID
+ */
 // ライントレース用シーンID
 enum class LineTraceSceneID
 {
@@ -57,7 +59,8 @@ enum class LineTraceSceneID
     GrageLineTrace = 35,  //ガレージの前の線に復帰
 };
 
-
+/* MARK:移動シーンID
+ */
 // 移動用シーンID
 enum class MoveSceneID
 {
@@ -96,7 +99,8 @@ enum class MoveSceneID
     EnterGarageBlue = 30, //青からガレージ
 };
 
-
+/* MARK:回転シーンID
+ */
 // 旋回用シーンID
 enum class TurnSceneID
 {
