@@ -100,7 +100,8 @@ const GatePosition gatePositions[] =
     {Color::Green, 13},
 };
 
-
+/* MARK:ラリーシーン
+ */
 // ============================================================
 // ラリー用シーン
 // ============================================================
@@ -225,6 +226,8 @@ const SceneOrder GreenAltProc[] =
     {2, static_cast<int>(TurnSceneID::Turn180Right),  ActionType::Turn},
 };
 
+/* MARK:ガレージ
+ */
 const SceneOrder EnterGarageLine[] =
 {
     {0, static_cast<int>(MoveSceneID::MoveGarageLine), ActionType::Move},
@@ -354,6 +357,8 @@ void RallyStrategy::execute()
                 gate.gatePositionNum);
 
 
+            /* MARK:点探索
+             */
             // ====================================================
             // 目標基準点を探す
             // ====================================================
@@ -374,6 +379,8 @@ void RallyStrategy::execute()
                     return;
                 }
 
+                /* MARK:点ライントレース
+                 */
                 // ------------------------------------------------
                 // 現在のエッジを使用して
                 // 次の基準点までライントレース
@@ -396,7 +403,8 @@ void RallyStrategy::execute()
                         static_cast<int>(detectedPointColor),
                         static_cast<int>(gate.pointColor));
 
-
+                    /* MARK:中央まで移動
+                     */
                     // ------------------------------------------------
                     // 目標基準点なら中央まで移動
                     // それ以外なら通過
@@ -445,7 +453,7 @@ void RallyStrategy::execute()
                 "[Rally]目標基準点到達 Gate=%d\r\n",
                 gate.gatePositionNum);
 
-
+            
             // ====================================================
             // ゲートへ向かう
             // ====================================================
@@ -453,7 +461,8 @@ void RallyStrategy::execute()
             // ゲートへ向かう前のエッジを保存
             const int gateApproachEdgeIndex = nowEdgeIndex;
 
-
+            /* MARK:コースに回転
+             */
             // ----------------------------------------------------
             // 基準線からゲート方向へ90度旋回
             // ----------------------------------------------------
@@ -471,6 +480,8 @@ void RallyStrategy::execute()
             const int gatePosition = gate.gatePositionNum;
 
 
+            /* MARK:↓横ゲート用
+            　*/
             if (gatePosition <= 4 || gatePosition >= 10)
             {
                 // --------------------------------------------
@@ -508,6 +519,8 @@ void RallyStrategy::execute()
                 // ゲート前まで移動
                 // ------------------------------------------------
 
+                /* MARK:ゲートまで移動
+                 */
                 if (!changeScene(&EnterGate[enterGateIndex],0))
                 {
                     // finish();
@@ -519,6 +532,8 @@ void RallyStrategy::execute()
                 // ゲート通過方向へ旋回
                 // ------------------------------------------------
 
+                /* MARK:ゲートに回転
+                 */
                 if (!changeScene(&GateTurn[turnDirection],0))
                 {
                     // finish();
@@ -529,6 +544,8 @@ void RallyStrategy::execute()
                 // ゲートを通過
                 // ------------------------------------------------
 
+                /* MARK:ゲート通過
+                 */
                 if (!changeScene(GateCrossing,1))
                 {
                     // finish();
@@ -540,6 +557,8 @@ void RallyStrategy::execute()
                 // 基準点方向へ旋回
                 // ------------------------------------------------
 
+                /* MARK:点方向に回転
+                 */
                 if (!changeScene(&GateCrossingTurn[turnDirection],0))
                 {
                     // finish();
@@ -548,6 +567,8 @@ void RallyStrategy::execute()
             }
             else
             {
+                /* MARK:↓縦ゲート用
+                 */
                 // --------------------------------------------
                 // ゲート 5～9
                 // --------------------------------------------
@@ -569,12 +590,16 @@ void RallyStrategy::execute()
                 // ゲート通過
                 // ------------------------------------------------
 
+                /* MARK:ゲート通過
+                 */
                 if (!changeScene(&EnterGate[enterGateIndex],0))
                 {
                     // finish();
                     return;
                 }
 
+                /* MARK:ゲートに回転
+                 */                
 
                 if (!changeScene(&GateCrossingTurn[VERTICAL_GATE_TURN_INDEX],0))
                 {
@@ -584,6 +609,8 @@ void RallyStrategy::execute()
             }
 
 
+            /* MARK:点帰還
+             */
             // ====================================================
             // 基準点へ帰還
             // ====================================================
@@ -646,6 +673,8 @@ void RallyStrategy::execute()
 
             changeScene(stop,0);
 
+            /* MARK:次のゲート移動
+             */
             // ====================================================
             // 次のゲートへ向かう
             // ====================================================
@@ -696,6 +725,8 @@ void RallyStrategy::execute()
                 gatePositions[
                     nextGateIndex].gatePositionNum);
 
+            /* MARK:エッヂ切り替え
+             */
             // ----------------------------------------------------
             // 次の基準点へ向かうエッジを決定
             // ----------------------------------------------------
@@ -757,7 +788,8 @@ void RallyStrategy::execute()
         }
     }
 
-
+    /* MARK:ラリー終了
+     */
     // ============================================================
     // ラリー終了
     // ============================================================
@@ -799,6 +831,8 @@ void RallyStrategy::execute()
         // それ以外なら通過
         // ------------------------------------------------
 
+        /* MARK:相撲に切り替え
+        */
         if (detectedPointColor == Color::Blue)
         {
             mOld_color = detectedPointColor;

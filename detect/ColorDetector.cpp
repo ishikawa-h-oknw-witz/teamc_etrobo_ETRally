@@ -44,6 +44,8 @@
 */
 
 // 走行体C
+/* MARK:HSV調整 
+*/
 static constexpr ColorHSVReference mColorReferences[] =
 {
     // 色              H , S, V, hWeight, sWeight, vWeight
@@ -66,6 +68,7 @@ static constexpr ColorHSVReference mColorReferences[] =
     { Color::Red,     354,  95, 80, 1.0, 0.5, 0.5 },
     { Color::Blue,    213,  97, 55, 0.8, 1.25, 1.0 }
 };
+
 // ============================================================
 // H(色相)の距離を計算する
 //
@@ -103,7 +106,6 @@ ColorDetector::ColorDetector(ColorSensor& sensor,
       mLight(light)
 {
 }
-
 
 // ============================================================
 // HSV同士の距離を計算する
@@ -207,6 +209,8 @@ void ColorDetector::setLight(Color color)
     }
 }
 
+/* MARK:色判定の調整 
+*/
 // ============================================================
 // 色を判定する
 //
