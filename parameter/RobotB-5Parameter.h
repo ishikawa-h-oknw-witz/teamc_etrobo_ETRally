@@ -6,6 +6,8 @@
 // Robot B-5 Parameter
 // ============================================================
 
+/* MARK:lineパラメータ
+ */
 // {シーンID, 台形制御パラメータ(開始速度、上限速度、終了速度、制御区間距離)、目標距離, 速度(今は使ってないメモ用), 走行エッジ, 終了色, 目標輝度, {Kp, Ki, Kd}}
 const LineTraceScene lineTraceScenes[] =
 {
@@ -52,7 +54,8 @@ const LineTraceScene lineTraceScenes[] =
     {34,  {30.0f, 60.0f, 50.0f, 950.0f}, 950, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
     {35,  {30.0f, 50.0f, 50.0f,   0.0f},   0, 30, RunnerEdge::RightEdge, {Color::White}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //ガレージ中に移動
 };
-
+/* MARK:直進パラメータ
+ */
 const MoveScene moveScenes[] =
 {
     { 0, Direction::front, {30.0f, 50.0f,  30.0f,   70.0f},  70, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvエリアまで
@@ -87,7 +90,8 @@ const MoveScene moveScenes[] =
     {29, Direction::front, {70.0f,100.0f, 80.0f,1300.0f}, 1300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
     {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
 };
-
+/* MARK:回転パラメータ 
+*/
 const TurnScene turnScenes[] =
 {
     {0,    0, false, false, {1.0f, 0.0f, 0.0f}}, // 正面
