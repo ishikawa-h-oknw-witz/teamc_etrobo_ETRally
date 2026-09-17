@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "SceneManager.h"
 #include "kernel.h"
+#include <cmath>
 
 // コンストラクタ
 LineTraceRunner::LineTraceRunner(
@@ -66,6 +67,7 @@ void LineTraceRunner::vrun()
 {
     ColorSensor::HSV hsv;
     int turn = 0;
+    double Score = 0;
 
     mBaseSpeed = mTrapezoidCalculator.getSpeed();
 
@@ -76,8 +78,12 @@ void LineTraceRunner::vrun()
     int vError =
         mTargetSensorValue - hsv.v;
 
+    Score = ((hsv.v + hsv.s) / 2.0) *
+        (1.0 - std::abs(hsv.v - hsv.s) / 100.0);
+
     // PID制御依頼
-    turn = mPIDCalculator.calculate(vError) * ((100 - hsv.s) * 0.01);
+    turn = mPIDCalculator.calculate(vError) * (1.0 / (1.0 + std::exp(0.2 * (Score - 50.0))));
+    /* ((100 - hsv.s) * 0.01)*/;
 
     // モータ出力
     mLeftMotor.setPower(
