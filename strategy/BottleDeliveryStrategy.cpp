@@ -114,6 +114,7 @@ void BottleDeliveryStrategy::execute()
     mSkipCount = -1;
 
     bool recoveryflag = false;
+    static int recoverycount = 0;
     while(true){
         for (int sceneNum = 0; sceneNum < 3; sceneNum++)
         {
@@ -146,6 +147,7 @@ void BottleDeliveryStrategy::execute()
         if (mSkipCount < 0)
         {
             recoveryflag = true;
+            recoverycount++;
 
             tslp_tsk(200 * 1000);
 
@@ -160,7 +162,9 @@ void BottleDeliveryStrategy::execute()
 
     if(recoveryflag)
     {
-        changeScene(RecoveryBack, 1);
+        for(int i = 0; i <= recoverycount; i++){
+            changeScene(RecoveryBack, 1);
+        }
         recoveryflag = false;
     }
 
