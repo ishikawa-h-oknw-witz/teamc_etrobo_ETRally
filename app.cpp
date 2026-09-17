@@ -138,7 +138,8 @@ void main_task(intptr_t exinf)
         targetAngleDetector,
         targetColorDetector,
         imu,
-        UltSonic);
+        UltSonic,
+        colorSensor);
 
     /* ログ */
     Logger logger(
@@ -154,7 +155,7 @@ void main_task(intptr_t exinf)
         sceneManager,
         armController);
 
-    RallyStrategy rallyStrategy(sceneManager);
+    RallyStrategy rallyStrategy(sceneManager, armController);
 
     /* 初期化 */
     //logger.init();
@@ -192,12 +193,12 @@ void main_task(intptr_t exinf)
     /* ラップ攻略 */
     Logger::printf("[app]ラップ開始\n");
 
-    //lapStrategy.execute();
+    lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
     Logger::printf("[app]ボトルデリバリー開始\n");
 
-    //bottleDeliveryStrategy.execute();
+    bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
     Logger::printf("[app]ETラリー開始\n");

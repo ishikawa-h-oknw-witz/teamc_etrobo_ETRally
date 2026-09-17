@@ -85,7 +85,8 @@ public:
         TargetAngleDetector& targetAngleDetector,
         TargetColorDetector& targetColorDetector,
         IMU& imu,
-        UltrasonicSensor& ultrasonicDetector);
+        UltrasonicSensor& ultrasonicDetector,
+        ColorSensor& colorSensor);
 
     int getSceneID();
     void setSceneID(int sceneid);
@@ -104,6 +105,7 @@ private:
     TargetColorDetector& mTargetColorDetector;
     IMU& mImu;
     UltrasonicSensor& mUltrasonicDetector;
+    ColorSensor& mColorSensor;
     int mSceneId;
     ActionType mActionType;
     IEventDetector* mEventDetector;

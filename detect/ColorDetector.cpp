@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+// MARK:基準値
 // ============================================================
 // 各色の基準となるHSV値
 //
@@ -25,9 +26,6 @@
 
     // --------------------------------------------------------
     // 無彩色
-    //
-    // 黒・灰・白は彩度(S)が低いため、Sだけでは区別しにくい。
-    // そのため、H・S・Vをバランスよく使用する。
     // --------------------------------------------------------
     { Color::Black,   220,  37,  9, 1.0, 0.5, 0.5 },
     { Color::White,   200,  30, 99, 1.0, 0.5, 0.5 },
@@ -35,12 +33,6 @@
 
     // --------------------------------------------------------
     // 有彩色
-    //
-    // Green / Yellow は今回の測定環境では誤判定しやすいため、
-    // 色相(H)を強めに評価する。
-    //
-    // Vは照明やセンサーと対象物との距離などの影響を
-    // 受けやすいため、Green / Yellowでは重みを小さくしている。
     // --------------------------------------------------------
     { Color::Green,   150,  79, 64, 1.5, 2.0, 1.5 },
     { Color::Yellow,   51,  64, 99, 1.0, 1.0, 1.0 },
@@ -59,9 +51,6 @@ static constexpr ColorHSVReference mColorReferences[] =
 
     // --------------------------------------------------------
     // 無彩色
-    //
-    // 黒・灰・白は彩度(S)が低いため、Sだけでは区別しにくい。
-    // そのため、H・S・Vをバランスよく使用する。
     // --------------------------------------------------------
     { Color::Black,   210,  32,  7, 1.0, 0.5, 0.5 },
     { Color::White,   204,  27, 98, 1.0, 0.5, 0.5 },
@@ -69,14 +58,8 @@ static constexpr ColorHSVReference mColorReferences[] =
 
     // --------------------------------------------------------
     // 有彩色
-    //
-    // Green / Yellow は今回の測定環境では誤判定しやすいため、
-    // 色相(H)を強めに評価する。
-    //
-    // Vは照明やセンサーと対象物との距離などの影響を
-    // 受けやすいため、Green / Yellowでは重みを小さくしている。
     // --------------------------------------------------------
-    { Color::Green,   150,  79, 49, 1.5, 2.0, 1.5 },
+    { Color::Green,   150,  79, 49, 2.0, 2.0, 1.5 },
     { Color::Yellow,   51,  69, 91, 1.0, 1.0, 1.0 },
 
     // Red / BlueはH・S・Vを比較的バランスよく評価する。
@@ -224,7 +207,6 @@ void ColorDetector::setLight(Color color)
     }
 }
 
-
 // ============================================================
 // 色を判定する
 //
@@ -240,6 +222,7 @@ void ColorDetector::setLight(Color color)
 // ============================================================
 Color ColorDetector::detect()
 {
+    /* MARK:閾値 */
     // --------------------------------------------------------
     // 色判定の閾値
     // --------------------------------------------------------
@@ -265,15 +248,16 @@ Color ColorDetector::detect()
 
     // 最初はUnknownとしておく。
     Color nearestColor = Color::Unknown;
+    Color nearestColor2 = Color::Unknown;   // 2ばん目に近い色を保存
+    
 
     // 有彩色の距離計算を行う場合に使用する初期値。
-    //
     // 最初の色が見つかるとminDistanceが更新され、
     // その後2番目に近い色がmin2ndDistanceに保存される。
     double minDistance = UNKNOWN_DISTANCE;
     double min2ndDistance = UNKNOWN_DISTANCE;
 
-
+    /* MARK:無彩色の判定 */
     // ========================================================
     // 極端に暗い場合
     // ========================================================
@@ -281,10 +265,6 @@ Color ColorDetector::detect()
     // Vが3未満の場合は、センサー値がほぼ0であり、
     // 色相や彩度による判定を行う必要がないため、
     // この場合はUnknownのままとする。
-    //
-    // ※ V=0を黒として扱いたい場合は、
-    //     nearestColor = Color::Black;
-    // に変更する。
     // ========================================================
     if (!(hsv.v < 3))
     {
@@ -320,7 +300,6 @@ Color ColorDetector::detect()
             // ====================================================
             //
             // Sが十分に高い場合は、
-            // Black / Gray / Whiteを候補から除外し、
             // Green / Yellow / Red / Blueだけを比較する。
             // ====================================================
             for (const auto& reference : mColorReferences)
@@ -343,13 +322,14 @@ Color ColorDetector::detect()
                 // ------------------------------------------------
                 if (distance < minDistance)
                 {
-                    // 今までの1位を2位へ移動する。
+                    // 今までの1位を2位へ移動する(距離)
                     min2ndDistance = minDistance;
-
-                    // 新しい距離を1位として保存する。
+                    // 新しい距離を1位として保存する
                     minDistance = distance;
 
-                    // 最も近い色を保存する。
+                    // 今までの1位を、2位へ移動する(色)
+                    nearestColor2 = nearestColor;
+                    // 最も近い色を保存する
                     nearestColor = reference.color;
                 }
 
@@ -358,7 +338,11 @@ Color ColorDetector::detect()
                 // ------------------------------------------------
                 else if (distance < min2ndDistance)
                 {
+                    // 今までの2位を更新する(距離)
                     min2ndDistance = distance;
+                    // 今までの2位を更新する(色)
+                    nearestColor2 = reference.color;
+                    
                 }
             }
 
@@ -379,10 +363,10 @@ Color ColorDetector::detect()
             // Unknown判定
             // ----------------------------------------------------
             //
-            // ① 最も近い色でも距離が大きすぎる
+            //  最も近い色でも距離が大きすぎる
             //    → どの色にも十分近くない
             //
-            // ② 1位と2位の距離差が小さい
+            //  1位と2位の距離差が小さい
             //    → 2色の判別が難しい
             //
             // どちらかに該当した場合はUnknownとする。
@@ -396,22 +380,20 @@ Color ColorDetector::detect()
     }
 
 
+    /* MARK: ログ出力 */
     // ========================================================
     // 判定結果をログ出力
     // ========================================================
-    //
-    // color : 判定結果
-    // d     : 最も近い色との距離
-    // d2    : 2番目に近い色との距離
-    // gap   : 1位と2位の距離差
-    // HSV   : センサーから取得したHSV値
-    // ========================================================
     Logger::printf(
-        "color=%d d=%f d2=%f gap=%f HSV=%d,%d,%d\n",
-        static_cast<int>(nearestColor),
-        minDistance,
-        min2ndDistance,
-        std::abs(min2ndDistance - minDistance),
+        "1st : color,%d d,%2f gap,%2f HSV,%d,%d,%d\n",
+        static_cast<int>(nearestColor), minDistance, std::abs(min2ndDistance - minDistance),
+        hsv.h,
+        hsv.s,
+        hsv.v
+    );
+    Logger::printf(
+        "2nd : color,%d d,%2f gap,%2f HSV,%d,%d,%d\n\n",
+        static_cast<int>(nearestColor2), min2ndDistance, std::abs(min2ndDistance - minDistance),
         hsv.h,
         hsv.s,
         hsv.v
