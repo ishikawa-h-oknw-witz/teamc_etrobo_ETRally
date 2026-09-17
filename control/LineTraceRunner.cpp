@@ -16,7 +16,7 @@ LineTraceRunner::LineTraceRunner(
       mColorSensor(colorSensor),
       mPIDCalculator(pidCalculate),
       mTrapezoidCalculator(trapezoidCalculator),
-      mTargetSensorValue(45),
+      mTargetSensorValue(50),
       mBaseSpeed(60)
 {
 }
@@ -82,7 +82,7 @@ void LineTraceRunner::vrun()
         (1.0 - std::abs(hsv.v - hsv.s) / 100.0);
 
     // PID制御依頼
-    turn = mPIDCalculator.calculate(vError) * (1.0 / (1.0 + std::exp(0.2 * (Score - 50.0))));
+    turn = mPIDCalculator.calculate(vError) * (1.0 / (1.0 + std::exp(0.1 * (Score - 35.0))));
     /* ((100 - hsv.s) * 0.01)*/;
 
     // モータ出力

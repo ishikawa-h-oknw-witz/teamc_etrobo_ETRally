@@ -27,7 +27,8 @@ SceneManager::SceneManager(
     TargetAngleDetector& targetAngleDetector,
     TargetColorDetector& targetColorDetector,
     IMU& imu,
-    UltrasonicSensor& ultrasonicDetector
+    UltrasonicSensor& ultrasonicDetector,
+    ColorSensor& colorSensor
     )
     : mLineTraceRunner(lineTraceRunner),
       mGyroTraceRunner(gyroTraceRunner),
@@ -39,6 +40,7 @@ SceneManager::SceneManager(
       mTargetColorDetector(targetColorDetector),
       mImu(imu),
       mUltrasonicDetector(ultrasonicDetector),
+      mColorSensor(colorSensor),
       mSceneId(0),
       mEventDetector(nullptr)
 {
@@ -61,7 +63,12 @@ void SceneManager::setActionType(ActionType actiontype)
 
 bool SceneManager::SceneExecute()
 {
-    mImu.resetHeading();
+    if(mActionType != ActionType::Stop || mActionType != ActionType::ColorDetect){
+        mImu.resetHeading();
+    }
+
+    ColorSensor::HSV hsv;
+
     mEventDetector = nullptr;
     setParameter();
 
@@ -107,12 +114,19 @@ bool SceneManager::SceneExecute()
             return false;
         }
 
-        if (UltSonic == true && 
-            mUltrasonicDetector.getDistance() != -1)
+        if (UltSonic == true)
         {
-            UltSonic = false;
-            SumouAngle = mImu.getHeading() * -1;
-            return true;
+            float usDis = mUltrasonicDetector.getDistance();
+            mColorSensor.getHSV(hsv);
+            if ((usDis != -1 && usDis < 300) || hsv.h > 10)
+            {
+                UltSonic = false;
+                if (SumouAngle == 0)
+                {
+                    SumouAngle = mImu.getHeading() * -1;
+                }
+                return true;
+            }
         }
 
         // 走行実行
@@ -141,6 +155,7 @@ bool SceneManager::SceneExecute()
         controlCycleCount++;
     }
 
+    UltSonic = false;
     // シーン終了
     return true;
 }

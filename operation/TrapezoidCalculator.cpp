@@ -14,8 +14,8 @@ void TrapezoidCalculator::setParameter(TrapezoidParameter parameter)
     mTotalDistance = parameter.totalDistance;
 
     // 全体距離に対する割合で加速・減速距離を決定
-    mAccelDistance = mTotalDistance * 0.1f;
-    mDecelDistance = mTotalDistance * 0.3f;
+    mAccelDistance = mTotalDistance * 0.2f;
+    mDecelDistance = mTotalDistance * 0.2f;
 }
 
 int TrapezoidCalculator::getSpeed()
