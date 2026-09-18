@@ -160,7 +160,7 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager, armController);
 
     /* 初期化 */
-    //logger.init();
+    logger.init();
 
     Logger::printf("[app]接続完了\n");
 
@@ -218,6 +218,14 @@ void main_task(intptr_t exinf)
     //         break;
     //     }
     // }
+
+    /*while(1)
+    {
+        Logger::printf(
+            "[app]超音波距離:%d mm\n",
+            UltSonic.getDistance());
+            tslp_tsk(100 * 1000);
+    }*/
 
     rallyStrategy.execute();
 
