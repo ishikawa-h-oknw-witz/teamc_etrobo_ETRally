@@ -106,7 +106,7 @@ bool SceneManager::SceneExecute()
             mGyroTraceRunner.stop();
             return false;
         }
-
+        Logger::printf("[app]超音波距離:%d mm\n",mUltrasonicDetector.getDistance());
         if (UltSonic == true && 
             mUltrasonicDetector.getDistance() != -1)
         {
