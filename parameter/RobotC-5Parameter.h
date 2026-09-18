@@ -66,7 +66,7 @@ const LineTraceScene lineTraceScenes[] =
     {24,  {30.0f, 100.0f, 50.0f,  950.0f}, 950,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv帰還直線 赤
     {25,  {LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25,  200.0f}, 200,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlv帰還カーブ1
     {26,  {30.0f, 100.0f, 30.0f, 1200.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv基準線下まで
-    {27,  {40.0f, 40.0f,  30.0f,  40.0f}, 40,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
+    {27,  {40.0f, 40.0f,  30.0f,  60.0f}, 60,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
 
     {28,  {LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28,   0.0f}, 0,  40, RunnerEdge::RightEdge, {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly右エッジで次の色地点まで
     {29,  {LT_CONSTANT_SPEED_SCENE29, LT_CONSTANT_SPEED_SCENE29, LT_CONSTANT_SPEED_SCENE29,   0.0f}, 0,  40, RunnerEdge::LeftEdge,  {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly左エッジで次の色地点まで

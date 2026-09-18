@@ -95,9 +95,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Green, 12},
-    {Color::Green, 6},
-    {Color::Blue, 10},
+    {Color::Green, 10},
+    {Color::Yellow, 7},
+    {Color::Green, 13},
 };
 
 /* MARK:ラリーシーン
@@ -254,19 +254,33 @@ const SceneOrder InGarage[] =
     {0, static_cast<int>(LineTraceSceneID::GrageLineTrace), ActionType::LineTrace},
 };
 
-/* MARK:相撲
- */
-const SceneOrder Sumou[] =
+const SceneOrder Blueback[] = 
 {
-    {0, 4,  ActionType::Turn},
+    {0, 31, ActionType::Move},
+};
+
+const SceneOrder LinePass[] = 
+{
+    {0, 22, ActionType::Move},
+};
+
+const SceneOrder SumouSearch[] =
+{
+    {0, static_cast<int>(TurnSceneID::Turn30Left),  ActionType::Turn},
     {1, 26, ActionType::Move},
     {2, 16, ActionType::Turn},
-    {3, 27, ActionType::Move},
-    {4, 28, ActionType::Move},
-    {5, 17, ActionType::Turn},
-    {6, 30, ActionType::Move},
-    {7, 2,  ActionType::Turn},
-    {8, 29, ActionType::Move},
+    {3, 19, ActionType::Move},
+    {4, 0, ActionType::Stop},
+};
+
+const SceneOrder SumouPush[] =
+{
+    {0, 27, ActionType::Move},
+    {1, 28, ActionType::Move},
+    {2, 17, ActionType::Turn},
+    {3, 30, ActionType::Move},
+    {4, static_cast<int>(TurnSceneID::Turn90Left),  ActionType::Turn},
+    {5, 29, ActionType::Move},
 };
 
 // 停止
@@ -279,8 +293,10 @@ const SceneOrder stop[] =
 
 
 RallyStrategy::RallyStrategy(
-    SceneManager& sceneManager)
-    : mSceneManager(sceneManager)
+    SceneManager& sceneManager,
+    ArmController& armController)
+    : mSceneManager(sceneManager),
+      mArmController(armController)
 {
 }
 
@@ -293,7 +309,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 3;
+    constexpr int LAP_COUNT = 2;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -781,13 +797,26 @@ void RallyStrategy::execute()
     Logger::printf(
         "[Rally]ラリー終了\r\n");
 
+    changeScene(LinePass, 0);
+
     changeScene(&RejoinTurn[0], 0);
 
     while(true)
     {
         Color detectedPointColor = Color::Unknown;
 
-        changeScene(&EnterPoint[nowEdgeIndex],0);
+        if(gatePositions[2].pointColor == Color::Blue){
+            changeScene(Blueback, 0);
+            mArmController.moveArmup();
+            if (changeScene(SumouSearch, 4))
+            {
+                mArmController.Armreset();
+                changeScene(SumouPush, 5);
+                break;
+            }
+        }
+
+        changeScene(&EnterPoint[1],0);
 
         changeScene(stop,0);
 
@@ -807,12 +836,16 @@ void RallyStrategy::execute()
         if (detectedPointColor == Color::Blue)
         {
             mOld_color = detectedPointColor;
+            mArmController.moveArmup();
 
-            if (changeScene(Sumou,8))
+            if (changeScene(SumouSearch, 4))
             {
+                mArmController.Armreset();
+                changeScene(SumouPush, 5);
                 break;
             }
         }
+
         else if(detectedPointColor == Color::Unknown)
         {
             continue;

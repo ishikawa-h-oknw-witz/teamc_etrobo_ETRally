@@ -51,17 +51,14 @@ const SceneOrder BottleDeliveryStrategy::MoveZone[] =
 
 const SceneOrder BottleDeliveryStrategy::CarryZone[] =
 {
-    {0, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
+    {0, static_cast<int>(TurnSceneID::Turn45Right),            ActionType::Turn}, // 右に45°回転
     {1, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
-    {2, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
+    {2, static_cast<int>(TurnSceneID::Turn45Right),            ActionType::Turn}, // 右に45°回転
     {3, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
-
-    {4, static_cast<int>(TurnSceneID::Turn30Right),            ActionType::Turn}, // 右に30°回転
-    {5, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
     
-    {6, static_cast<int>(MoveSceneID::ReturnToDeliveryLine),   ActionType::Move}, // Dlv線まで帰還
-    {7, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn}  // 右に90°回転
+    {4, static_cast<int>(MoveSceneID::ReturnToDeliveryLine),   ActionType::Move}, // Dlv線まで帰還
+    {5, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn}  // 右に90°回転
 };
 
 
@@ -180,7 +177,7 @@ void BottleDeliveryStrategy::execute()
     changeScene(&MoveZone[mSkipCount], 0);
 
     // ボトル設置
-    changeScene(CarryZone, 7);
+    changeScene(CarryZone, 5);
 
     // 検知した色に対応する帰還
     changeScene(&ReturnZone[mSkipCount], 0);
