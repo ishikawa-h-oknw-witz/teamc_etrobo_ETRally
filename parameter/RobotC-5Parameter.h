@@ -86,7 +86,7 @@ const MoveScene moveScenes[] =
 {
     { 0, Direction::front, {30.0f, 50.0f,  30.0f,   70.0f},  70, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvエリアまで
     { 1, Direction::back,  {30.0f, 60.0f,  30.0f,  160.0f}, 100, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
-    { 2, Direction::front, {MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2,  60.0f},  60, {Color::None},  60, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvボトルまで
+    { 2, Direction::front, {MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, 60.0f}, 60, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvボトルまで
     { 3, Direction::front, {MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, 70.0f}, 70, {Color::None}, {5.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
     { 4, Direction::front, {70.0f,  70.0f,  30.0f, 250.0f}, 250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前1
     { 5, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前2
@@ -103,11 +103,11 @@ const MoveScene moveScenes[] =
     {16, Direction::front, {70.0f, 100.0f,  30.0f, 760.0f}, 760, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還3
     {17, Direction::front, {70.0f, 100.0f,  30.0f, 1010.0f}, 1010, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還4
     {18, Direction::front, {70.0f, 100.0f,  30.0f,1260.0f},1260, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還5
-    {19, Direction::back,  {MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19,  50.0f},50, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー用バック
-    {20, Direction::front, {MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, 60.0f},60, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 代替処理用move
+    {19, Direction::back,  {MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, 50.0f}, 50, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー用バック
+    {20, Direction::front, {MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, 60.0f}, 60, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 代替処理用move
     {21, Direction::front, {30.0f, 80.0f,  30.0f, 1250.0f},1250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 実験用move
-    {22, Direction::front, {MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22,  20.0f},  20, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
-    {23, Direction::back,  {MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23,  30.0f}, 30, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
+    {22, Direction::front, {MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, 20.0f}, 20, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
+    {23, Direction::back,  {MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, 30.0f}, 30, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
     {24, Direction::front, {30.0f, 80.0f, 40.0f, 600.0f}, 600, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ線まで
     {25, Direction::front, {30.0f, 50.0f, 40.0f, 150.0f}, 150, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ中まで
     {26, Direction::front, {50.0f, 60.0f, 40.0f, 470.0f}, 470, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
