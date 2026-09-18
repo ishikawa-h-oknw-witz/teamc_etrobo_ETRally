@@ -36,21 +36,40 @@ const SceneOrder BottleDeliveryStrategy::Back[] =
 const SceneOrder BottleDeliveryStrategy::EnterZone[] =
 {
     //{0, static_cast<int>(LineTraceSceneID::PassBlueLine),   ActionType::LineTrace}, // Dlv行き青スルー
-    {0, static_cast<int>(LineTraceSceneID::EnterStraight1), ActionType::LineTrace}, // Dlv直線1
-    {1, static_cast<int>(LineTraceSceneID::EnterCurve3),    ActionType::LineTrace}  // Dlvカーブ3
+    {0, 32, ActionType::Move},
+    {1, static_cast<int>(TurnSceneID::Turn45Left), ActionType::Turn},
+    {2, static_cast<int>(LineTraceSceneID::PassBlueLine), ActionType::LineTrace}, // Dlv直線1
+    {3, static_cast<int>(LineTraceSceneID::EnterStraight1),    ActionType::LineTrace}  // Dlvカーブ3
 };
 
 
 const SceneOrder BottleDeliveryStrategy::MoveZone[] =
 {
+    /*
     {0, static_cast<int>(LineTraceSceneID::ApproachYellowArea), ActionType::LineTrace}, // 黄エリア前まで
     {1, static_cast<int>(LineTraceSceneID::ApproachBlueArea),   ActionType::LineTrace}, // 青エリア前まで
     {2, static_cast<int>(LineTraceSceneID::ApproachRedArea),    ActionType::LineTrace}  // 赤エリア前まで
+    */
+    {0, static_cast<int>(TurnSceneID::Turn60Left), ActionType::Turn},
+    {1, 33, ActionType::Move},
+    {2, 36, ActionType::Move},
+    {3, 18, ActionType::Turn},
+
+    {4, 19, ActionType::Turn},
+    {5, 34, ActionType::Move},
+    {6, 37, ActionType::Move},
+    {7, 20, ActionType::Turn},
+
+    {8, 21, ActionType::Turn},
+    {9, 35, ActionType::Move},
+    {10, 38, ActionType::Move},
+    {11, 22, ActionType::Turn},
 };
 
 
 const SceneOrder BottleDeliveryStrategy::CarryZone[] =
 {
+    /*
     {0, static_cast<int>(TurnSceneID::Turn45Right),            ActionType::Turn}, // 右に45°回転
     {1, static_cast<int>(MoveSceneID::MoveToDeliveryArea),     ActionType::Move}, // Dlvエリアまで
 
@@ -59,6 +78,8 @@ const SceneOrder BottleDeliveryStrategy::CarryZone[] =
     
     {4, static_cast<int>(MoveSceneID::ReturnToDeliveryLine),   ActionType::Move}, // Dlv線まで帰還
     {5, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn}  // 右に90°回転
+    */
+    {0, static_cast<int>(TurnSceneID::Turn60Left), ActionType::Turn},
 };
 
 
@@ -72,12 +93,25 @@ const SceneOrder BottleDeliveryStrategy::ReturnZone[] =
 
 const SceneOrder BottleDeliveryStrategy::EnterRally[] =
 {
+    /*
     {0, static_cast<int>(LineTraceSceneID::ReturnCurve1),      ActionType::LineTrace}, // Dlv帰還カーブ1
     {1, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
     {2, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青線半分まで
     {3, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
     {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
     {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
+    */
+    {0, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
+    {1, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青線半分まで
+    {2, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
+    {3, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
+    {4, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
+};
+
+const SceneOrder BottleDeliveryStrategy::BottleCatch[] =
+{
+    {0, static_cast<int>(TurnSceneID::Turn45Left), ActionType::Turn},
+    {1, 32, ActionType::Move},
 };
 
 BottleDeliveryStrategy::BottleDeliveryStrategy(
@@ -92,6 +126,7 @@ BottleDeliveryStrategy::BottleDeliveryStrategy(
 
 void BottleDeliveryStrategy::execute()
 {
+    changeScene(BottleCatch, 1);
     changeScene(Back, 1);
 
     // アーム上昇
@@ -171,19 +206,36 @@ void BottleDeliveryStrategy::execute()
     mArmController.Armreset();
 
     // Dlvカーブ3まで
-    changeScene(EnterZone, 1);
+    changeScene(EnterZone, 3);
 
     // 検知した色のエリアまで移動
-    changeScene(&MoveZone[mSkipCount], 0);
+    switch (mSkipCount)
+    {
+    case 0:
+        changeScene(&MoveZone[0], 3);
+        break;
+    
+    case 1:
+        changeScene(&MoveZone[4], 3);
+        break;
+
+    case 2:
+        changeScene(&MoveZone[8], 3);
+        break;
+
+    default:
+        break;
+    }
+    //changeScene(&MoveZone[mSkipCount], 0);
 
     // ボトル設置
-    changeScene(CarryZone, 5);
+    //changeScene(CarryZone, 5);
 
     // 検知した色に対応する帰還
-    changeScene(&ReturnZone[mSkipCount], 0);
+    //changeScene(&ReturnZone[mSkipCount], 0);
 
     //ラリーへ向かう
-    changeScene(EnterRally, 5);
+    changeScene(EnterRally, 4);
 }
 
 
