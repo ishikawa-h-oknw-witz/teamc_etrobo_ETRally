@@ -42,6 +42,9 @@
 // フロントディスプレイ
 #include "Display.h"
 
+//クロック
+#include "Clock.h"
+
 using namespace spikeapi;
 
 /* MARK:インスタンス生成
@@ -77,6 +80,8 @@ void main_task(intptr_t exinf)
     Display display;
 
     UltrasonicSensor UltSonic(EPort::PORT_F);
+
+    Clock clock;
 
     imu.setTilt(51.0f);
 
@@ -192,6 +197,7 @@ void main_task(intptr_t exinf)
     tslp_tsk(20 * 1000);
     while (forceSensor.isTouched());
 
+    clock.reset();
     LOG_PRINTF("[app]スタート\n");
     
     /* ラップ攻略 */
@@ -228,6 +234,8 @@ void main_task(intptr_t exinf)
     }*/
 
     rallyStrategy.execute();
+
+    display.showNumber((clock.now() / 1000000) - 60);
 
     LOG_PRINTF("[app]終了\n");
 
