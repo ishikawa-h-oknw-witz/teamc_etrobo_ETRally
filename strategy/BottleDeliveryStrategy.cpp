@@ -124,7 +124,7 @@ void BottleDeliveryStrategy::execute()
             mSceneManager.setSceneID(
                 sceneOrder.sceneId);
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[BottleDelivery]SceneID=%d\n",
                 sceneOrder.sceneId);
 
@@ -132,7 +132,7 @@ void BottleDeliveryStrategy::execute()
             {
                 mSkipCount = sceneNum;
 
-                Logger::printf(
+                LOG_PRINTF(
                     "[BottleDelivery]色検知:%s\n",
                     colorName[sceneNum]);
 
@@ -148,7 +148,7 @@ void BottleDeliveryStrategy::execute()
 
             tslp_tsk(200 * 1000);
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[BottleDelivery]ボトル検知失敗\n");
 
             changeScene(RecoveryBottleDetect, 1);

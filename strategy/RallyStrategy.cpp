@@ -303,7 +303,7 @@ RallyStrategy::RallyStrategy(
 
 void RallyStrategy::execute()
 {
-    Logger::printf("[Rally]ラリー開始\r\n");
+    LOG_PRINTF("[Rally]ラリー開始\r\n");
 
     // ============================================================
     // 初期設定
@@ -328,7 +328,7 @@ void RallyStrategy::execute()
 
     for (int lap = 0; lap < LAP_COUNT; lap++)
     {
-        Logger::printf(
+        LOG_PRINTF(
             "[Rally] %d周目開始\r\n",
             lap + 1);
 
@@ -343,7 +343,7 @@ void RallyStrategy::execute()
             if (gateIndex == 1 &&
                 gatePositions[0].pointColor == gatePositions[1].pointColor)
             {
-                Logger::printf(
+                LOG_PRINTF(
                     "Skip Gate. GateIndex=%d\r\n",
                     gateIndex);
 
@@ -352,7 +352,7 @@ void RallyStrategy::execute()
 
             const GatePosition& gate = gatePositions[gateIndex];
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[Rally]ゲート攻略開始 Gate=%d\r\n",
                 gate.gatePositionNum);
 
@@ -371,7 +371,7 @@ void RallyStrategy::execute()
             {
                 if (pointSearchCount >= MAX_POINT_SEARCH_COUNT)
                 {
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]基準点探索失敗 Gate=%d\r\n",
                         gate.gatePositionNum);
 
@@ -397,7 +397,7 @@ void RallyStrategy::execute()
 
                     detectedPointColor = detectPointColor();
 
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]検知基準点=%d "
                         "目標基準点=%d\r\n",
                         static_cast<int>(detectedPointColor),
@@ -449,7 +449,7 @@ void RallyStrategy::execute()
             }
 
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[Rally]目標基準点到達 Gate=%d\r\n",
                 gate.gatePositionNum);
 
@@ -506,7 +506,7 @@ void RallyStrategy::execute()
 
                 if (enterGateIndex < 0 || enterGateIndex >= 5)
                 {
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]ゲート番号不正=%d\r\n",
                         gatePosition);
 
@@ -577,7 +577,7 @@ void RallyStrategy::execute()
 
                 if (enterGateIndex < 0 || enterGateIndex >= 5)
                 {
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]ゲート番号不正=%d\r\n",
                         gatePosition);
 
@@ -634,7 +634,7 @@ void RallyStrategy::execute()
 
                 if (rejoinIndex < 0 || rejoinIndex >= 5)
                 {
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]ゲート番号不正=%d\r\n",
                         gatePosition);
 
@@ -657,7 +657,7 @@ void RallyStrategy::execute()
 
                 if (rejoinIndex < 0 || rejoinIndex >= 5)
                 {
-                    Logger::printf(
+                    LOG_PRINTF(
                         "[Rally]ゲート番号不正=%d\r\n",
                         gatePosition);
 
@@ -720,7 +720,7 @@ void RallyStrategy::execute()
             const Color nextPointColor =
                 gatePositions[nextGateIndex].pointColor;
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[Rally]次のゲート=%d\r\n",
                 gatePositions[
                     nextGateIndex].gatePositionNum);
@@ -759,12 +759,12 @@ void RallyStrategy::execute()
                     break;
                 }
                 default:
-                    Logger::printf(
+                    LOG_PRINTF(
                     "[Rally]次のエッジ決定失敗\r\n");
                     break;
             }
 
-            Logger::printf(
+            LOG_PRINTF(
                 "[Rally]次のエッジ=%d\r\n",
                 nowEdgeIndex);
 
@@ -794,7 +794,7 @@ void RallyStrategy::execute()
     // ラリー終了
     // ============================================================
 
-    Logger::printf(
+    LOG_PRINTF(
         "[Rally]ラリー終了\r\n");
 
     changeScene(LinePass, 0);
@@ -936,7 +936,7 @@ Color RallyStrategy::detectPointColor()
             sceneId);
 
 
-        Logger::printf(
+        LOG_PRINTF(
             "[Rally]色判定 SceneID=%d\r\n",
             sceneId);
 
@@ -946,25 +946,25 @@ Color RallyStrategy::detectPointColor()
             switch (sceneId)
             {
             case YELLOW_COLOR_SCENE_ID:
-                Logger::printf(
+                LOG_PRINTF(
                     "[Rally]検出色=Green\r\n");
 
                 return Color::Green;
 
             case BLUE_COLOR_SCENE_ID:
-                Logger::printf(
+                LOG_PRINTF(
                     "[Rally]検出色=Blue\r\n");
 
                 return Color::Blue;
 
             case RED_COLOR_SCENE_ID:
-                Logger::printf(
+                LOG_PRINTF(
                     "[Rally]検出色=Red\r\n");
 
                 return Color::Red;
 
             case GREEN_COLOR_SCENE_ID:
-                Logger::printf(
+                LOG_PRINTF(
                     "[Rally]検出色=Yellow\r\n");
 
                 return Color::Yellow;
@@ -976,7 +976,7 @@ Color RallyStrategy::detectPointColor()
     }
 
 
-    Logger::printf(
+    LOG_PRINTF(
         "[Rally]色を検出できませんでした\r\n");
 
     return Color::Unknown;
@@ -1005,14 +1005,14 @@ bool RallyStrategy::changeScene(
             sceneOrderData.sceneId);
 
 
-        Logger::printf(
+        LOG_PRINTF(
             "[Rally]SceneID=%d\r\n",
             sceneOrderData.sceneId);
 
 
         if (!mSceneManager.SceneExecute())
         {
-            Logger::printf(
+            LOG_PRINTF(
                 "[Rally]Scene実行失敗 ID=%d\r\n",
                 sceneOrderData.sceneId);
 

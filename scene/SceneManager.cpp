@@ -99,7 +99,7 @@ bool SceneManager::SceneExecute()
 
     if (mEventDetector == nullptr)
     {
-        Logger::printf("Event detector is not configured. SceneID=%d\r\n", mSceneId);
+        LOG_PRINTF("Event detector is not configured. SceneID=%d\r\n", mSceneId);
         mGyroTraceRunner.stop();
         return false;
     }
@@ -109,7 +109,7 @@ bool SceneManager::SceneExecute()
     {
         if (controlCycleCount >= MAX_SCENE_CONTROL_CYCLES)
         {
-            Logger::printf("Scene timeout. SceneID=%d\r\n", mSceneId);
+            LOG_PRINTF("Scene timeout. SceneID=%d\r\n", mSceneId);
             mGyroTraceRunner.stop();
             return false;
         }
