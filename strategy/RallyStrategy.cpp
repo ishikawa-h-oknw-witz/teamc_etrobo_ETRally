@@ -307,7 +307,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 1;
+    constexpr int LAP_COUNT = 2;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -363,7 +363,7 @@ void RallyStrategy::execute()
 
             Color detectedPointColor = Color::Unknown;
 
-            int pointSearchCount = 0;
+            int pointSearchCount = 2;
 
             while (detectedPointColor != gate.pointColor)
             {

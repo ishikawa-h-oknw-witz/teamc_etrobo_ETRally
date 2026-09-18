@@ -30,7 +30,7 @@ LapStrategy::LapStrategy(
 
 void LapStrategy::execute()
 {
-    changeScene(LAP, 16);
+    changeScene(LAP, 13);
 }
 
 void LapStrategy::update(
