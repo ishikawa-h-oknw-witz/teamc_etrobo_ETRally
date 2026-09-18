@@ -165,20 +165,20 @@ void main_task(intptr_t exinf)
     RallyStrategy rallyStrategy(sceneManager, armController);
 
     /* 初期化 */
-    //logger.init();
+    LOG_INIT();
 
-    Logger::printf("[app]接続完了\n");
+    LOG_PRINTF("[app]接続完了\n");
 
-    Logger::printf(
+    LOG_PRINTF(
         "[app]Course=%s (%d)\n",
         COURSE_DIRECTION == 1 ? "Left" : "Right",
         COURSE_DIRECTION);
 
-    Logger::printf(
+    LOG_PRINTF(
         "[app]出力電圧:%d\n",
         battery.getVoltage());
 
-    Logger::printf(
+    LOG_PRINTF(
         "[app]出力電流:%d\n",
         battery.getCurrent());
  
@@ -198,20 +198,20 @@ void main_task(intptr_t exinf)
     while (forceSensor.isTouched());
 
     clock.reset();
-    Logger::printf("[app]スタート\n");
+    LOG_PRINTF("[app]スタート\n");
     
     /* ラップ攻略 */
-    Logger::printf("[app]ラップ開始\n");
+    LOG_PRINTF("[app]ラップ開始\n");
 
     lapStrategy.execute();
 
     /* ボトルデリバリー攻略 */
-    Logger::printf("[app]ボトルデリバリー開始\n");
+    LOG_PRINTF("[app]ボトルデリバリー開始\n");
 
     bottleDeliveryStrategy.execute();
 
     /* ETラリー攻略 */
-    Logger::printf("[app]ETラリー開始\n");
+    LOG_PRINTF("[app]ETラリー開始\n");
     
     // while (true){
     //     colorDetector.detect();
@@ -220,14 +220,14 @@ void main_task(intptr_t exinf)
  
     //     if (forceSensor.isTouched())
     //     {
-    //         Logger::printf("[app]終了\n");
+    //         LOG_PRINTF("[app]終了\n");
     //         break;
     //     }
     // }
 
     /*while(1)
     {
-        Logger::printf(
+        LOG_PRINTF(
             "[app]超音波距離:%d mm\n",
             UltSonic.getDistance());
             tslp_tsk(100 * 1000);
@@ -237,7 +237,7 @@ void main_task(intptr_t exinf)
 
     display.showNumber((clock.now() / 1000000) - 60);
 
-    Logger::printf("[app]終了\n");
+    LOG_PRINTF("[app]終了\n");
 
     ext_tsk();
 }
