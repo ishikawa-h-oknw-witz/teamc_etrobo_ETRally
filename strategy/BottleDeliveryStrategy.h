@@ -37,4 +37,5 @@ private:
     static const SceneOrder CarryZone[];
     static const SceneOrder ReturnZone[];
     static const SceneOrder EnterRally[];
+    static const SceneOrder BottleCatch[];
 };

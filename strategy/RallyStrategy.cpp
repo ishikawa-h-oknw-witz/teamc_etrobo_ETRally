@@ -278,9 +278,7 @@ const SceneOrder SumouPush[] =
     {0, 27, ActionType::Move},
     {1, 28, ActionType::Move},
     {2, 17, ActionType::Turn},
-    {3, 30, ActionType::Move},
-    {4, static_cast<int>(TurnSceneID::Turn90Left),  ActionType::Turn},
-    {5, 29, ActionType::Move},
+    {3, 29, ActionType::Move},
 };
 
 // 停止
@@ -309,7 +307,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 2;
+    constexpr int LAP_COUNT = 1;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -811,7 +809,7 @@ void RallyStrategy::execute()
             if (changeScene(SumouSearch, 4))
             {
                 mArmController.Armreset();
-                changeScene(SumouPush, 5);
+                changeScene(SumouPush, 3);
                 break;
             }
         }
@@ -841,7 +839,7 @@ void RallyStrategy::execute()
             if (changeScene(SumouSearch, 4))
             {
                 mArmController.Armreset();
-                changeScene(SumouPush, 5);
+                changeScene(SumouPush, 3);
                 break;
             }
         }
