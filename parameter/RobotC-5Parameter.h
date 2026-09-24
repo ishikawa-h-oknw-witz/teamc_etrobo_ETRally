@@ -49,13 +49,13 @@ const LineTraceScene lineTraceScenes[] =
     { 9,  {LT_CONSTANT_SPEED_SCENE9, LT_CONSTANT_SPEED_SCENE9, LT_CONSTANT_SPEED_SCENE9,  400.0f}, 400,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {1.2f, 0.0f, 1.2f}}, // Lapカーブ3
     {10,  {100.0f, 100.0f, 100.0f,  900.0f}, 900, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.8f, 0.0f, 1.1f}}, // Lap蛇行1
     {11,  {LT_CONSTANT_SPEED_SCENE11, LT_CONSTANT_SPEED_SCENE11, LT_CONSTANT_SPEED_SCENE11,  900.0f}, 900,  80, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.9f, 0.0f, 1.1f}}, // Lap蛇行2
-    {12,  {100.0f, 100.0f, 70.0f,  960.0f}, 960, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.7f, 0.0f, 1.2f}}, // Lap直線4
-    {13,  {70.0f,  60.0f,  50.0f,  280.0f}, 300,  70, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // Lap減速
+    {12,  {100.0f, 100.0f, 70.0f, 1050.0f}, 1050, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.7f, 0.0f, 1.2f}}, // Lap直線4
+    {13,  {70.0f,  60.0f,  50.0f,  300.0f}, 300,  70, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.5f}}, // Lap減速
     {14,  {30.0f, 60.0f,  40.0f,  600.0f}, 600,  60, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 0.5f}}, // ラップ後カーブ1
     {15,  {LT_CONSTANT_SPEED_SCENE15, LT_CONSTANT_SPEED_SCENE15, LT_CONSTANT_SPEED_SCENE15,  400.0f}, 400,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // ラップ後カーブ2
 
     {16,  {40.0f, 40.0f,  30.0f,  150.0f}, 150,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Dlv最初の青スルー
-    {17,  {30.0f,100.0f,  50.0f,  1100.0f}, 1100,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv直線1
+    {17,  {30.0f,100.0f,  50.0f,  800.0f}, 800,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv直線1
     {18,  {LT_CONSTANT_SPEED_SCENE18, LT_CONSTANT_SPEED_SCENE18, LT_CONSTANT_SPEED_SCENE18,  200.0f}, 200,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlvカーブ3
     {19,  {30.0f, 80.0f,  50.0f,  300.0f}, 300,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // 黄ボトル位置まで
     {20,  {30.0f, 100.0f, 50.0f,  550.0f}, 550,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // 青ボトル位置まで
@@ -115,10 +115,10 @@ const MoveScene moveScenes[] =
     {26, Direction::front, {50.0f, 60.0f, 40.0f, 470.0f}, 470, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {27, Direction::front, {40.0f, 50.0f,50.0f, 240.0f}, 240, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {28, Direction::back, {30.0f, 50.0f, 50.0f, 170.0f}, 170, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
-    {29, Direction::front, {70.0f,100.0f, 80.0f,1420.0f}, 1420, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
+    {29, Direction::front, {70.0f,100.0f, 80.0f,1420.0f}, 1300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {31, Direction::back, {30.0f,60.0f, 40.0f, 70.0f}, 70, {Color::None}, {3.0f, 0.0f, 0.0f}}, //最後の目標基準点が青だった時の例外処理用
-    {32, Direction::front, {70.0f, 100.0f, 70.0f, 410.0f}, 410, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {32, Direction::front, {70.0f, 100.0f, 70.0f, 520.0f}, 520, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {33, Direction::front, {70.0f,  80.0f, 50.0f, 370.0f}, 370, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {34, Direction::front, {70.0f, 100.0f, 70.0f, 700.0f}, 700, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {35, Direction::front, {70.0f, 100.0f, 70.0f, 950.0f}, 950, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
