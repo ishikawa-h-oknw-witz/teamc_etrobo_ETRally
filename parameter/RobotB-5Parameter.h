@@ -49,12 +49,12 @@ const LineTraceScene lineTraceScenes[] =
     { 9,  {LT_CONSTANT_SPEED_SCENE9, LT_CONSTANT_SPEED_SCENE9, LT_CONSTANT_SPEED_SCENE9,  400.0f}, 400,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Lapカーブ3
     {10,  {70.0f, 100.0f, 80.0f,  900.0f}, 900, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Lap蛇行1
     {11,  {LT_CONSTANT_SPEED_SCENE11, LT_CONSTANT_SPEED_SCENE11, LT_CONSTANT_SPEED_SCENE11,  900.0f}, 900,  80, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 0.4f}}, // Lap蛇行2
-    {12,  {80.0f, 100.0f, 70.0f,  900.0f}, 900, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Lap直線4
+    {12,  {80.0f, 100.0f, 70.0f,  960.0f}, 960, 100, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Lap直線4
     {13,  {70.0f, 70.0f,  30.0f,  280.0f}, 280,  70, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Lap減速
     {14,  {30.0f, 60.0f,  40.0f,  600.0f}, 600,  60, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 0.5f}}, // ラップ後カーブ1
     {15,  {LT_CONSTANT_SPEED_SCENE15, LT_CONSTANT_SPEED_SCENE15, LT_CONSTANT_SPEED_SCENE15,  400.0f}, 400,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // ラップ後カーブ2
 
-    {16,  {40.0f, 40.0f,  30.0f,  100.0f}, 100,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv最初の青スルー
+    {16,  {40.0f, 40.0f,  30.0f,  100.0f}, 100,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Dlv最初の青スルー
     {17,  {30.0f,100.0f,  50.0f,  1200.0f}, 1200,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv直線1
     {18,  {LT_CONSTANT_SPEED_SCENE18, LT_CONSTANT_SPEED_SCENE18, LT_CONSTANT_SPEED_SCENE18,  200.0f}, 200,  30, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlvカーブ3
     {19,  {30.0f, 80.0f,  50.0f,  300.0f}, 300,  70, RunnerEdge::LeftEdge,  {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // 黄ボトル位置まで
@@ -66,7 +66,7 @@ const LineTraceScene lineTraceScenes[] =
     {24,  {30.0f, 100.0f, 50.0f,  950.0f}, 950,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv帰還直線 赤
     {25,  {LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25,  200.0f}, 200,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlv帰還カーブ1
     {26,  {30.0f, 100.0f, 30.0f, 1200.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv基準線下まで
-    {27,  {40.0f, 40.0f,  30.0f,  40.0f}, 40,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
+    {27,  {40.0f, 40.0f,  30.0f,  60.0f}, 60,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, // Dlv青半分まで
 
     {28,  {LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28,   0.0f}, 0,  40, RunnerEdge::RightEdge, {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly右エッジで次の色地点まで
     {29,  {LT_CONSTANT_SPEED_SCENE29, LT_CONSTANT_SPEED_SCENE29, LT_CONSTANT_SPEED_SCENE29,   0.0f}, 0,  40, RunnerEdge::LeftEdge,  {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly左エッジで次の色地点まで
@@ -80,44 +80,52 @@ const LineTraceScene lineTraceScenes[] =
     {34,  {30.0f, 60.0f, 50.0f, 950.0f}, 950, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
     {35,  {30.0f, 50.0f, 50.0f,   0.0f},   0, 30, RunnerEdge::RightEdge, {Color::White}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //ガレージ中に移動
 };
-/* MARK:直進パラメータ
- */
+/* MARK:直進パラメータ 
+*/
 const MoveScene moveScenes[] =
 {
-    { 0, Direction::front, {30.0f, 50.0f,  30.0f,   70.0f},  70, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvエリアまで
-    { 1, Direction::back,  {30.0f, 60.0f,  30.0f,  180.0f}, 180, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
-    { 2, Direction::front, {MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2,  60.0f},  60, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Dlvボトルまで
-    { 3, Direction::front, {MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, 70.0f}, 70, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
-    { 4, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲート前1
-    { 5, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲート前2
-    { 6, Direction::front, {70.0f, 100.0f,  30.0f, 750.0f}, 750, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲート前3
-    { 7, Direction::front, {70.0f, 100.0f,  30.0f,1000.0f},1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲート前4
-    { 8, Direction::front, {70.0f, 100.0f,  30.0f,1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲート前5
-    { 9, Direction::front, {70.0f,  80.0f,  30.0f, 300.0f}, 300, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートを通過
+    { 0, Direction::front, {30.0f, 50.0f,  30.0f,   70.0f},  70, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvエリアまで
+    { 1, Direction::back,  {30.0f, 60.0f,  30.0f,  160.0f}, 100, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlv線まで帰還
+    { 2, Direction::front, {MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, MV_CONSTANT_SPEED_SCENE2, 60.0f}, 60, {Color::None}, {2.0f, 0.0f, 0.0f}}, // Dlvボトルまで
+    { 3, Direction::front, {MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, MV_CONSTANT_SPEED_SCENE3, 70.0f}, 70, {Color::None}, {5.0f, 0.0f, 0.0f}}, // Rly基準点中央まで
+    { 4, Direction::front, {70.0f,  70.0f,  30.0f, 250.0f}, 250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前1
+    { 5, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前2
+    { 6, Direction::front, {70.0f, 100.0f,  30.0f, 750.0f}, 750, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前3
+    { 7, Direction::front, {70.0f, 100.0f,  30.0f,1000.0f},1000, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前4
+    { 8, Direction::front, {70.0f, 100.0f,  30.0f,1250.0f},1250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲート前5
+    { 9, Direction::front, {70.0f,  80.0f,  20.0f, 300.0f}, 300, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲートを通過
     {10, Direction::front, {MV_CONSTANT_SPEED_SCENE10, MV_CONSTANT_SPEED_SCENE10, MV_CONSTANT_SPEED_SCENE10,   0.0f},   0, {Color::Green, Color::Yellow, Color::Red, Color::Blue},{1.0f, 0.0f, 0.0f}}, //基準点帰還
-    {11, Direction::front, {30.0f,  50.0f,  50.0f, 100.0f}, 100, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly目標外の基準点を通過
-    {12, Direction::back,  {30.0f,  70.0f,  30.0f, 280.0f}, 280, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
-    {13, Direction::front, {30.0f,  40.0f,  30.0f, 50.0f}, 50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
-    {14, Direction::front, {70.0f,  80.0f,  30.0f, 270.0f}, 270, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還1
-    {15, Direction::front, {70.0f, 100.0f,  30.0f, 480.0f}, 480, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還2
-    {16, Direction::front, {70.0f, 100.0f,  30.0f, 750.0f}, 750, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還3
-    {17, Direction::front, {70.0f, 100.0f,  30.0f, 1000.0f}, 1000, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還4
-    {18, Direction::front, {70.0f, 100.0f,  30.0f,1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 帰還5
-    {19, Direction::back,  {MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19,  50.0f},50, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー用バック
-    {20, Direction::front, {MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, 60.0f},60, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 代替処理用move
-    {21, Direction::front, {30.0f, 80.0f,  30.0f, 1250.0f},1250, {Color::None}, {1.0f, 0.0f, 0.0f}}, // 実験用move
-    {22, Direction::front, {MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22,  20.0f},  20, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
-    {23, Direction::back,  {MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23,  30.0f}, 30, {Color::None}, {1.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
-    {24, Direction::front, {30.0f, 80.0f, 30.0f, 600.0f}, 600, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ線まで
-    {25, Direction::front, {30.0f, 50.0f, 30.0f, 150.0f}, 150, {Color::None}, {1.0f, 0.0f, 0.0f}}, //ガレージ中まで
-    {26, Direction::front, {50.0f, 80.0f, 50.0f, 470.0f}, 470, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
-    {27, Direction::front, {40.0f, 50.0f,50.0f, 300.0f}, 170, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
-    {28, Direction::back, {30.0f, 50.0f, 50.0f, 300.0f}, 170, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
-    {29, Direction::front, {70.0f,100.0f, 80.0f,1300.0f}, 1300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //土俵前まで
-    {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {1.0f, 0.0f, 0.0f}}, //押し出し
+    {11, Direction::front, {30.0f,  50.0f,  50.0f, 100.0f}, 100, {Color::None}, {5.0f, 0.0f, 0.0f}}, // Rly目標外の基準点を通過
+    {12, Direction::back,  {30.0f,  60.0f,  40.0f, 300.0f}, 300, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rlyゲートから後退して帰還
+    {13, Direction::front, {30.0f,  40.0f,  40.0f, 50.0f}, 50, {Color::None}, {3.0f, 0.0f, 0.0f}}, // Rly帰還旋回後にラインまで直進
+    {14, Direction::front, {70.0f,  70.0f,  30.0f, 250.0f}, 250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還1
+    {15, Direction::front, {70.0f, 100.0f,  30.0f, 500.0f}, 500, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還2
+    {16, Direction::front, {70.0f, 100.0f,  30.0f, 760.0f}, 760, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還3
+    {17, Direction::front, {70.0f, 100.0f,  30.0f, 1010.0f}, 1010, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還4
+    {18, Direction::front, {70.0f, 100.0f,  30.0f,1260.0f},1260, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 帰還5
+    {19, Direction::back,  {MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, MV_CONSTANT_SPEED_SCENE19, 50.0f}, 50, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー用バック
+    {20, Direction::front, {MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, MV_CONSTANT_SPEED_SCENE20, 60.0f}, 60, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 代替処理用move
+    {21, Direction::front, {30.0f, 80.0f,  30.0f, 1250.0f},1250, {Color::None}, {3.0f, 0.0f, 0.0f}}, // 実験用move
+    {22, Direction::front, {MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, MV_CONSTANT_SPEED_SCENE22, 20.0f}, 20, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時復帰用
+    {23, Direction::back,  {MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, MV_CONSTANT_SPEED_SCENE23, 30.0f}, 30, {Color::None}, {3.0f, 0.0f, 0.0f}}, // ボトルデリバリー検知失敗時用バック
+    {24, Direction::front, {30.0f, 80.0f, 40.0f, 600.0f}, 600, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ線まで
+    {25, Direction::front, {30.0f, 50.0f, 40.0f, 150.0f}, 150, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ中まで
+    {26, Direction::front, {50.0f, 60.0f, 40.0f, 470.0f}, 470, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
+    {27, Direction::front, {40.0f, 50.0f,50.0f, 220.0f}, 240, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
+    {28, Direction::back, {30.0f, 50.0f, 50.0f, 170.0f}, 170, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
+    {29, Direction::front, {70.0f,100.0f, 80.0f,1420.0f}, 1420, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
+    {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
+    {31, Direction::back, {30.0f,60.0f, 40.0f, 70.0f}, 70, {Color::None}, {3.0f, 0.0f, 0.0f}}, //最後の目標基準点が青だった時の例外処理用
+    {32, Direction::front, {70.0f, 100.0f, 20.0f, 410.0f}, 410, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {33, Direction::front, {70.0f,  80.0f, 50.0f, 370.0f}, 370, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {34, Direction::front, {70.0f, 100.0f, 70.0f, 700.0f}, 700, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {35, Direction::front, {70.0f, 100.0f, 70.0f, 950.0f}, 950, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {36, Direction::back, {40.0f,  80.0f, 70.0f,  340.0f}, 340, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {37, Direction::back, {40.0f,  80.0f, 70.0f,  670.0f}, 670, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
+    {38, Direction::back, {40.0f,  80.0f, 70.0f,  920.0f}, 920, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
 };
-/* MARK:回転パラメータ 
-*/
+/* MARK:回転パラメータ
+ */
 const TurnScene turnScenes[] =
 {
     {0,    0, false, false, {1.0f, 0.0f, 0.0f}}, // 正面
@@ -146,7 +154,13 @@ const TurnScene turnScenes[] =
     {15,  -10, false, false, {1.0f, 0.0f, 0.0f}}, // 左10°
 
     {16,-360, true, false, {1.0f, 0.0f, 0.0f}}, //測距1
-    {17, 0, false, true, {1.0f, 0.0f, 0.0f}} //測距1
+    {17, 0, false, true, {1.0f, 0.0f, 0.0f}}, //測距1
+
+    {18, -120, false, false, {1.0f, 0.0f, 0.0f}}, // 左120°
+    {19,  -65, false, false, {1.0f, 0.0f, 0.0f}}, // 左70°
+    {20, -115, false, false, {1.0f, 0.0f, 0.0f}}, // 左110°
+    {21,  -70, false, false, {1.0f, 0.0f, 0.0f}}, // 左75°
+    {22, -110, false, false, {1.0f, 0.0f, 0.0f}}, // 左105°
 };
 
 const BottleDetectScene bottleDetectScenes[] =
