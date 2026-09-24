@@ -37,7 +37,7 @@ const SceneOrder BottleDeliveryStrategy::EnterZone[] =
 {
     //{0, static_cast<int>(LineTraceSceneID::PassBlueLine),   ActionType::LineTrace}, // Dlv行き青スルー
     {0, 32, ActionType::Move},
-    {1, static_cast<int>(TurnSceneID::Turn45Left), ActionType::Turn},
+    {1, static_cast<int>(TurnSceneID::Turn30Left), ActionType::Turn},
     {2, static_cast<int>(LineTraceSceneID::PassBlueLine), ActionType::LineTrace}, // Dlv直線1
     {3, static_cast<int>(LineTraceSceneID::EnterStraight1),    ActionType::LineTrace}  // Dlvカーブ3
 };
@@ -111,7 +111,7 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
 
 const SceneOrder BottleDeliveryStrategy::BottleCatch[] =
 {
-    {0, static_cast<int>(TurnSceneID::Turn45Left), ActionType::Turn},
+    {0, static_cast<int>(TurnSceneID::Turn60Left), ActionType::Turn},
     {1, 32, ActionType::Move},
 };
 
