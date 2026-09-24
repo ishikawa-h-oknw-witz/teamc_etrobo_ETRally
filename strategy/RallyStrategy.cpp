@@ -278,7 +278,7 @@ const SceneOrder SumouPush[] =
     {0, 27, ActionType::Move},
     {1, 28, ActionType::Move},
     {2, 17, ActionType::Turn},
-    {3, 24, ActionType::Move},
+    {3, 30, ActionType::Move},
     {4, 5,  ActionType::Turn},
     {5, 29, ActionType::Move},
 };
