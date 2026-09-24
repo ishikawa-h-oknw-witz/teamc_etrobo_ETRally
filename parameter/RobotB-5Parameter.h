@@ -79,6 +79,8 @@ const LineTraceScene lineTraceScenes[] =
     {33,  {30.0f, 60.0f, 50.0f, 700.0f}, 700, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //赤からガレージ
     {34,  {30.0f, 60.0f, 50.0f, 950.0f}, 950, 30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //青からガレージ
     {35,  {30.0f, 50.0f, 50.0f,   0.0f},   0, 30, RunnerEdge::RightEdge, {Color::White}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //ガレージ中に移動
+
+    {36,  {35.0f, 35.0f,  35.0f,  150.0f}, 150,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Dlv後線上に復帰
 };
 /* MARK:直進パラメータ 
 */
