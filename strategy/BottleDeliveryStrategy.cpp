@@ -101,11 +101,12 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
     {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
     {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
     */
-    {0, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
-    {1, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青線半分まで
-    {2, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
-    {3, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
-    {4, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
+    {0, 36,      ActionType::LineTrace}, // ライン復帰まで
+    {1, static_cast<int>(LineTraceSceneID::ReturnToBlue),      ActionType::LineTrace}, // Dlv帰還青まで
+    {2, static_cast<int>(LineTraceSceneID::ReturnBlueHalfway), ActionType::LineTrace}, // Dlv青線半分まで
+    {3, static_cast<int>(TurnSceneID::Turn90Right),            ActionType::Turn},      // Dlv右に90°回転
+    {4, static_cast<int>(MoveSceneID::ReturnToBaseline),       ActionType::Move},      // Dlv基準線まで
+    {5, static_cast<int>(StopSceneID::Finish),                 ActionType::Stop}
 };
 
 const SceneOrder BottleDeliveryStrategy::BottleCatch[] =
@@ -235,7 +236,7 @@ void BottleDeliveryStrategy::execute()
     //changeScene(&ReturnZone[mSkipCount], 0);
 
     //ラリーへ向かう
-    changeScene(EnterRally, 4);
+    changeScene(EnterRally, 5);
 }
 
 
