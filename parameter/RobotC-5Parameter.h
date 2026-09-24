@@ -165,7 +165,7 @@ const TurnScene turnScenes[] =
 
 const BottleDetectScene bottleDetectScenes[] =
 {
-    {0, {Color::Green}}, // 黄ボトル検知
+    {0, {Color::Yellow}}, // 黄ボトル検知
     {1, {Color::Blue}},   // 青ボトル検知
     {2, {Color::Red}}     // 赤ボトル検知
 };
