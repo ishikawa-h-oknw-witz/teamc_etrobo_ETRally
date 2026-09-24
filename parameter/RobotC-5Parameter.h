@@ -113,7 +113,7 @@ const MoveScene moveScenes[] =
     {26, Direction::front, {50.0f, 60.0f, 40.0f, 470.0f}, 470, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {27, Direction::front, {40.0f, 50.0f,50.0f, 240.0f}, 240, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {28, Direction::back, {30.0f, 50.0f, 50.0f, 170.0f}, 170, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
-    {29, Direction::front, {70.0f,100.0f, 80.0f,1420.0f}, 1420, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
+    {29, Direction::front, {70.0f,100.0f, 80.0f,1420.0f}, 1300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {30, Direction::front, {50.0f,100.0f, 50.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {31, Direction::back, {30.0f,60.0f, 40.0f, 70.0f}, 70, {Color::None}, {3.0f, 0.0f, 0.0f}}, //最後の目標基準点が青だった時の例外処理用
     {32, Direction::front, {70.0f, 100.0f, 70.0f, 410.0f}, 410, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び

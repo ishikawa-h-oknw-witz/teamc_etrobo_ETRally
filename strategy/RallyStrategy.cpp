@@ -278,7 +278,9 @@ const SceneOrder SumouPush[] =
     {0, 27, ActionType::Move},
     {1, 28, ActionType::Move},
     {2, 17, ActionType::Turn},
-    {3, 29, ActionType::Move},
+    {3, 24, ActionType::Move},
+    {4, 5,  ActionType::Turn},
+    {5, 29, ActionType::Move},
 };
 
 // 停止
@@ -809,7 +811,7 @@ void RallyStrategy::execute()
             if (changeScene(SumouSearch, 4))
             {
                 mArmController.Armreset();
-                changeScene(SumouPush, 3);
+                changeScene(SumouPush, 5);
                 break;
             }
         }
@@ -839,7 +841,7 @@ void RallyStrategy::execute()
             if (changeScene(SumouSearch, 4))
             {
                 mArmController.Armreset();
-                changeScene(SumouPush, 3);
+                changeScene(SumouPush, 5);
                 break;
             }
         }
