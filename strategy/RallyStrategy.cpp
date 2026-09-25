@@ -84,6 +84,53 @@ int getNextEdgeIndex(
     return 2;
 }
 
+// 2番目の縦ゲートを、横ゲートへ向かう途中で通過できるか判定
+bool canPassVerticalGateOnTheWay(
+    int verticalGate,
+    int horizontalGate)
+{
+    switch (verticalGate)
+    {
+    case 5:
+        // 5はすべての横ゲートを通過できる
+        return horizontalGate == 1 ||
+               horizontalGate == 2 ||
+               horizontalGate == 3 ||
+               horizontalGate == 4 ||
+               horizontalGate == 10 ||
+               horizontalGate == 11 ||
+               horizontalGate == 12 ||
+               horizontalGate == 13;
+
+    case 6:
+        // 6は1,10以外
+        return horizontalGate == 2 ||
+               horizontalGate == 3 ||
+               horizontalGate == 4 ||
+               horizontalGate == 11 ||
+               horizontalGate == 12 ||
+               horizontalGate == 13;
+
+    case 7:
+        // 7は3,4,12,13
+        return horizontalGate == 3 ||
+               horizontalGate == 4 ||
+               horizontalGate == 12 ||
+               horizontalGate == 13;
+
+    case 8:
+        // 8は4,13
+        return horizontalGate == 4 ||
+               horizontalGate == 13;
+
+    case 9:
+        // 9はどの横ゲートも通過しない
+        return false;
+
+    default:
+        return false;
+    }
+}
 
 struct GatePosition
 {
@@ -95,9 +142,9 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Green, 10},
-    {Color::Yellow, 7},
     {Color::Green, 13},
+    {Color::Blue, 7},
+    {Color::Blue, 4},
 };
 
 /* MARK:ラリーシーン
@@ -309,7 +356,7 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 2;
+    constexpr int LAP_COUNT = 3;
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
@@ -320,6 +367,57 @@ void RallyStrategy::execute()
         static_cast<int>(
             sizeof(gatePositions) /
             sizeof(gatePositions[0]));
+
+    // ============================================================
+    // 2番目のゲートをスキップできるか判定
+    // ============================================================
+    bool skipSecondGate = false;
+
+    if (gatePositionCount >= 3)
+    {
+        const int firstGatePosition =
+            gatePositions[0].gatePositionNum;
+
+        const int secondGatePosition =
+            gatePositions[1].gatePositionNum;
+
+        const int thirdGatePosition =
+            gatePositions[2].gatePositionNum;
+
+        // 2番目は縦ゲート（5～9）
+        const bool secondGateIsVertical =
+            secondGatePosition >= 5 &&
+            secondGatePosition <= 9;
+
+        if (secondGateIsVertical)
+        {
+            // 1番目の横ゲートへ向かう途中で
+            // 2番目の縦ゲートを通過する場合
+            const bool canSkipByFirstGate =
+                gatePositions[0].pointColor ==
+                gatePositions[1].pointColor &&
+                canPassVerticalGateOnTheWay(
+                    secondGatePosition,
+                    firstGatePosition);
+
+            // 3番目の横ゲートへ向かう途中で
+            // 2番目の縦ゲートを通過する場合
+            const bool canSkipByThirdGate =
+                gatePositions[1].pointColor ==
+                gatePositions[2].pointColor &&
+                canPassVerticalGateOnTheWay(
+                    secondGatePosition,
+                    thirdGatePosition);
+
+            skipSecondGate =
+                canSkipByFirstGate ||
+                canSkipByThirdGate;
+        }
+
+        LOG_PRINTF(
+            "[Rally] 2番目ゲートスキップ=%d\r\n",
+            skipSecondGate);
+    }
 
 
     // ============================================================
@@ -339,13 +437,11 @@ void RallyStrategy::execute()
 
         for (int gateIndex = 0; gateIndex < gatePositionCount; gateIndex++)
         {
-            // 直前のゲートと目標基準点が同じなら、このゲートは攻略しない
-            if (gateIndex == 1 &&
-                gatePositions[0].pointColor == gatePositions[1].pointColor)
+            // 2番目のゲートをスキップ
+            if (gateIndex == 1 && skipSecondGate)
             {
                 LOG_PRINTF(
-                    "Skip Gate. GateIndex=%d\r\n",
-                    gateIndex);
+                    "[Rally] 2番目のゲートをスキップ\r\n");
 
                 continue;
             }
@@ -694,12 +790,14 @@ void RallyStrategy::execute()
 
             int nextGateIndex = gateIndex + 1;
 
-            // 1つ目と2つ目の基準点が同じ場合、2つ目をスキップ
-            if (gateIndex == 0 &&
-                gatePositionCount >= 3 &&
-                gatePositions[0].pointColor == gatePositions[1].pointColor)
+            // 2番目のゲートをスキップする場合は
+            // 1番目の次を3番目にする
+            if (gateIndex == 0 && skipSecondGate)
             {
                 nextGateIndex = 2;
+
+                LOG_PRINTF(
+                    "[Rally] 2番目をスキップして3番目へ移動\r\n");
             }
 
             const bool hasNextGate = (nextGateIndex < gatePositionCount);
