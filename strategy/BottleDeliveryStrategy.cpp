@@ -112,7 +112,7 @@ const SceneOrder BottleDeliveryStrategy::EnterRally[] =
 const SceneOrder BottleDeliveryStrategy::BottleCatch[] =
 {
     {0, static_cast<int>(TurnSceneID::Turn60Left), ActionType::Turn},
-    {1, 32, ActionType::Move},
+    {1, 39, ActionType::Move},
 };
 
 BottleDeliveryStrategy::BottleDeliveryStrategy(
@@ -142,7 +142,7 @@ void BottleDeliveryStrategy::execute()
     changeScene(EnterBottle, 1);
 
     // ボトル色検知
-    const char* colorName[] = {"黄", "青", "赤"};
+    //const char* colorName[] = {"黄", "青", "赤"};
 
     mSkipCount = -1;
 

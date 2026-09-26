@@ -142,9 +142,13 @@ struct GatePosition
 // ラリーで攻略するゲート
 const GatePosition gatePositions[] =
 {
-    {Color::Green, 13},
-    {Color::Blue, 7},
-    {Color::Blue, 4},
+    {Color::Blue, 3},
+    {Color::Blue, 5},
+    {Color::Green, 11},
+    /*
+   {Color::Green, 2},
+    {Color::Red, 8},
+    {Color::Blue, 1},*/
 };
 
 /* MARK:ラリーシーン
@@ -356,7 +360,8 @@ void RallyStrategy::execute()
     // 初期設定
     // ============================================================
 
-    constexpr int LAP_COUNT = 3;
+    //constexpr int LAP_COUNT = 2;
+    constexpr int LAP_COUNT = 3;//L
 
     // 最初は右エッジを使用
     // 周回をまたいでもエッジは引き継ぐ
