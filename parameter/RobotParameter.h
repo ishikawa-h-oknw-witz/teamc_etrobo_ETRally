@@ -1,5 +1,14 @@
 #pragma once
+#include "CourseParameter.h"
 
-#include "RobotA-5Parameter.h"
-//#include "RobotB-5Parameter.h"
-//#include "RobotC-5Parameter.h"
+#ifdef COURSE_LEFT
+
+#include "L-CourseParameter.h"
+constexpr int COURSE_DIRECTION = 1;
+
+#elif defined(COURSE_RIGHT)
+
+#include "R-CourseParameter.h"
+constexpr int COURSE_DIRECTION = -1;
+
+#endif
