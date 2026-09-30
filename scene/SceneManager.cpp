@@ -123,7 +123,7 @@ bool SceneManager::SceneExecute()
                 UltSonic = false;
                 if (SumouAngle == 0)
                 {
-                    SumouAngle = mImu.getHeading() * -1;
+                    SumouAngle = mImu.getHeading();
                 }
                 return true;
             }
@@ -266,13 +266,18 @@ void SceneManager::setParameter()
 
         if (turnscene.variable != false)
         {
-            /*
-            mGyroTraceRunner.setTargetAngle((SumouAngle - 60) * COURSE_DIRECTION);
-            mTargetAngleDetector.setTargetAngle((SumouAngle - 60) * COURSE_DIRECTION);
-            */
-            //L用
-            mGyroTraceRunner.setTargetAngle((SumouAngle - 53) * COURSE_DIRECTION);
-            mTargetAngleDetector.setTargetAngle((SumouAngle - 53) * COURSE_DIRECTION);
+            //L用(目標角度 - 現在の絶対角度)
+            if(COURSE_DIRECTION == 1){
+                mGyroTraceRunner.setTargetAngle((-90 - ((-30) + SumouAngle)));
+                mTargetAngleDetector.setTargetAngle((-90 - ((-30) + SumouAngle)));
+            }
+
+            //R用
+            if(COURSE_DIRECTION == -1){
+                mGyroTraceRunner.setTargetAngle((90 - ((30) + SumouAngle)));
+                mTargetAngleDetector.setTargetAngle((90 - ((30) + SumouAngle)));
+            }
+    
             mEventDetector = &mTargetAngleDetector;
         }
 
