@@ -4,9 +4,6 @@
 #include "Logger.h"
 #include "kernel.h"
 
-#define RBIAS 60
-#define LBIAS 53
-
 namespace
 {
     constexpr int COLOR_SAMPLE_COUNT = 10;
