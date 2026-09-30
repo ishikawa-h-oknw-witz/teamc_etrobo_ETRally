@@ -76,7 +76,6 @@ const LineTraceScene lineTraceScenes[] =
     {24,  {30.0f, 100.0f, 50.0f,  950.0f}, 950,  60, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.6f}}, // Dlv帰還直線 赤
     {25,  {LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25, LT_CONSTANT_SPEED_SCENE25,  200.0f}, 200,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.6f, 0.0f, 0.4f}}, // Dlv帰還カーブ1
     {26,  {60.0f, 100.0f, 30.0f, 900.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 2.0f}}, // Dlv基準線下まで
-    //{26,  {60.0f, 100.0f, 30.0f, 1050.0f},   0, 100, RunnerEdge::RightEdge, {Color::Blue}, CalibrationData::BlackWhiteCenter, {0.5f, 0.0f, 2.0f}}, // L
     {27,  {40.0f, 40.0f,  30.0f,  60.0f}, 60,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.6f}}, // Dlv青半分まで
 
     {28,  {LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28, LT_CONSTANT_SPEED_SCENE28,   0.0f}, 0,  40, RunnerEdge::RightEdge, {Color::Green, Color::Yellow, Color::Red, Color::Blue},CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.5f}}, // Rly右エッジで次の色地点まで
@@ -92,7 +91,6 @@ const LineTraceScene lineTraceScenes[] =
     {35,  {30.0f, 50.0f, 50.0f,   0.0f},   0, 30, RunnerEdge::RightEdge, {Color::White}, CalibrationData::BlackWhiteCenter, {0.3f, 0.0f, 0.4f}}, //ガレージ中に移動
 
     {36,  {40.0f, 40.0f,  40.0f,  300.0f}, 300,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // Dlv後線上に復帰
-    //{36,  {40.0f, 40.0f,  40.0f,  150.0f}, 150,  30, RunnerEdge::RightEdge, {Color::None}, CalibrationData::BlackWhiteCenter, {0.4f, 0.0f, 0.4f}}, // L
 };
 /* MARK:直進パラメータ 
 */
@@ -125,27 +123,18 @@ const MoveScene moveScenes[] =
     {24, Direction::front, {30.0f, 80.0f, 40.0f, 600.0f}, 600, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ線まで
     {25, Direction::front, {30.0f, 50.0f, 40.0f, 150.0f}, 150, {Color::None}, {3.0f, 0.0f, 0.0f}}, //ガレージ中まで
     {26, Direction::front, {60.0f, 40.0f, 40.0f, 510.0f}, 510, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
-    //{26, Direction::front, {60.0f, 40.0f, 40.0f, 420.0f}, 420, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {27, Direction::front, {40.0f, 50.0f,50.0f, 240.0f}, 240, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {28, Direction::back, {30.0f, 50.0f, 50.0f, 170.0f}, 170, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {29, Direction::front, {70.0f,100.0f, 80.0f,1200.0f}, 1200, {Color::None}, {2.0f, 0.0f, 0.0f}}, //土俵前まで
     {30, Direction::front, {50.0f,80.0f, 40.0f, 300.0f}, 300, {Color::None}, {2.0f, 0.0f, 0.0f}}, //押し出し
     {31, Direction::back, {30.0f,40.0f, 40.0f, 50.0f}, 50, {Color::None}, {3.0f, 0.0f, 0.0f}}, //最後の目標基準点が青だった時の例外処理用
-    //{31, Direction::back, {30.0f,40.0f, 40.0f, 0.0f}, 0, {Color::None}, {3.0f, 0.0f, 0.0f}}, //最後の目標基準点が青だった時の例外処理用
     {32, Direction::front, {70.0f, 70.0f, 40.0f, 500.0f},   0, {Color::Black, Color::Blue}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
-    //{32, Direction::front, {70.0f, 100.0f, 40.0f, 560.0f},   0, {Color::Black, Color::Blue}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {33, Direction::front, {70.0f,  80.0f, 50.0f, 400.0f}, 400, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {34, Direction::front, {70.0f, 100.0f, 70.0f, 700.0f}, 700, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {35, Direction::front, {70.0f, 100.0f, 70.0f, 950.0f}, 950, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {36, Direction::back, {40.0f,  80.0f, 70.0f,  370.0f}, 350, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {37, Direction::back, {40.0f,  80.0f, 70.0f,  670.0f}, 650, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
     {38, Direction::back, {40.0f,  80.0f, 70.0f,  900.0f}, 900, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
-    //L用
-    /*
-    {36, Direction::back, {40.0f,  80.0f, 70.0f,  370.0f}, 370, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
-    {37, Direction::back, {40.0f,  80.0f, 70.0f,  670.0f}, 670, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
-    {38, Direction::back, {40.0f,  80.0f, 70.0f,  920.0f}, 920, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
-    */
     {39, Direction::front, {70.0f, 100.0f, 20.0f, 750.0f}, 750, {Color::None}, {3.0f, 0.0f, 0.0f}}, //Dlvボトル運び
 };
 /* MARK:回転パラメータ
@@ -162,7 +151,6 @@ const TurnScene turnScenes[] =
 
     {5,   -90, false, false, {1.0f, 0.0f, 0.0f}}, // 左90°
     {6,    90, false, false, {1.0f, 0.0f, 0.0f}}, // 右90°
-    //{6,    92, false, false, {1.0f, 0.0f, 0.0f}}, // 右90°
 
     {7,   -60, false, false, {1.0f, 0.0f, 0.0f}}, // 左60°
     {8,    60, false, false, {1.0f, 0.0f, 0.0f}}, // 右60°
@@ -185,8 +173,7 @@ const TurnScene turnScenes[] =
     {19,  -65, false, false, {1.0f, 0.0f, 0.0f}}, // 左70°
     {20, -115, false, false, {1.0f, 0.0f, 0.0f}}, // 左110°
     {21,  -75, false, false, {1.0f, 0.0f, 0.0f}}, // 左75°
-    {22, -105, false, false, {1.0f, 0.0f, 0.0f}}, // 左105° L110
-    //{22, -110, false, false, {1.0f, 0.0f, 0.0f}}, // L110
+    {22, -105, false, false, {1.0f, 0.0f, 0.0f}}, // 左105°
 };
 
 const BottleDetectScene bottleDetectScenes[] =
