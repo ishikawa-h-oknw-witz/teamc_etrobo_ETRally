@@ -266,8 +266,13 @@ void SceneManager::setParameter()
 
         if (turnscene.variable != false)
         {
-            mGyroTraceRunner.setTargetAngle(SumouAngle - 53);
-            mTargetAngleDetector.setTargetAngle(SumouAngle - 53);
+            /*
+            mGyroTraceRunner.setTargetAngle((SumouAngle - 60) * COURSE_DIRECTION);
+            mTargetAngleDetector.setTargetAngle((SumouAngle - 60) * COURSE_DIRECTION);
+            */
+            //L用
+            mGyroTraceRunner.setTargetAngle((SumouAngle - 53) * COURSE_DIRECTION);
+            mTargetAngleDetector.setTargetAngle((SumouAngle - 53) * COURSE_DIRECTION);
             mEventDetector = &mTargetAngleDetector;
         }
 
